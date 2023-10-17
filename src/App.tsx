@@ -1,12 +1,12 @@
 import { useState } from "react";
+import "./App.css";
 import SplashScreen from "./components/SplashScreen";
-import "./style/App.css";
 
 function App() {
-  const [order, setOrder] = useState({});
+  const [orderData, setOrderData] = useState({});
   return (
     <div>
-      <SplashScreen order={Object.keys(order).length > 0 ? true : false}></SplashScreen>
+      <SplashScreen isPaniniOrdered={Object.keys(orderData).length > 0 ? true : false}></SplashScreen>
     </div>
   );
 }

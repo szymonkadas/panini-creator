@@ -1,5 +1,5 @@
-@import "../../../style/vars/borders.css";
-.title-badge {
+@import "../../style/borders.css";
+.titleBadge {
   position: absolute;
   z-index: 500;
   display: flex;
@@ -12,11 +12,11 @@
   border-style: solid;
 }
 
-.title-badge * {
+.titleBadge * {
   align-self: center;
 }
 
-.title-badge button {
+.button {
   height: 44px;
   padding: 14px 20px;
   background-color: rgba(0, 0, 0, 0);
@@ -30,11 +30,11 @@
   box-sizing: border-box;
 }
 
-.title-badge button:hover {
+.titleBadge button:hover {
   border: solid var(--border-width) black;
 }
 
-.title-badge h1 {
+.titleBadge h1 {
   font-family: var(--primary-font-family);
   font-size: 46px;
   user-select: none;

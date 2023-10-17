@@ -1,22 +1,24 @@
+import styles from "./SplashScreen.module.css";
 import Circle from "./splashScreen/Circle";
-import "./splashScreen/style/SplashScreen.css";
 import TitleBadge from "./splashScreen/TitleBadge";
+
 type SplashScreenProps = {
-  order: boolean;
+  isPaniniOrdered: boolean;
 };
+
 export default function SplashScreen(props: SplashScreenProps) {
   return (
-    <div className="splash-screen">
-      <div className="circle-row">
+    <div className={styles.splashScreen}>
+      <div className="circlesRow">
         <Circle columnLayout={false}></Circle>
         <Circle columnLayout={false}></Circle>
         <Circle columnLayout={false}>
-          <TitleBadge order={props.order}></TitleBadge>
+          <TitleBadge isPaniniOrdered={props.isPaniniOrdered}></TitleBadge>
         </Circle>
         <Circle columnLayout={false}></Circle>
         <Circle columnLayout={false}></Circle>
       </div>
-      <div className="circle-column">
+      <div className="circlesColumn">
         <Circle columnLayout={true}></Circle>
         <Circle columnLayout={true}></Circle>
       </div>

@@ -1,14 +1,14 @@
-import "./style/TitleBadge.css";
+import styles from "./TitleBadge.module.css";
 
 type TitleBadgeProps = {
-  order: boolean;
+  isPaniniOrdered: boolean;
 };
 
 export default function TitleBadge(props: TitleBadgeProps) {
   return (
-    <div className="title-badge">
-      <h1>Panini {props.order ? "ordered" : "Creator"}</h1>
-      <button>{props.order ? "start again" : "begin"}</button>
+    <div className={styles.titleBadge}>
+      <h1 className={styles.textContent}>Panini {props.isPaniniOrdered ? "ordered" : "Creator"}</h1>
+      <button className={styles.button}>{props.isPaniniOrdered ? "start again" : "begin"}</button>
     </div>
   );
 }

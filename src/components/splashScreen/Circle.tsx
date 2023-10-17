@@ -1,4 +1,4 @@
-import "./style/Circle.css";
+import styles from "./Circle.module.css";
 
 type CircleProps = {
   columnLayout: boolean;
@@ -6,5 +6,5 @@ type CircleProps = {
 };
 
 export default function Circle(props: CircleProps) {
-  return <div className={`circle-${props.columnLayout ? "column" : "row"}__circle`}>{props.children}</div>;
+  return <div className={props.columnLayout ? styles.columnCircle : styles.rowCircle}>{props.children}</div>;
 }
