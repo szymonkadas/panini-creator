@@ -1,0 +1,8 @@
+#root {
+  min-width: 100dvw;
+  min-height: 100dvh;
+  width: fit-content;
+  height: fit-content;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

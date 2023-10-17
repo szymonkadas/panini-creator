@@ -1,0 +1,41 @@
+@import "../../../style/vars/borders.css";
+.title-badge {
+  position: absolute;
+  z-index: 500;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 20%;
+  width: 100%;
+  border-width: var(--border-width) 0px var(--border-width) 0px;
+  border-color: black;
+  border-style: solid;
+}
+
+.title-badge * {
+  align-self: center;
+}
+
+.title-badge button {
+  height: 44px;
+  padding: 14px 20px;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font: var(--secondary-font);
+  text-transform: var(--secondary-font-transform);
+  transition: border 0.5s;
+  border-style: none;
+  box-sizing: border-box;
+}
+
+.title-badge button:hover {
+  border: solid var(--border-width) black;
+}
+
+.title-badge h1 {
+  font-family: var(--primary-font-family);
+  font-size: 46px;
+  user-select: none;
+}
