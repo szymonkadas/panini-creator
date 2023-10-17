@@ -1,8 +1,8 @@
 import { useState } from "react";
-import "./style/TitleBadge.css";
+import styles from "./TitleBadge.module.css";
 
 type TitleBadgeProps = {
-  order: boolean;
+  isPaniniOrdered: boolean;
   handleTransition: () => void;
 };
 
@@ -18,9 +18,10 @@ export default function TitleBadge(props: TitleBadgeProps) {
     cursor: "initial",
   };
   return (
-    <div className={`title-badge ${!isButtonAvailable && "title-badge--escape"}`}>
-      <h1>Panini {props.order ? "ordered" : "Creator"}</h1>
+    <div className={`${styles.titleBadge} ${!isButtonAvailable && styles.titleBadgeEscape}`}>
+      <h1 className={styles.textContent}>Panini {props.isPaniniOrdered ? "ordered" : "Creator"}</h1>
       <button
+        className={styles.button}
         onClick={() => {
           props.handleTransition();
           handleClick();
@@ -28,7 +29,7 @@ export default function TitleBadge(props: TitleBadgeProps) {
         disabled={isButtonAvailable ? false : true}
         style={isButtonAvailable ? {} : buttonStyle}
       >
-        {props.order ? "start again" : "begin"}
+        {props.isPaniniOrdered ? "start again" : "begin"}
       </button>
     </div>
   );

@@ -1,10 +1,12 @@
 import { useState } from "react";
+import styles from "./SplashScreen.module.css";
 import Circle from "./splashScreen/Circle";
 import TitleBadge from "./splashScreen/TitleBadge";
-import "./splashScreen/style/SplashScreen.css";
+
 type SplashScreenProps = {
-  order: boolean;
+  isPaniniOrdered: boolean;
 };
+
 export default function SplashScreen(props: SplashScreenProps) {
   const [isVisible, setIsVisible] = useState(true);
   const [transition, setTransition] = useState(false);
@@ -17,6 +19,7 @@ export default function SplashScreen(props: SplashScreenProps) {
       setIsVisible(false);
       setTransition(false);
     }, 4000);
+    // for test purposes
     setTimeout(() => {
       setIsVisible(true);
     }, 6000);
@@ -24,17 +27,17 @@ export default function SplashScreen(props: SplashScreenProps) {
   return (
     <>
       {isVisible && (
-        <div className={`splash-screen ${transition && "splash-screen--escape"}`}>
-          <div className={`circle-row`}>
+        <div className={`${styles.splashScreen} ${transition && styles.splashScreenEscape}`}>
+          <div className={`circlesRow`}>
             <Circle columnLayout={false} transition={transition}></Circle>
             <Circle columnLayout={false} transition={transition}></Circle>
             <Circle columnLayout={false} transition={transition}>
-              <TitleBadge order={props.order} handleTransition={handleTransition}></TitleBadge>
+              <TitleBadge isPaniniOrdered={props.isPaniniOrdered} handleTransition={handleTransition}></TitleBadge>
             </Circle>
             <Circle columnLayout={false} transition={transition}></Circle>
             <Circle columnLayout={false} transition={transition}></Circle>
           </div>
-          <div className="circle-column">
+          <div className="circlesColumn">
             <Circle columnLayout={true} transition={transition}></Circle>
             <Circle columnLayout={true} transition={transition}></Circle>
           </div>

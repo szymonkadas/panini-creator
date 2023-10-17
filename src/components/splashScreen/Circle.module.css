@@ -1,0 +1,76 @@
+@import "../../style/borders.css";
+
+.rowCircle {
+  height: 106.5dvh;
+  width: 106.5dvh;
+}
+.columnCircle {
+  height: 62dvh;
+  width: 62dvh;
+}
+.rowCircle,
+.columnCircle {
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  border-radius: 100%;
+  border: var(--border-width) solid black;
+  position: absolute;
+  overflow: hidden;
+  transition: 4s cubic-bezier(0.75, 0.03, 0.58, 1);
+}
+
+/* ułożenie kolumny kół */
+.columnCircle:nth-child(1) {
+  transform: translate(-50%, -113%);
+}
+.columnCircle:last-child {
+  transform: translate(-50%, 13%);
+}
+.columnCircleEscape {
+  height: 22dvh;
+  width: 22dvh;
+}
+.columnCircleEscape:nth-child(1) {
+  top: 0;
+}
+.columnCircleEscape:nth-child(2) {
+  top: 100dvh;
+}
+
+/* ułożenie rzędu kół */
+.rowCircle:nth-child(1) {
+  transform: translate(-130%, -50%);
+}
+.rowCircle:nth-child(2) {
+  transform: translate(-80%, -50%);
+}
+.rowCircleEscape:nth-child(1) {
+  transform: translate(-165%, -50%);
+}
+.rowCircleEscape:nth-child(2) {
+  transform: translate(-165%, -50%);
+}
+.rowCircle:nth-child(3) {
+  z-index: 6;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rowCircleEscape:nth-child(3) {
+  height: 155dvh;
+  width: 155dvh;
+}
+.rowCircle:nth-child(4) {
+  transform: translate(-20%, -50%);
+}
+.rowCircle:nth-child(5) {
+  transform: translate(30%, -50%);
+}
+.rowCircleEscape:nth-child(4) {
+  transform: translate(65%, -50%);
+}
+.rowCircleEscape:nth-child(5) {
+  transform: translate(65%, -50%);
+}

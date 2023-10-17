@@ -1,0 +1,12 @@
+@import "../style/fonts.css";
+
+.splashScreen {
+  height: 100dvh;
+  overflow: hidden;
+  position: relative;
+  transition: 4s cubic-bezier(0.75, 0.03, 0.58, 1);
+  opacity: 1;
+}
+.splashScreenEscape {
+  opacity: 0;
+}

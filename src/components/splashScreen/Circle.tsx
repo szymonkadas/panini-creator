@@ -1,4 +1,4 @@
-import "./style/Circle.css";
+import styles from "./Circle.module.css";
 
 type CircleProps = {
   columnLayout: boolean;
@@ -7,10 +7,11 @@ type CircleProps = {
 };
 
 export default function Circle(props: CircleProps) {
-  const layout = props.columnLayout ? "column" : "row";
-  return (
-    <div className={`circle-${layout}__circle ${props.transition && `circle-${layout}__circle--escape`}`}>
-      {props.children}
-    </div>
-  );
+  let circleLayout = styles.columnCircle;
+  let circleEscapeLayout = styles.columnCircleEscape;
+  if (props.columnLayout === false) {
+    circleLayout = styles.rowCircle;
+    circleEscapeLayout = styles.rowCircleEscape;
+  }
+  return <div className={`${circleLayout} ${props.transition && circleEscapeLayout}`}>{props.children}</div>;
 }
