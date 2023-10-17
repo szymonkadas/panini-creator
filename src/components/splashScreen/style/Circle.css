@@ -17,4 +17,5 @@
   border: var(--border-width) solid black;
   position: absolute;
   overflow: hidden;
+  transition: 4s cubic-bezier(0.75, 0.03, 0.58, 1);
 }
