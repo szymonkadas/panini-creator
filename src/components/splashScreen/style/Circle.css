@@ -1,0 +1,18 @@
+.circle-row__circle {
+  height: 106.5dvh;
+  width: 106.5dvh;
+}
+.circle-column__circle {
+  height: 58dvh;
+  width: 58dvh;
+}
+.circle-row__circle,
+.circle-column__circle {
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  border-radius: 100%;
+  border: 0.5px solid black;
+  position: absolute;
+  overflow: hidden;
+}

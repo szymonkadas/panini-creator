@@ -1,9 +1,12 @@
-import "./App.css";
+import { useState } from "react";
+import SplashScreen from "./components/SplashScreen";
+import "./style/App.css";
 
 function App() {
+  const [order, setOrder] = useState({});
   return (
     <div>
-      <h1>Panini Creator</h1>
+      <SplashScreen order={Object.keys(order).length > 0 ? true : false}></SplashScreen>
     </div>
   );
 }

@@ -1,0 +1,26 @@
+.title-badge {
+  position: absolute;
+  z-index: 500;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 25%;
+  width: 100%;
+  border-width: 0.5px 0px 0.5px 0px;
+  border-color: black;
+  border-style: solid;
+}
+.title-badge * {
+  align-self: center;
+}
+.title-badge button {
+  font: var(--secondary-font);
+  text-transform: var(--secondary-font-transform);
+  padding: 14px 20px;
+  background-color: rgba(0, 0, 0, 0);
+  border-style: none;
+}
+.title-badge h1 {
+  font-family: var(--primary-font-family);
+  font-size: 46px;
+}

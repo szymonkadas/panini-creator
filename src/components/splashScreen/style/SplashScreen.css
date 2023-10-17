@@ -1,0 +1,36 @@
+@import "../../../style/vars/fonts.css";
+
+.splash-screen {
+  height: 100dvh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ułożenie kolumny kół */
+.circle-column__circle:nth-child(1) {
+  transform: translate(-50%, -118%);
+}
+.circle-column__circle:last-child {
+  transform: translate(-50%, 18%);
+}
+
+/* ułożenie rzędu kół */
+.circle-row__circle:nth-child(1) {
+  transform: translate(-135%, -50%);
+}
+.circle-row__circle:nth-child(2) {
+  transform: translate(-80%, -50%);
+}
+.circle-row__circle:nth-child(3) {
+  z-index: 6;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.circle-row__circle:nth-child(4) {
+  transform: translate(-20%, -50%);
+}
+.circle-row__circle:nth-child(5) {
+  transform: translate(35%, -50%);
+}
