@@ -9,8 +9,9 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Layout isPaniniOrdered={Object.keys(orderData).length > 0 ? true : false} />}>
-        <Route index element={<SplashScreen />} />
-        <Route path="/panini_creator" element={<PaniniCreatorLayout />}></Route>
+        <Route index element={<SplashScreen shouldTransition={false} />} />
+        <Route path="/panini_creator" element={<PaniniCreatorLayout shouldTransition={true} />}></Route>
+        <Route path="/panini_creator:options" element={<PaniniCreatorLayout shouldTransition={false} />}></Route>
       </Route>
     )
   );

@@ -1,6 +1,7 @@
 import styles from "./Form.module.css";
 
 export type FormProps = {
+  title: string;
   children?: React.ReactNode;
 };
 
