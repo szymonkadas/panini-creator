@@ -2,10 +2,14 @@
 
 .splashScreen {
   height: 100dvh;
+  width: 100dvw;
   overflow: hidden;
-  position: relative;
-  transition: 4s cubic-bezier(0.75, 0.03, 0.58, 1);
+  top: 0;
+  left: 0;
+  position: absolute;
+  transition: opacity 4s cubic-bezier(0.75, 0.03, 0.58, 1);
   opacity: 1;
+  background-color: white;
 }
 .splashScreenEscape {
   opacity: 0;

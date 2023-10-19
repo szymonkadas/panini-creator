@@ -1,35 +1,23 @@
-import { useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { LayoutContext } from "../../pages/Layout";
 import styles from "./TitleBadge.module.css";
 
 type TitleBadgeProps = {
-  isPaniniOrdered: boolean;
-  handleTransition: () => void;
+  shouldTransition?: true;
 };
 
 export default function TitleBadge(props: TitleBadgeProps) {
-  const [isButtonAvailable, setIsButtonAvailable] = useState(true);
+  const { isPaniniOrdered } = useOutletContext() as LayoutContext;
+  const navigate = useNavigate();
   const handleClick = () => {
-    setIsButtonAvailable(false);
-    setTimeout(() => {
-      setIsButtonAvailable(true);
-    }, 4000);
+    navigate(`${isPaniniOrdered ? "/" : "/panini_creator"}`);
   };
-  const buttonStyle = {
-    cursor: "initial",
-  };
+
   return (
-    <div className={`${styles.titleBadge} ${!isButtonAvailable && styles.titleBadgeEscape}`}>
-      <h1 className={styles.textContent}>Panini {props.isPaniniOrdered ? "ordered" : "Creator"}</h1>
-      <button
-        className={styles.button}
-        onClick={() => {
-          props.handleTransition();
-          handleClick();
-        }}
-        disabled={isButtonAvailable ? false : true}
-        style={isButtonAvailable ? {} : buttonStyle}
-      >
-        {props.isPaniniOrdered ? "start again" : "begin"}
+    <div className={`${styles.titleBadge} ${props.shouldTransition && styles.titleBadgeEscape}`}>
+      <h1 className={styles.textContent}>Panini {isPaniniOrdered ? "ordered" : "Creator"}</h1>
+      <button className={styles.button} disabled={props.shouldTransition} onClick={handleClick}>
+        {isPaniniOrdered ? "start again" : "begin"}
       </button>
     </div>
   );

@@ -2,16 +2,16 @@ import styles from "./Circle.module.css";
 
 type CircleProps = {
   columnLayout: boolean;
-  transition: boolean;
+  shouldTransition?: true;
   children?: React.ReactNode;
 };
 
 export default function Circle(props: CircleProps) {
-  let circleLayout = styles.columnCircle;
-  let circleEscapeLayout = styles.columnCircleEscape;
-  if (props.columnLayout === false) {
-    circleLayout = styles.rowCircle;
-    circleEscapeLayout = styles.rowCircleEscape;
-  }
-  return <div className={`${circleLayout} ${props.transition && circleEscapeLayout}`}>{props.children}</div>;
+  const circleLayout = props.columnLayout ? styles.columnCircle : styles.rowCircle;
+  const circleEscapeLayout = props.shouldTransition
+    ? props.columnLayout
+      ? styles.columnCircleEscape
+      : styles.rowCircleEscape
+    : "";
+  return <div className={`${circleLayout} ${circleEscapeLayout}`}>{props.children}</div>;
 }

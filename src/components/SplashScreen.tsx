@@ -1,48 +1,52 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./SplashScreen.module.css";
 import Circle from "./splashScreen/Circle";
 import TitleBadge from "./splashScreen/TitleBadge";
 
 type SplashScreenProps = {
-  isPaniniOrdered: boolean;
+  shouldTransition?: true;
+};
+
+const splashScreenDisplayOffStyle = {
+  display: "none",
 };
 
 export default function SplashScreen(props: SplashScreenProps) {
-  const [isVisible, setIsVisible] = useState(true);
-  const [transition, setTransition] = useState(false);
-  // w przyszłości można to przerobić tak by tranzycja odpalała się na starcie tak jak prawdopodobnie wygladałaby odwrócona animacja po złożeniu zamówienia. możnaby wtedy zrobić logikę na zasadzie przełącznika.
-  const handleTransition = () => {
-    // start transition
-    setTransition(true);
-    // mogą być potrzebne refy do tego timeoutu.
-    setTimeout(() => {
-      setIsVisible(false);
-      setTransition(false);
-    }, 4000);
-    // for test purposes
-    setTimeout(() => {
-      setIsVisible(true);
-    }, 6000);
-  };
+  const [shouldDisplay, setShouldDisplay] = useState(true);
+  // delay and this state are neccessary for transition applied on route transition, so the animation still happens.
+  const [isTransitionReady, setIsTransitionReady] = useState<true | undefined>(undefined);
+  useEffect(() => {
+    const handleTransition = (transition: true | undefined) => {
+      transition && isTransitionReady !== transition && setIsTransitionReady(transition);
+    };
+    const toggleDisplay = (transition: true | undefined) => {
+      setShouldDisplay((prevVal) => !prevVal);
+    };
+    const transitionTimeoutId = setTimeout(() => handleTransition(props.shouldTransition), 1);
+    const displayTimeoutId = setTimeout(() => toggleDisplay(props.shouldTransition), 4000);
+    return () => {
+      clearTimeout(transitionTimeoutId);
+      clearTimeout(displayTimeoutId);
+    };
+  }, [props.shouldTransition]);
   return (
-    <>
-      {isVisible && (
-        <div className={`${styles.splashScreen} ${transition && styles.splashScreenEscape}`}>
-          <div className={`circlesRow`}>
-            <Circle columnLayout={false} transition={transition}></Circle>
-            <Circle columnLayout={false} transition={transition}></Circle>
-            <Circle columnLayout={false} transition={transition}>
-              <TitleBadge isPaniniOrdered={props.isPaniniOrdered} handleTransition={handleTransition}></TitleBadge>
-            </Circle>
-            <Circle columnLayout={false} transition={transition}></Circle>
-            <Circle columnLayout={false} transition={transition}></Circle>
-          </div>
-          <div className="circlesColumn">
-            <Circle columnLayout={true} transition={transition}></Circle>
-            <Circle columnLayout={true} transition={transition}></Circle>
-          </div>
-        </div>
-      )}
-    </>
+    <div
+      className={`${styles.splashScreen} ${isTransitionReady && styles.splashScreenEscape}`}
+      style={shouldDisplay ? {} : splashScreenDisplayOffStyle}
+    >
+      <div className={`circlesRow`}>
+        <Circle columnLayout={false} shouldTransition={isTransitionReady}></Circle>
+        <Circle columnLayout={false} shouldTransition={isTransitionReady}></Circle>
+        <Circle columnLayout={false} shouldTransition={isTransitionReady}>
+          <TitleBadge shouldTransition={isTransitionReady}></TitleBadge>
+        </Circle>
+        <Circle columnLayout={false} shouldTransition={isTransitionReady}></Circle>
+        <Circle columnLayout={false} shouldTransition={isTransitionReady}></Circle>
+      </div>
+      <div className="circlesColumn">
+        <Circle columnLayout={true} shouldTransition={isTransitionReady}></Circle>
+        <Circle columnLayout={true} shouldTransition={isTransitionReady}></Circle>
+      </div>
+    </div>
   );
 }
