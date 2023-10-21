@@ -11,9 +11,11 @@ export default function SelectSection(props: FormSectionProps) {
       </option>
     ));
   }, [props.options]);
+  // transform 1st word to capitalized;
+  const title = `${props.title[0].toUpperCase()}${props.title.slice(1)}`;
   return (
     <label className={styles.formSection}>
-      <p className={styles.formSectionTitle}>{props.title}</p>
+      <h4 className={styles.formSectionTitle}>{title}</h4>
       <div className={styles.removalsWrapper}>
         <div className={styles.removal}>
           <label className={styles.switch}>

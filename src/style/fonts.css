@@ -1,5 +1,10 @@
 :root {
-  --secondary-font: 400 12px "Oxygen Mono", monospace;
-  --secondary-font-transform: uppercase;
   --primary-font-family: "Instrument Serif", serif;
+  --secondary-font-family: "Oxygen Mono", monospace;
+  --secondary-font: 400 12px var(--secondary-font-family);
+  --secondary-font-transform: uppercase;
+  --h1-size: 46px;
+  --h2-size: 36px;
+  --h3-size: 26px;
+  --h4-size: 18px;
 }
