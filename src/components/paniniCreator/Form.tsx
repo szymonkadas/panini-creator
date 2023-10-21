@@ -7,8 +7,8 @@ export type FormProps = {
 
 export default function Form(props: FormProps) {
   return (
-    <form className={styles.mainForm}>
-      <h3 className={styles.formTitle}></h3>
+    <form className={styles.form}>
+      <h3 className={styles.formTitle}>{props.title}</h3>
       {props.children}
     </form>
   );

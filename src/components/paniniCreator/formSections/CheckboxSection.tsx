@@ -20,10 +20,13 @@ export default function CheckboxSection(props: CheckboxSectionProps) {
       </label>
     ));
   }, [props.options]);
+  // transform 1st word to capitalized;
+  const title = `${props.title[0].toUpperCase()}${props.title.slice(1)}`;
   // form handling to be implemented
+
   return (
     <label className={styles.formSection}>
-      <p className={styles.formSectionTitle}>{props.title}</p>
+      <h4 className={styles.formSectionTitle}>{title}</h4>
       <div className={styles.optionsWrapper}>{...options}</div>
     </label>
   );

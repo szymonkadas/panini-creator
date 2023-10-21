@@ -16,35 +16,40 @@ import SwipeSection from "./paniniCreator/formSections/SwipeSection";
 import TextSection from "./paniniCreator/formSections/TextSection";
 export default function PaniniCreator() {
   return (
-    <div className={styles.paniniCreator}>
-      <div className={styles.formInterface}>
+    <main className={styles.paniniCreator}>
+      <div className={styles.formsInterface}>
         <h2 className={styles.formsLabel}>Panini Creator</h2>
-        <div className={styles.buttonWrapper}>
-          <button type="button" className={styles.button}>
-            Randomize Panini
-          </button>
-        </div>
+        <button type="button" className={styles.button}>
+          <img className={styles.diceIcon} src="/src/images/dices.svg" alt="dices icon"></img>
+          Randomize Panini
+        </button>
       </div>
       <Form title="Configure Base">
-        <SwipeSection removable={false} title="bread" options={breadVariants}></SwipeSection>
-        <SelectSection removable={true} title="cheese" options={cheeseVariants}></SelectSection>
-        <SelectSection removable={true} title="meat" options={meatVariants}></SelectSection>
-        <SelectSection removable={true} title="dressing" options={dressingVariants}></SelectSection>
-        <CheckboxButtonSection removable={true} title="vegetables" options={vegetableVariant}></CheckboxButtonSection>
+        <article className={styles.formSections}>
+          <SwipeSection removable={false} title="bread" options={breadVariants}></SwipeSection>
+          <SelectSection removable={true} title="cheese" options={cheeseVariants}></SelectSection>
+          <SelectSection removable={true} title="meat" options={meatVariants}></SelectSection>
+          <SelectSection removable={true} title="dressing" options={dressingVariants}></SelectSection>
+          <CheckboxButtonSection removable={true} title="vegetables" options={vegetableVariant}></CheckboxButtonSection>
+        </article>
       </Form>
       <Form title="Configure Extras">
-        <SelectSection removable={true} title="Egg" options={eggVariants}></SelectSection>
-        <CheckboxSection removable={false} title="Egg" options={eggVariants}></CheckboxSection>
-        <RadioSection removable={false} title="Serving" options={servingVariant}></RadioSection>
-        <CheckboxSection removable={false} title="Topping" options={toppingVariant}></CheckboxSection>
+        <article className={styles.formSections}>
+          <SelectSection removable={true} title="Egg" options={eggVariants}></SelectSection>
+          <CheckboxSection removable={false} title="Egg" options={eggVariants}></CheckboxSection>
+          <RadioSection removable={false} title="Serving" options={servingVariant}></RadioSection>
+          <CheckboxSection removable={false} title="Topping" options={toppingVariant}></CheckboxSection>
+        </article>
       </Form>
       <Form title="Finalize Order">
-        <TextSection title="Name panini"></TextSection>
-        <CheckboxSection removable={false} title="Cutlery" options={["Add to order"]}></CheckboxSection>
-        <CheckboxSection removable={false} title="Name panini" options={["Add to order"]}></CheckboxSection>
+        <article className={styles.formSections}>
+          <TextSection title="Name panini"></TextSection>
+          <CheckboxSection removable={false} title="Cutlery" options={["Add to order"]}></CheckboxSection>
+          <CheckboxSection removable={false} title="Name panini" options={["Add to order"]}></CheckboxSection>
+        </article>
         <input type="submit" className={styles.formsSubmit} value={"place order"} />
         <button className={styles.formsReset}>start again</button>
       </Form>
-    </div>
+    </main>
   );
 }

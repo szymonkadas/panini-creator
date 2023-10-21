@@ -1,0 +1,19 @@
+@import url("../../style/borders.css");
+@import url("../../style/fonts.css");
+
+.form {
+  border: var(--border-width) solid var(--border-color);
+  width: 100%;
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+.formTitle {
+  font-size: var(--h3-size);
+  font-family: var(--primary-font-family);
+  text-align: center;
+  text-transform: uppercase;
+}

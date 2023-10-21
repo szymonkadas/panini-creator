@@ -1,0 +1,25 @@
+@import url("../../../style/borders.css");
+@import url("../../../style/spacing.css");
+@import url("../../../style/fonts.css");
+
+.formSection {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 20fr 10fr 70fr;
+  grid-template-areas: "title removal option";
+  background-color: white;
+  padding: var(--primary-spacing) 0;
+}
+.formSectionTitle {
+  grid-area: "title";
+  font-family: var(--primary-font-family);
+  font-size: var(--h4-size);
+}
+.removalsWrapper {
+  grid-area: "removal";
+}
+.optionsWrapper {
+  grid-area: "option";
+  display: flex;
+  flex: column;
+}
