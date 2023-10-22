@@ -1,19 +1,13 @@
 import { breadVariants } from "../data/bread";
 import { cheeseVariants } from "../data/cheese";
 import { dressingVariants } from "../data/dressing";
-import { eggVariants } from "../data/egg";
 import { meatVariants } from "../data/meat";
-import { servingVariant } from "../data/serving";
-import { toppingVariant } from "../data/topping";
 import { vegetableVariant } from "../data/vegetable";
 import styles from "./PaniniCreator.module.css";
 import Form from "./paniniCreator/Form";
 import CheckboxButtonSection from "./paniniCreator/formSections/CheckboxButtonSection";
-import CheckboxSection from "./paniniCreator/formSections/CheckboxSection";
-import RadioSection from "./paniniCreator/formSections/RadioSection";
 import SelectSection from "./paniniCreator/formSections/SelectSection";
 import SwipeSection from "./paniniCreator/formSections/SwipeSection";
-import TextSection from "./paniniCreator/formSections/TextSection";
 export default function PaniniCreator() {
   return (
     <main className={styles.paniniCreator}>
@@ -26,14 +20,16 @@ export default function PaniniCreator() {
       </div>
       <Form title="Configure Base">
         <article className={styles.formSections}>
-          <SwipeSection removable={false} title="bread" options={breadVariants}></SwipeSection>
+          <SwipeSection removable={false} title="bread" options={breadVariants}>
+            <img src="/src/images/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img>
+          </SwipeSection>
           <SelectSection removable={true} title="cheese" options={cheeseVariants}></SelectSection>
           <SelectSection removable={true} title="meat" options={meatVariants}></SelectSection>
-          <SelectSection removable={true} title="dressing" options={dressingVariants}></SelectSection>
+          <SwipeSection removable={true} title="dressing" options={dressingVariants}></SwipeSection>
           <CheckboxButtonSection removable={true} title="vegetables" options={vegetableVariant}></CheckboxButtonSection>
         </article>
       </Form>
-      <Form title="Configure Extras">
+      {/* <Form title="Configure Extras">
         <article className={styles.formSections}>
           <SelectSection removable={true} title="Egg" options={eggVariants}></SelectSection>
           <CheckboxSection removable={false} title="Egg" options={eggVariants}></CheckboxSection>
@@ -49,7 +45,7 @@ export default function PaniniCreator() {
         </article>
         <input type="submit" className={styles.formsSubmit} value={"place order"} />
         <button className={styles.formsReset}>start again</button>
-      </Form>
+      </Form> */}
     </main>
   );
 }

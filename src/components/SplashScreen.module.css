@@ -1,15 +1,14 @@
-@import "../style/fonts.css";
-
 .splashScreen {
   height: 100dvh;
   width: 100dvw;
   overflow: hidden;
   top: 0;
   left: 0;
-  position: absolute;
+  position: fixed;
   transition: opacity 4s cubic-bezier(0.75, 0.03, 0.58, 1);
   opacity: 1;
   background-color: white;
+  z-index: 10;
 }
 .splashScreenEscape {
   opacity: 0;
