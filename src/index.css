@@ -11,6 +11,22 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --option-width: 250px;
+  --border-width: 0.5px;
+  --border-color: black;
+  --special-color: #fbfbfb;
+  --primary-font-family: "Instrument Serif", serif;
+  --secondary-font-family: "Oxygen Mono", monospace;
+  --secondary-font: 400 12px var(--secondary-font-family);
+  --secondary-font-transform: uppercase;
+  --h1-size: 46px;
+  --h2-size: 36px;
+  --h3-size: 26px;
+  --h4-size: 18px;
+  --primary-spacing: 20px;
+  --secondary-spacing: 14px;
+  --form-section-content-spacing: 15px;
 }
 
 body {

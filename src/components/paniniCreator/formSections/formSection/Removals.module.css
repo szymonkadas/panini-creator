@@ -1,0 +1,125 @@
+.removalsWrapper {
+  grid-area: removal;
+  display: grid;
+  grid-template-columns: repeat(auto, 1fr);
+  gap: var(--form-section-content-spacing);
+}
+
+.removal {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas: "switch add_remove";
+  gap: 5px;
+  align-items: center;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 27px;
+  height: 17px;
+  font-size: 0;
+  grid-area: switch;
+}
+
+.switchInput {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  border: none;
+  position: absolute;
+  user-select: none;
+}
+
+.switchSlider {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  cursor: pointer;
+  background-color: transparent;
+  -webkit-transition: 0.4s;
+  transition-timing-function: cubic-bezier(0.75, 0.03, 0.58, 1);
+  transition: 0.4s;
+  border-radius: 27px;
+  border-style: solid;
+  border-color: var(--border-color);
+  border-width: var(--border-width);
+}
+
+.switchSlider:before {
+  display: inline-block;
+  position: relative;
+  content: "";
+  height: 9px;
+  width: 9px;
+  left: 3px;
+  top: 3px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: var(--border-width);
+  border-color: var(--border-color);
+  transition-timing-function: cubic-bezier(0.75, 0.03, 0.58, 1);
+}
+
+input:checked + .switchSlider:before {
+  -webkit-transform: translateX(9px);
+  -ms-transform: translateX(9px);
+  transform: translateX(9px);
+  background-color: black;
+}
+
+.addButton,
+.removeButton {
+  height: 17px;
+  width: 17px;
+  grid-area: add_remove;
+  border-radius: 50%;
+  background-color: white;
+  border-style: solid;
+  border-width: var(--border-width);
+  border-color: var(--border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 100;
+  transition: 0.4s;
+  transition-timing-function: cubic-bezier(0.75, 0.03, 0.58, 1);
+}
+.addButton::after {
+  position: relative;
+  left: -4px;
+  display: block;
+  width: 1px;
+  height: 8px;
+  background-color: black;
+  content: "";
+}
+.addButton::before {
+  position: relative;
+  display: block;
+  width: 8px;
+  height: 1px;
+  background-color: black;
+  content: "";
+}
+.removeButton::after {
+  position: relative;
+  display: block;
+  width: 8px;
+  height: 1px;
+  background-color: black;
+  content: "";
+}
+
+.addButton:hover,
+.removeButton:hover {
+  background-color: black;
+}
+.removeButton:hover::after,
+.addButton:hover::after,
+.addButton:hover::before {
+  background-color: white;
+}

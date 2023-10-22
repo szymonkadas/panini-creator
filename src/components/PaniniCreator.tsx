@@ -20,13 +20,15 @@ export default function PaniniCreator() {
       </div>
       <Form title="Configure Base">
         <article className={styles.formSections}>
-          <SwipeSection removable={false} title="bread" options={breadVariants}></SwipeSection>
+          <SwipeSection removable={false} title="bread" options={breadVariants}>
+            <img src="/src/images/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img>
+          </SwipeSection>
           <SelectSection removable={true} title="cheese" options={cheeseVariants}></SelectSection>
           <SelectSection removable={true} title="meat" options={meatVariants}></SelectSection>
-          <SelectSection removable={true} title="dressing" options={dressingVariants}></SelectSection>
+          <SwipeSection removable={true} title="dressing" options={dressingVariants}></SwipeSection>
           <CheckboxButtonSection removable={true} title="vegetables" options={vegetableVariant}></CheckboxButtonSection>
         </article>
       </Form>
-    </div>
+    </main>
   );
 }

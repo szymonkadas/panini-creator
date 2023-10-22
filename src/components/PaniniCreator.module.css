@@ -1,7 +1,3 @@
-@import url("../style/fonts.css");
-@import url("../style/borders.css");
-@import url("../style/spacing.css");
-
 .paniniCreator {
   background-color: white;
   display: flex;
@@ -44,6 +40,11 @@
 .diceIcon {
   max-height: 17px;
   max-width: 15px;
+  font-size: 0px;
+}
+.wheatIcon {
+  max-height: 20px;
+  max-width: 20px;
   font-size: 0px;
 }
 
