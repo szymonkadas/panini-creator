@@ -11,31 +11,44 @@
   border-color: black;
   border-style: solid;
 }
+.titleBadgeEscape {
+  border-style: none;
+}
 
 .titleBadge * {
   align-self: center;
 }
 
 .button {
-  height: 44px;
   padding: 14px 20px;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
   font: var(--secondary-font);
   text-transform: var(--secondary-font-transform);
-  transition: border 0.5s;
-  border-style: none;
+  border: solid var(--border-width) transparent;
   box-sizing: border-box;
+  transition: border 0.3s;
+}
+.button:disabled {
+  color: initial;
+  border-color: transparent;
+  cursor: initial;
+}
+.button:hover {
+  border-color: black;
+}
+.button:disabled:hover {
+  border-color: transparent;
 }
 
-.titleBadge button:hover {
-  border: solid var(--border-width) black;
-}
-
-.titleBadge h1 {
+.textContent {
   font-family: var(--primary-font-family);
   font-size: 46px;
   user-select: none;
+}
+
+a {
+  text-decoration: none;
 }

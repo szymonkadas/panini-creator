@@ -1,0 +1,11 @@
+.paniniCreator {
+  height: 50dvh;
+  width: 40dvw;
+}
+
+.painForm {
+  display: flex;
+  flex-direction: column;
+  margin: 40px;
+  background-color: white;
+}
