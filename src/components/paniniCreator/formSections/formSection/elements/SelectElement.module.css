@@ -1,0 +1,30 @@
+.selectLabel {
+  font-size: 0;
+  border: var(--border-width) solid var(--border-color);
+  position: relative;
+}
+.selectOptions {
+  border: none;
+  width: var(--option-width);
+  height: 35px;
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* applied this so on arrow img click, it passes through without any problems to the select */
+  background-color: transparent;
+  position: relative;
+  z-index: 2;
+}
+
+.selectArrow {
+  font-size: 0px;
+  position: absolute;
+  width: 14px;
+  right: 9px;
+  top: calc((35px - 7px) / 2);
+  z-index: 1;
+}
+.selectArrowActive {
+  transform: rotate(180deg);
+}

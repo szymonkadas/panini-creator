@@ -2,7 +2,7 @@ import styles from "./Circle.module.css";
 
 type CircleProps = {
   columnLayout: boolean;
-  shouldTransition?: true;
+  shouldTransition: boolean;
   children?: React.ReactNode;
 };
 

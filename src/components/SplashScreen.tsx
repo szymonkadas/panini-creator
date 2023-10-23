@@ -4,7 +4,7 @@ import Circle from "./splashScreen/Circle";
 import TitleBadge from "./splashScreen/TitleBadge";
 
 type SplashScreenProps = {
-  shouldTransition?: true;
+  shouldTransition: boolean;
 };
 
 const splashScreenDisplayOffStyle = {
@@ -14,16 +14,16 @@ const splashScreenDisplayOffStyle = {
 export default function SplashScreen(props: SplashScreenProps) {
   const [shouldDisplay, setShouldDisplay] = useState(true);
   // delay and this state are neccessary for transition applied on route transition, so the animation still happens.
-  const [isTransitionReady, setIsTransitionReady] = useState<true | undefined>(undefined);
+  const [isTransitionReady, setIsTransitionReady] = useState(false);
   useEffect(() => {
-    const handleTransition = (transition: true | undefined) => {
+    const handleTransition = (transition: boolean) => {
       transition && isTransitionReady !== transition && setIsTransitionReady(transition);
     };
-    const toggleDisplay = (transition: true | undefined) => {
+    const toggleDisplay = () => {
       setShouldDisplay((prevVal) => !prevVal);
     };
     const transitionTimeoutId = setTimeout(() => handleTransition(props.shouldTransition), 1);
-    const displayTimeoutId = setTimeout(() => toggleDisplay(props.shouldTransition), 4000);
+    const displayTimeoutId = setTimeout(() => toggleDisplay(), 4000);
     return () => {
       clearTimeout(transitionTimeoutId);
       clearTimeout(displayTimeoutId);

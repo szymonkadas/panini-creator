@@ -3,7 +3,7 @@ import { LayoutContext } from "../../pages/Layout";
 import styles from "./TitleBadge.module.css";
 
 type TitleBadgeProps = {
-  shouldTransition?: true;
+  shouldTransition: boolean;
 };
 
 export default function TitleBadge(props: TitleBadgeProps) {

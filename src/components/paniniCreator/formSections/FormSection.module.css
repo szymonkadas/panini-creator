@@ -1,0 +1,37 @@
+.formSection {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 20fr 10fr 70fr;
+  grid-template-areas: "title removal option";
+  background-color: white;
+  padding: var(--primary-spacing) 0;
+}
+
+.formSectionTitle {
+  grid-area: title;
+  font-family: var(--primary-font-family);
+  font-size: var(--h4-size);
+}
+
+.optionsWrapper {
+  grid-area: option;
+  display: grid;
+  grid-template-rows: auto;
+  gap: var(--form-section-content-spacing);
+  justify-content: right;
+  font: var(--secondary-font);
+}
+
+.checkboxButtonsWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.swipeOptionParting {
+  width: 60px;
+  height: calc(var(--border-width) * 2);
+  background-color: black;
+  justify-self: center;
+  border: none;
+}

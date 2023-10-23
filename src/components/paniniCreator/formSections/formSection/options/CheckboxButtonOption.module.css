@@ -1,0 +1,22 @@
+.checkboxButtonLabel {
+  width: fit-content;
+  font-size: 0px;
+}
+.checkboxButtonOption {
+  height: 0px;
+  width: 0px;
+  opacity: 0;
+  border-width: 0px;
+}
+.checkboxButton {
+  width: 100%;
+  background-color: var(--special-color);
+  border: var(--border-width) solid var(--special-color);
+  padding: calc(var(--primary-spacing) / 2) var(--primary-spacing);
+  text-transform: none;
+  font: var(--secondary-font);
+}
+.checked {
+  border-color: var(--border-color) !important;
+  background-color: transparent !important;
+}

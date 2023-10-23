@@ -1,4 +1,3 @@
-@import "../../style/borders.css";
 .titleBadge {
   position: absolute;
   z-index: 500;
@@ -8,7 +7,7 @@
   height: 20%;
   width: 100%;
   border-width: var(--border-width) 0px var(--border-width) 0px;
-  border-color: black;
+  border-color: var(--border-color);
   border-style: solid;
 }
 .titleBadgeEscape {
@@ -37,7 +36,7 @@
   cursor: initial;
 }
 .button:hover {
-  border-color: black;
+  border-color: var(--border-color);
 }
 .button:disabled:hover {
   border-color: transparent;

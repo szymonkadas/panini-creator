@@ -1,17 +1,34 @@
+import { breadVariants } from "../data/bread";
+import { cheeseVariants } from "../data/cheese";
+import { dressingVariants } from "../data/dressing";
+import { meatVariants } from "../data/meat";
+import { vegetableVariant } from "../data/vegetable";
 import styles from "./PaniniCreator.module.css";
 import Form from "./paniniCreator/Form";
+import CheckboxButtonSection from "./paniniCreator/formSections/CheckboxButtonSection";
+import SelectSection from "./paniniCreator/formSections/SelectSection";
+import SwipeSection from "./paniniCreator/formSections/SwipeSection";
 export default function PaniniCreator() {
   return (
-    <div className={styles.paniniCreator}>
-      <div className={styles.formInterface}>
+    <main className={styles.paniniCreator}>
+      <div className={styles.formsInterface}>
         <h2 className={styles.formsLabel}>Panini Creator</h2>
-        {/* <NavLink to="/panini_creator:"> */}
-        <div className={styles.buttonWrapper}>
-          <button className={styles.button}>Randomize Panini</button>
-        </div>
-        {/* </NavLink> */}
+        <button type="button" className={styles.button}>
+          <img className={styles.diceIcon} src="/src/images/dices.svg" alt="dices icon"></img>
+          Randomize Panini
+        </button>
       </div>
-      <Form></Form>
-    </div>
+      <Form title="Configure Base">
+        <article className={styles.formSections}>
+          <SwipeSection removable={false} title="bread" options={breadVariants}>
+            <img src="/src/images/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img>
+          </SwipeSection>
+          <SelectSection removable={true} title="cheese" options={cheeseVariants}></SelectSection>
+          <SelectSection removable={true} title="meat" options={meatVariants}></SelectSection>
+          <SwipeSection removable={true} title="dressing" options={dressingVariants}></SwipeSection>
+          <CheckboxButtonSection removable={true} title="vegetables" options={vegetableVariant}></CheckboxButtonSection>
+        </article>
+      </Form>
+    </main>
   );
 }

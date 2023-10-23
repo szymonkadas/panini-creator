@@ -1,5 +1,3 @@
-@import "../../style/borders.css";
-
 .rowCircle {
   height: 106.5dvh;
   width: 106.5dvh;
@@ -14,7 +12,7 @@
   top: 50%;
   left: 50%;
   border-radius: 100%;
-  border: var(--border-width) solid black;
+  border: var(--border-width) solid var(--border-color);
   position: absolute;
   overflow: hidden;
   transition: 4s cubic-bezier(0.75, 0.03, 0.58, 1);
