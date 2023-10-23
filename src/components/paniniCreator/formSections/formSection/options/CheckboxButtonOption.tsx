@@ -5,7 +5,6 @@ import { OptionProps } from "./OptionProps";
 export default function CheckboxButtonOption(props: OptionProps) {
   const [isChecked, setIsChecked] = useState(false);
   const handleUserCheckToggle = () => {
-    console.log(isChecked);
     setIsChecked((prev) => !prev);
   };
   const handleCheckboxChange = () => {

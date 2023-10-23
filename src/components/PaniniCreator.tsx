@@ -41,7 +41,7 @@ export default function PaniniCreator() {
         <article className={styles.formSections}>
           <SelectSection removable={true} title="Egg" options={eggVariants}></SelectSection>
           <CheckboxSection removable={false} title="Egg" options={spreadVariant}></CheckboxSection>
-          <RadioSection removable={false} title="Serving" options={servingVariant}></RadioSection>
+          <RadioSection removable={false} title="Serving" options={servingVariant} name={"serving"}></RadioSection>
           <CheckboxSection removable={false} title="Topping" options={toppingVariant}></CheckboxSection>
         </article>
       </Form>

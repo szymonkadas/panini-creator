@@ -9,7 +9,7 @@
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-template-areas: "switch add_remove";
-  gap: 5px;
+  column-gap: 5px;
   align-items: center;
 }
 

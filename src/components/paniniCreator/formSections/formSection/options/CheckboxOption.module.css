@@ -1,27 +1,24 @@
-.radioOptionLabel {
+.checkboxLabel {
   display: flex;
   justify-content: right;
   gap: var(--primary-spacing);
   text-transform: uppercase;
 }
-.radioOption {
+.checkboxOption {
   width: 0px;
   height: 0px;
   opacity: 0;
   position: absolute;
 }
-.radioButton {
+.checkboxButton {
   height: 15px;
   width: 15px;
   border: var(--border-width) solid var(--border-color);
   background-color: transparent;
-  border-radius: 50%;
 }
-
 .checked {
   position: relative;
 }
-
 .checked::after {
   position: absolute;
   width: 7px;
@@ -31,5 +28,4 @@
   content: "";
   display: block;
   background-color: black;
-  border-radius: 50%;
 }
