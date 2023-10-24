@@ -7,7 +7,11 @@ type RemovalsProps = {
 
 export default function Removals(props: RemovalsProps) {
   return (
-    <div className={styles.removalsWrapper}>
+    <div
+      className={`${styles.removalsWrapper} ${
+        props.isActive ? styles.removalsWrapperActive : styles.removalsWrapperInactive
+      }`}
+    >
       <div className={styles.removal}>
         <label className={styles.switch}>
           switch addons

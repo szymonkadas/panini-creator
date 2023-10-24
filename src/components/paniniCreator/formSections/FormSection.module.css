@@ -3,14 +3,25 @@
   display: grid;
   grid-template-columns: 20fr 10fr 70fr;
   grid-template-areas: "title removal option";
+  grid-template-rows: auto;
   background-color: white;
   padding: var(--primary-spacing) 0;
 }
 
-.formSectionTitle {
+.formSectionTitleWrapper {
   grid-area: title;
+  display: grid;
+  grid-template-rows: clamp(27px, 100%, 35px) 1fr;
+}
+
+.formSectionTitle {
+  display: flex;
   font-family: var(--primary-font-family);
   font-size: var(--h4-size);
+  height: max-content;
+  align-content: center;
+  align-self: center;
+  text-transform: capitalize;
 }
 
 .optionsWrapper {
@@ -28,10 +39,17 @@
   gap: 8px;
 }
 
+.swipeOptionPartingWrapper {
+  justify-self: right;
+  width: var(--option-width);
+  height: calc(var(--border-width) * 2);
+}
+
 .swipeOptionParting {
   width: 60px;
-  height: calc(var(--border-width) * 2);
+  height: 100%;
   background-color: black;
-  justify-self: center;
+  justify-self: right;
   border: none;
+  margin: auto;
 }
