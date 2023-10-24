@@ -15,7 +15,7 @@
   border: var(--border-width) solid var(--border-color);
   position: absolute;
   overflow: hidden;
-  transition: 4s cubic-bezier(0.75, 0.03, 0.58, 1);
+  transition: 4s var(--transition-function);
 }
 
 /* ułożenie kolumny kół */

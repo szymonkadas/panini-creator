@@ -53,3 +53,17 @@
   border: none;
   margin: auto;
 }
+
+.textOptionWrapper {
+  justify-content: initial;
+}
+
+.textOption {
+  display: flex;
+  justify-self: center;
+  padding: calc(var(--primary-spacing) / 2) var(--form-section-content-spacing);
+  font: var(--secondary-font);
+  width: 100%;
+  border: var(--border-width) solid var(--border-color);
+  outline: transparent;
+}

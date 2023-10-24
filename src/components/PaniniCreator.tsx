@@ -14,7 +14,7 @@ import CheckboxSection from "./paniniCreator/formSections/CheckboxSection";
 import RadioSection from "./paniniCreator/formSections/RadioSection";
 import SelectSection from "./paniniCreator/formSections/SelectSection";
 import SwipeSection from "./paniniCreator/formSections/SwipeSection";
-// import TextSection from "./paniniCreator/formSections/TextSection";
+import TextSection from "./paniniCreator/formSections/TextSection";
 
 export default function PaniniCreator() {
   return (
@@ -45,15 +45,20 @@ export default function PaniniCreator() {
           <CheckboxSection removable={false} title="Topping" options={toppingVariant}></CheckboxSection>
         </article>
       </Form>
-      {/* <Form title="Finalize Order">
+      <Form title="Finalize Order">
         <article className={styles.formSections}>
           <TextSection title="Name panini"></TextSection>
           <CheckboxSection removable={false} title="Cutlery" options={["Add to order"]}></CheckboxSection>
           <CheckboxSection removable={false} title="Name panini" options={["Add to order"]}></CheckboxSection>
         </article>
-        <input type="submit" className={styles.formsSubmit} value={"place order"} />
-        <button className={styles.formsReset}>start again</button>
-      </Form> */}
+        <div className={styles.formsSubmitInterfaceWrapper}>
+          <label className={styles.formsSubmitLabel}>
+            place order or start again
+            <input type="submit" className={styles.formsSubmit} value={"place order"} />
+          </label>
+          <button className={styles.formsReset}>start again</button>
+        </div>
+      </Form>
     </main>
   );
 }
