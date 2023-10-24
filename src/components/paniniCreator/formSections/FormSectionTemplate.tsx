@@ -11,7 +11,9 @@ export default function FormSectionTemplate(props: FormSectionTemplateProps) {
   const title = `${props.title[0].toUpperCase()}${props.title.slice(1)}`;
   return (
     <div className={styles.formSection}>
-      <h4 className={styles.formSectionTitle}>{title}</h4>
+      <div className={styles.formSectionTitleWrapper}>
+        <h4 className={styles.formSectionTitle}>{title}</h4>
+      </div>
       {props.children}
     </div>
   );
