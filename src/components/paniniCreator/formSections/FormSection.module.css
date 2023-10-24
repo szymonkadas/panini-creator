@@ -21,6 +21,7 @@
   height: max-content;
   align-content: center;
   align-self: center;
+  text-transform: capitalize;
 }
 
 .optionsWrapper {
