@@ -27,6 +27,7 @@
   --primary-spacing: 20px;
   --secondary-spacing: 14px;
   --form-section-content-spacing: 15px;
+  --transition-function: cubic-bezier(0.75, 0.03, 0.58, 1);
 }
 
 body {

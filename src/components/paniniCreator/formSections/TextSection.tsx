@@ -1,5 +1,6 @@
 import styles from "./FormSection.module.css";
 import { FormSectionProps } from "./FormSectionProps";
+import FormSectionTemplate from "./FormSectionTemplate";
 
 interface TextSectionProps extends Omit<FormSectionProps, "options" | "removable"> {
   removable?: never;
@@ -9,11 +10,10 @@ export default function TextSection(props: TextSectionProps) {
   // logic to be implemented
 
   return (
-    <label className={styles.formSection}>
-      <h4 className={styles.formSectionTitle}>{props.title}</h4>
-      <div className={styles.optionsWrapper}>
-        <input type="text" value={"Full Grain"} className={styles.textOption} readOnly />
+    <FormSectionTemplate title={props.title}>
+      <div className={`${styles.optionsWrapper} ${styles.textOptionWrapper}`}>
+        <input type="text" placeholder="eg. Club Panini" className={styles.textOption} />
       </div>
-    </label>
+    </FormSectionTemplate>
   );
 }

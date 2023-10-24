@@ -3,6 +3,7 @@
   justify-content: right;
   gap: var(--primary-spacing);
   text-transform: uppercase;
+  align-items: center;
 }
 .checkboxOption {
   width: 0px;
