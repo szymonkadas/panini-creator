@@ -7,17 +7,31 @@ type TitleBadgeProps = {
 };
 
 export default function TitleBadge(props: TitleBadgeProps) {
-  const { isPaniniOrdered } = useOutletContext() as LayoutContext;
+  const { userStep, setOrderData } = useOutletContext() as LayoutContext;
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`${isPaniniOrdered ? "/" : "/panini_creator"}`);
+    let destination = "/";
+    switch (userStep) {
+      case 0:
+        destination = "/form_transition/without_order";
+        break;
+      case 1:
+        destination = "/form_transition/without_order";
+        break;
+      case 2:
+        destination = "/form_transition/with_order";
+      case 3:
+        destination = "/form_transition/reset";
+        break;
+    }
+    navigate(destination);
   };
 
   return (
     <div className={`${styles.titleBadge} ${props.shouldTransition && styles.titleBadgeEscape}`}>
-      <h1 className={styles.textContent}>Panini {isPaniniOrdered ? "ordered" : "Creator"}</h1>
+      <h1 className={styles.textContent}>Panini {userStep < 2 ? "Creator" : "ordered"}</h1>
       <button className={styles.button} disabled={props.shouldTransition} onClick={handleClick}>
-        {isPaniniOrdered ? "start again" : "begin"}
+        {userStep === 0 ? "begin" : "start again"}
       </button>
     </div>
   );

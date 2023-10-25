@@ -1,3 +1,11 @@
+import { NavLink, useOutletContext } from "react-router-dom";
+import Form from "../components/paniniCreator/Form";
+import CheckboxButtonSection from "../components/paniniCreator/formSections/CheckboxButtonSection";
+import CheckboxSection from "../components/paniniCreator/formSections/CheckboxSection";
+import RadioSection from "../components/paniniCreator/formSections/RadioSection";
+import SelectSection from "../components/paniniCreator/formSections/SelectSection";
+import SwipeSection from "../components/paniniCreator/formSections/SwipeSection";
+import TextSection from "../components/paniniCreator/formSections/TextSection";
 import { breadVariants } from "../data/bread";
 import { cheeseVariants } from "../data/cheese";
 import { dressingVariants } from "../data/dressing";
@@ -7,16 +15,18 @@ import { servingVariant } from "../data/serving";
 import { spreadVariant } from "../data/spread";
 import { toppingVariant } from "../data/topping";
 import { vegetableVariant } from "../data/vegetable";
+import { LayoutContext } from "./Layout";
 import styles from "./PaniniCreator.module.css";
-import Form from "./paniniCreator/Form";
-import CheckboxButtonSection from "./paniniCreator/formSections/CheckboxButtonSection";
-import CheckboxSection from "./paniniCreator/formSections/CheckboxSection";
-import RadioSection from "./paniniCreator/formSections/RadioSection";
-import SelectSection from "./paniniCreator/formSections/SelectSection";
-import SwipeSection from "./paniniCreator/formSections/SwipeSection";
-import TextSection from "./paniniCreator/formSections/TextSection";
 
 export default function PaniniCreator() {
+  const { setOrderData, updateUserStep } = useOutletContext() as LayoutContext;
+  const resetOrderData = () => {
+    setOrderData({});
+  };
+  // for now this will do.
+  const setOrderDataToTrue = () => {
+    setOrderData({ order: true });
+  };
   return (
     <main className={styles.paniniCreator}>
       <div className={styles.formsInterface}>
@@ -52,11 +62,15 @@ export default function PaniniCreator() {
           <CheckboxSection removable={false} title="Name panini" options={["Add to order"]}></CheckboxSection>
         </article>
         <div className={styles.formsSubmitInterfaceWrapper}>
-          <label className={styles.formsSubmitLabel}>
-            place order or start again
-            <input type="submit" className={styles.formsSubmit} value={"place order"} />
-          </label>
-          <button className={styles.formsReset}>start again</button>
+          <NavLink to="/form_transition/with_order" onClick={setOrderDataToTrue}>
+            <label className={styles.formsSubmitLabel}>
+              place order or start again
+              <input type="submit" className={styles.formsSubmit} value={"place order"} />
+            </label>
+          </NavLink>
+          <NavLink to="/panini_creator" onClick={resetOrderData} className={styles.formsResetNavLink}>
+            <button className={styles.formsReset}>start again</button>
+          </NavLink>
         </div>
       </Form>
     </main>
