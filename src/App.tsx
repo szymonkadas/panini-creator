@@ -35,7 +35,7 @@ function App() {
         path="/"
         element={<Layout userStep={userStep} updateUserStep={handleUserStepUpdate} setOrderData={handleSetOrderData} />}
       >
-        <Route index element={<SplashScreen shouldTransition={false} />} />
+        <Route index element={<SplashScreen shouldTransition={false} defaultPos={true} />} />
         <Route path="/form_transition/:action" element={<FormTransition></FormTransition>}></Route>
         <Route path="/panini_creator" element={<PaniniCreator />}></Route>
       </Route>

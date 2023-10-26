@@ -5,6 +5,7 @@ import TitleBadge from "./splashScreen/TitleBadge";
 
 type SplashScreenProps = {
   shouldTransition: boolean;
+  defaultPos: boolean;
 };
 
 export default function SplashScreen(props: SplashScreenProps) {
@@ -14,25 +15,27 @@ export default function SplashScreen(props: SplashScreenProps) {
     const handleTransition = (transition: boolean) => {
       transition && isTransitionReady !== transition && setIsTransitionReady(transition);
     };
-    const transitionTimeoutId = setTimeout(() => handleTransition(props.shouldTransition), 0);
+    const transitionTimeoutId = setTimeout(() => handleTransition(props.shouldTransition), 1);
     return () => {
       clearTimeout(transitionTimeoutId);
     };
   }, [props.shouldTransition]);
+  const defaultStyle = props.defaultPos ? styles.splashScreenDefault : styles.splashScreenTransformed;
+  const transitionStyle = props.defaultPos ? styles.toTransformedTransition : styles.toDefaultTransition;
   return (
-    <div className={`${styles.splashScreen} ${isTransitionReady && styles.splashScreenEscape}`}>
+    <div className={`${defaultStyle} ${isTransitionReady ? transitionStyle : ""}`}>
       <div className={`circlesRow`}>
-        <Circle columnLayout={false} shouldTransition={isTransitionReady}></Circle>
-        <Circle columnLayout={false} shouldTransition={isTransitionReady}></Circle>
-        <Circle columnLayout={false} shouldTransition={isTransitionReady}>
+        <Circle columnLayout={false} shouldTransition={isTransitionReady} defaultPos={props.defaultPos} />
+        <Circle columnLayout={false} shouldTransition={isTransitionReady} defaultPos={props.defaultPos} />
+        <Circle columnLayout={false} shouldTransition={isTransitionReady} defaultPos={props.defaultPos}>
           <TitleBadge shouldTransition={isTransitionReady}></TitleBadge>
         </Circle>
-        <Circle columnLayout={false} shouldTransition={isTransitionReady}></Circle>
-        <Circle columnLayout={false} shouldTransition={isTransitionReady}></Circle>
+        <Circle columnLayout={false} shouldTransition={isTransitionReady} defaultPos={props.defaultPos} />
+        <Circle columnLayout={false} shouldTransition={isTransitionReady} defaultPos={props.defaultPos} />
       </div>
       <div className="circlesColumn">
-        <Circle columnLayout={true} shouldTransition={isTransitionReady}></Circle>
-        <Circle columnLayout={true} shouldTransition={isTransitionReady}></Circle>
+        <Circle columnLayout={true} shouldTransition={isTransitionReady} defaultPos={props.defaultPos} />
+        <Circle columnLayout={true} shouldTransition={isTransitionReady} defaultPos={props.defaultPos} />
       </div>
     </div>
   );

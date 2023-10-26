@@ -9,34 +9,25 @@ export default function FormTransition() {
   const { userStep, updateUserStep, setOrderData } = useOutletContext() as LayoutContext;
   // Because this page is used only for animation purposes, on each visit after transition is done, navigate user to proper page.
   const navigate = useNavigate();
+  const defaultPos = action === "with_order" ? false : true;
+  const destination = action === "with_order" ? "/" : "/panini_creator";
+  console.log(action, defaultPos);
   useEffect(() => {
     // console.log(userStep);
-    setTimeout(() => {
-      let destination = "/";
-      switch (action) {
-        case "without_order":
-          destination = "/panini_creator";
-          break;
-        case "with_order":
-          destination = "/";
-          break;
-        case "reset":
-          destination = "/panini_creator";
-          setOrderData({});
-          break;
-        default:
-          setOrderData({});
-          destination = "/";
-          break;
+    const timeoutId = setTimeout(() => {
+      if (action === "reset") {
+        setOrderData({});
       }
       updateUserStep();
-      //   console.log(userStep);
       navigate(destination);
     }, 4000);
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, []);
   return (
     <>
-      <SplashScreen shouldTransition={true}></SplashScreen>
+      <SplashScreen shouldTransition={true} defaultPos={defaultPos}></SplashScreen>
       <PaniniCreator></PaniniCreator>
     </>
   );

@@ -1,4 +1,5 @@
-.splashScreen {
+.splashScreenDefault,
+.splashScreenTransformed {
   height: 100dvh;
   width: 100dvw;
   overflow: hidden;
@@ -6,10 +7,19 @@
   left: 0;
   position: fixed;
   transition: opacity 4s var(--transition-function);
-  opacity: 1;
   background-color: white;
   z-index: 10;
 }
-.splashScreenEscape {
+.splashScreenDefault {
+  opacity: 1;
+}
+.splashScreenTransformed {
   opacity: 0;
+}
+.toDefaultTransition {
+  opacity: 1;
+}
+.toTransformedTransition {
+  opacity: 0;
+  transition: opacity 4s var(--transition-function);
 }
