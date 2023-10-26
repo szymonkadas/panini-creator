@@ -19,7 +19,7 @@ import { LayoutContext } from "./Layout";
 import styles from "./PaniniCreator.module.css";
 
 export default function PaniniCreator() {
-  const { setOrderData, updateUserStep } = useOutletContext() as LayoutContext;
+  const { setOrderData } = useOutletContext() as LayoutContext;
   const resetOrderData = () => {
     setOrderData({});
   };
@@ -62,7 +62,7 @@ export default function PaniniCreator() {
           <CheckboxSection removable={false} title="Name panini" options={["Add to order"]}></CheckboxSection>
         </article>
         <div className={styles.formsSubmitInterfaceWrapper}>
-          <NavLink to="/form_transition/with_order" onClick={setOrderDataToTrue}>
+          <NavLink to="/success" onClick={setOrderDataToTrue}>
             <label className={styles.formsSubmitLabel}>
               place order or start again
               <input type="submit" className={styles.formsSubmit} value={"place order"} />
