@@ -9,7 +9,6 @@ type CircleProps = {
 
 export default function Circle(props: CircleProps) {
   // const defaultStyle = props.defaultPos ? styles.default : styles.transformed;
-  const circleLayout = props.columnLayout ? styles.columnCircle : styles.rowCircle;
   let defaultStyle = "";
   if (props.columnLayout) {
     defaultStyle = props.defaultPos ? styles.columnCircleDefault : styles.columnCircleTransformed;
@@ -26,5 +25,5 @@ export default function Circle(props: CircleProps) {
       transitionStyle = props.defaultPos ? styles.rowCircleToTransformed : styles.rowCircleToDefault;
     }
   }
-  return <div className={`${circleLayout} ${defaultStyle} ${transitionStyle}`}>{props.children}</div>;
+  return <div className={`${defaultStyle} ${transitionStyle}`}>{props.children}</div>;
 }

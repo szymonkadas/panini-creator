@@ -7,6 +7,7 @@ import TitleBadge from "./splashScreen/TitleBadge";
 type SplashScreenProps = {
   shouldTransition: boolean;
   defaultPos: boolean;
+  navTo: string;
   title?: string;
   actionDesc?: string;
 };
@@ -25,7 +26,7 @@ export default function SplashScreen(props: SplashScreenProps) {
     const handleTransition = (transition: boolean) => {
       transition && isTransitionReady !== transition && setIsTransitionReady(transition);
     };
-    const transitionTimeoutId = setTimeout(() => handleTransition(props.shouldTransition), 1);
+    const transitionTimeoutId = setTimeout(() => handleTransition(props.shouldTransition), 0);
     return () => {
       clearTimeout(transitionTimeoutId);
     };
@@ -35,19 +36,22 @@ export default function SplashScreen(props: SplashScreenProps) {
   useEffect(() => {
     if (isTransitionReady) {
       if (isDefaultPositionOn) {
-        const displayToggleTimeoutId = setTimeout(() => navigate("/panini_creator"), 4000);
-        return () => {
-          clearTimeout(displayToggleTimeoutId);
-        };
+        const timeoutId = setTimeout(() => navigate(props.navTo), 4000);
+        return () => clearTimeout(timeoutId);
       } else {
-        setIsTransitionReady(false);
-        setIsDefaultPositionOn(true);
+        const timeoutId = setTimeout(() => {
+          setIsTransitionReady(false);
+          setIsDefaultPositionOn(true);
+        }, 4000);
+        return () => clearTimeout(timeoutId);
       }
     }
   }, [isTransitionReady]);
 
   const defaultStyle = isDefaultPositionOn ? styles.splashScreenDefault : styles.splashScreenTransformed;
   const transitionStyle = isDefaultPositionOn ? styles.toTransformedTransition : styles.toDefaultTransition;
+
+  console.log(isTransitionReady);
   return (
     <div className={`${defaultStyle} ${isTransitionReady ? transitionStyle : ""}`}>
       <div className={`circlesRow`}>
