@@ -1,18 +1,15 @@
 import { Outlet } from "react-router-dom";
+import { SetOrderData } from "../App";
 import styles from "./Layout.module.css";
 
-type LayoutProps = {
-  isPaniniOrdered: boolean;
-};
-
 export type LayoutContext = {
-  isPaniniOrdered: boolean;
+  setOrderData: SetOrderData;
 };
 
-export default function Layout(props: LayoutProps) {
+export default function Layout(props: LayoutContext) {
   return (
     <div className={styles.siteWrapper}>
-      <Outlet context={{ isPaniniOrdered: props.isPaniniOrdered }}></Outlet>
+      <Outlet context={{ ...props }}></Outlet>
     </div>
   );
 }
