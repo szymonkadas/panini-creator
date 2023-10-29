@@ -18,16 +18,23 @@ function App() {
         <Route
           index
           element={
-            <SplashScreenLayout shouldTransition={false} defaultPos={true} title="Panini Creator" actionDesc="begin" />
+            <SplashScreenLayout
+              shouldTransition={false}
+              defaultPos={true}
+              navTo="/panini_creator"
+              title="Panini Creator"
+              actionDesc="begin"
+            />
           }
         />
-        <Route path="/panini_creator" element={<PaniniCreator />}></Route>
+        <Route path="/panini_creator" element={<PaniniCreator navTo="/success" />}></Route>
         <Route
           path="/success"
           element={
             <SplashScreenLayout
               shouldTransition={true}
               defaultPos={false}
+              navTo="/panini_creator"
               title="Panini ordered"
               actionDesc="start again"
             ></SplashScreenLayout>
