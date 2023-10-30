@@ -11,12 +11,11 @@ interface RadioOptionProps extends OptionProps {
 }
 
 export default function RadioOption(props: RadioOptionProps) {
-  const { control, setValue } = useContext(formContext);
   // for styling purposes
   const isChecked = useMemo(() => {
     return props.checkedIndex === props.index;
   }, [props.checkedIndex]);
-
+  const { control, setValue } = useContext(formContext);
   const handleRadioClick = () => {
     props.setCheckedRadioIndex(props.index);
     setValue(props.name, props.option);

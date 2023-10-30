@@ -1,17 +1,18 @@
 import { useContext, useState } from "react";
+import { Controller } from "react-hook-form";
 import { formContext } from "../../../../../pages/PaniniCreator";
 import styles from "./CheckboxButtonOption.module.css";
 import { CheckboxOptionProps } from "./CheckboxOption";
 
 export default function CheckboxButtonOption(props: CheckboxOptionProps) {
-  const { register } = useContext(formContext);
   const [isChecked, setIsChecked] = useState(false);
+  const { setValue, control } = useContext(formContext);
   const handleUserCheckToggle = () => {
     setIsChecked((prev) => !prev);
-  };
-  const handleCheckboxChange = () => {
-    // since i don't know the way i'll need to work with forms later on, this function is here solely for removing console.error purpose.
-    let o = 2 + 2;
+    const updatedItems = isChecked
+      ? props.checkedItems.filter((item) => item !== props.option)
+      : [...props.checkedItems, props.option];
+    setValue(props.name, updatedItems);
   };
   const textContent =
     props.option.length > 0 ? `${props.option[0].toUpperCase()}${props.option.slice(1).toLowerCase()}` : ``;
@@ -26,16 +27,19 @@ export default function CheckboxButtonOption(props: CheckboxOptionProps) {
       >
         {textContent}
       </button>
-      <input
-        key={`checkboxButtonInput${props.option}${props.index}`}
-        className={styles.checkboxButtonOption}
-        type="checkbox"
-        {...register(props.name, {
-          onChange: handleCheckboxChange,
-          value: props.option,
-        })}
-        checked={isChecked}
-      />
+      <Controller
+        name={props.name}
+        control={control}
+        defaultValue={[]}
+        render={({ field }) => (
+          <input
+            key={`checkboxButtonInput${props.option}${props.index}`}
+            className={styles.checkboxButtonOption}
+            type="checkbox"
+            {...field}
+          />
+        )}
+      ></Controller>
     </label>
   );
 }

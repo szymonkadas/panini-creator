@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { Control, FieldValues, UseFormRegister, useForm } from "react-hook-form";
-import { UseFormSetValue } from "react-hook-form/dist/types";
+import { UseFormSetValue, UseFormWatch } from "react-hook-form/dist/types";
 import { NavLink, useOutletContext } from "react-router-dom";
 import Form from "../components/paniniCreator/Form";
 import CheckboxButtonSection from "../components/paniniCreator/formSections/CheckboxButtonSection";
@@ -29,12 +29,13 @@ export type FormContext = {
   control: Control<FieldValues, any>;
   register: UseFormRegister<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
+  watch: UseFormWatch<FieldValues>;
 };
 
 export const formContext = createContext({} as FormContext);
 
 export default function PaniniCreator(props: PaniniCreatorProps) {
-  const { control, register, handleSubmit, setValue } = useForm();
+  const { control, register, handleSubmit, setValue, watch } = useForm();
   const { setOrderData } = useOutletContext() as LayoutContext;
   const resetOrderData = () => {
     setOrderData({});
@@ -50,7 +51,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
     return;
   };
   return (
-    <formContext.Provider value={{ control, register, setValue }}>
+    <formContext.Provider value={{ control, register, setValue, watch }}>
       <form className={styles.paniniCreator} onSubmit={handleSubmit(handleSave)}>
         <div className={styles.formsInterface}>
           <h2 className={styles.formsLabel}>Panini Creator</h2>
