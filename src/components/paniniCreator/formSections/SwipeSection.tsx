@@ -20,13 +20,21 @@ export default function SwipeSection(props: SwipeSectionProps) {
     <FormSectionTemplate title={props.title}>
       {props.removable && <Removals isActive={areRemovalsActive} toggleActive={handleActiveToggle} />}
       <div className={styles.optionsWrapper}>
-        {showElements && <SwipeElement options={props.options}>{props.children}</SwipeElement>}
+        {showElements && (
+          <SwipeElement name={props.name} options={props.options}>
+            {props.children}
+          </SwipeElement>
+        )}
         {showElements && (
           <div className={styles.swipeOptionPartingWrapper}>
             <hr className={styles.swipeOptionParting}></hr>
           </div>
         )}
-        {showElements && <SwipeElement options={props.options}>{props.children}</SwipeElement>}
+        {showElements && (
+          <SwipeElement name={props.name} options={props.options}>
+            {props.children}
+          </SwipeElement>
+        )}
       </div>
     </FormSectionTemplate>
   );

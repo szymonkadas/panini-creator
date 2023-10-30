@@ -7,9 +7,9 @@ export type FormProps = {
 
 export default function Form(props: FormProps) {
   return (
-    <form className={styles.form}>
+    <article className={styles.form}>
       <h3 className={styles.formTitle}>{props.title}</h3>
       {props.children}
-    </form>
+    </article>
   );
 }

@@ -13,7 +13,7 @@ export default function CheckboxSection(props: CheckboxSectionProps) {
   return (
     <FormSectionTemplate title={props.title}>
       <div className={styles.optionsWrapper}>
-        <SpecialOptions type="checkbox" options={props.options} />
+        <SpecialOptions type="checkbox" options={props.options} name={props.name} />
       </div>
     </FormSectionTemplate>
   );

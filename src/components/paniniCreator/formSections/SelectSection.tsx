@@ -26,8 +26,8 @@ export default function SelectSection(props: FormSectionProps) {
     <FormSectionTemplate title={props.title}>
       {props.removable && <Removals isActive={areRemovalsActive} toggleActive={handleActiveToggle} />}
       <div className={styles.optionsWrapper}>
-        {showElements && <SelectElement options={props.options} usedOption={0} />}
-        {showElements && <SelectElement options={props.options} usedOption={1} />}
+        {showElements && <SelectElement name={`${props.name}1`} options={props.options} usedOption={0} />}
+        {showElements && <SelectElement name={`${props.name}2`} options={props.options} usedOption={1} />}
       </div>
     </FormSectionTemplate>
   );

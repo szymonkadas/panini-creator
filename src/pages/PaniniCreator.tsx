@@ -1,3 +1,6 @@
+import { createContext } from "react";
+import { Control, FieldValues, UseFormRegister, useForm } from "react-hook-form";
+import { UseFormSetValue } from "react-hook-form/dist/types";
 import { NavLink, useOutletContext } from "react-router-dom";
 import Form from "../components/paniniCreator/Form";
 import CheckboxButtonSection from "../components/paniniCreator/formSections/CheckboxButtonSection";
@@ -22,7 +25,16 @@ type PaniniCreatorProps = {
   navTo: string;
 };
 
+export type FormContext = {
+  control: Control<FieldValues, any>;
+  register: UseFormRegister<FieldValues>;
+  setValue: UseFormSetValue<FieldValues>;
+};
+
+export const formContext = createContext({} as FormContext);
+
 export default function PaniniCreator(props: PaniniCreatorProps) {
+  const { control, register, handleSubmit, setValue } = useForm();
   const { setOrderData } = useOutletContext() as LayoutContext;
   const resetOrderData = () => {
     setOrderData({});
@@ -31,52 +43,83 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
   const setOrderDataToTrue = () => {
     setOrderData({ order: true });
   };
+
+  const handleSave = (formValues: any) => {
+    console.log("D:");
+    console.log(formValues);
+    return;
+  };
   return (
-    <main className={styles.paniniCreator}>
-      <div className={styles.formsInterface}>
-        <h2 className={styles.formsLabel}>Panini Creator</h2>
-        <button type="button" className={styles.button}>
-          <img className={styles.diceIcon} src="/src/images/dices.svg" alt="dices icon"></img>
-          Randomize Panini
-        </button>
-      </div>
-      <Form title="Configure Base">
-        <article className={styles.formSections}>
-          <SwipeSection removable={false} title="bread" options={breadVariants}>
-            <img src="/src/images/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img>
-          </SwipeSection>
-          <SelectSection removable={true} title="cheese" options={cheeseVariants}></SelectSection>
-          <SelectSection removable={true} title="meat" options={meatVariants}></SelectSection>
-          <SwipeSection removable={true} title="dressing" options={dressingVariants}></SwipeSection>
-          <CheckboxButtonSection removable={true} title="vegetables" options={vegetableVariant}></CheckboxButtonSection>
-        </article>
-      </Form>
-      <Form title="Configure Extras">
-        <article className={styles.formSections}>
-          <SelectSection removable={true} title="Egg" options={eggVariants}></SelectSection>
-          <CheckboxSection removable={false} title="Egg" options={spreadVariant}></CheckboxSection>
-          <RadioSection removable={false} title="Serving" options={servingVariant} name={"serving"}></RadioSection>
-          <CheckboxSection removable={false} title="Topping" options={toppingVariant}></CheckboxSection>
-        </article>
-      </Form>
-      <Form title="Finalize Order">
-        <article className={styles.formSections}>
-          <TextSection title="Name panini"></TextSection>
-          <CheckboxSection removable={false} title="Cutlery" options={["Add to order"]}></CheckboxSection>
-          <CheckboxSection removable={false} title="Name panini" options={["Add to order"]}></CheckboxSection>
-        </article>
-        <div className={styles.formsSubmitInterfaceWrapper}>
-          <NavLink to={props.navTo} onClick={setOrderDataToTrue}>
-            <label className={styles.formsSubmitLabel}>
-              place order or start again
-              <input type="submit" className={styles.formsSubmit} value={"place order"} />
-            </label>
-          </NavLink>
-          <NavLink to="/panini_creator" onClick={resetOrderData} className={styles.formsResetNavLink}>
-            <button className={styles.formsReset}>start again</button>
-          </NavLink>
+    <formContext.Provider value={{ control, register, setValue }}>
+      <form className={styles.paniniCreator} onSubmit={handleSubmit(handleSave)}>
+        <div className={styles.formsInterface}>
+          <h2 className={styles.formsLabel}>Panini Creator</h2>
+          <button type="button" className={styles.button}>
+            <img className={styles.diceIcon} src="/src/images/dices.svg" alt="dices icon"></img>
+            Randomize Panini
+          </button>
         </div>
-      </Form>
-    </main>
+        <Form title="Configure Base">
+          <div className={styles.formSections}>
+            <SwipeSection removable={false} name="bread" title="bread" options={breadVariants}>
+              <img src="/src/images/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img>
+            </SwipeSection>
+            <SelectSection removable={true} name="cheese" title="cheese" options={cheeseVariants}></SelectSection>
+            <SelectSection removable={true} name="meat" title="meat" options={meatVariants}></SelectSection>
+            <SwipeSection removable={true} name="dressing" title="dressing" options={dressingVariants}></SwipeSection>
+            <CheckboxButtonSection
+              removable={true}
+              name="vegetables"
+              title="vegetables"
+              options={vegetableVariant}
+            ></CheckboxButtonSection>
+          </div>
+        </Form>
+        <Form title="Configure Extras">
+          <div className={styles.formSections}>
+            <SelectSection removable={true} name="egg" title="egg" options={eggVariants}></SelectSection>
+            <CheckboxSection removable={false} name="spread" title="spread" options={spreadVariant}></CheckboxSection>
+            <RadioSection removable={false} name="serving" title="serving" options={servingVariant}></RadioSection>
+            <CheckboxSection
+              removable={false}
+              name="topping"
+              title="topping"
+              options={toppingVariant}
+            ></CheckboxSection>
+          </div>
+        </Form>
+        <Form title="Finalize Order">
+          <div className={styles.formSections}>
+            <TextSection name={"name_panini"} title="name panini"></TextSection>
+            <CheckboxSection
+              removable={false}
+              name="cutlery"
+              title="cutlery"
+              options={["Add to order"]}
+            ></CheckboxSection>
+            <CheckboxSection
+              removable={false}
+              name="napkins"
+              title="napkins"
+              options={["Add to order"]}
+            ></CheckboxSection>
+          </div>
+          <div className={styles.formsSubmitInterfaceWrapper}>
+            <NavLink to={props.navTo} onClick={setOrderDataToTrue}>
+              <label className={styles.formsSubmitLabel}>
+                place order or start again
+                <input type="submit" className={styles.formsSubmit} value={"place order"} />
+              </label>
+            </NavLink>
+            <NavLink to="/panini_creator" onClick={resetOrderData} className={styles.formsResetNavLink}>
+              <button type="submit" className={styles.formsReset}>
+                start again
+              </button>
+            </NavLink>
+            <input type="submit" value={"ehu"} />
+          </div>
+        </Form>
+      </form>
+    </formContext.Provider>
   );
 }

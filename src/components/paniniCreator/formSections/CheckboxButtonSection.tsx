@@ -8,7 +8,7 @@ export default function CheckboxButtonSection(props: FormSectionProps) {
   return (
     <FormSectionTemplate title={props.title}>
       <div className={`${styles.optionsWrapper} ${styles.checkboxButtonsWrapper}`}>
-        <SpecialOptions type="checkboxButton" options={props.options} />
+        <SpecialOptions type="checkboxButton" options={props.options} name={props.name} />
       </div>
     </FormSectionTemplate>
   );

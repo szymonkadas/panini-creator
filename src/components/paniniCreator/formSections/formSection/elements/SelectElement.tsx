@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { formContext } from "../../../../../pages/PaniniCreator";
 import SpecialOptions from "../SpecialOptions";
 import styles from "./SelectElement.module.css";
 
 // options: ((string | number)[] | undefined)[];
 type SelectElementProps = {
+  name: string;
   options: string[];
   usedOption: number;
 };
 
 export default function SelectElement(props: SelectElementProps) {
+  const { register } = useContext(formContext);
   const [isSelectActive, setIsSelectActive] = useState(false);
   const handleSelectClick = () => {
     setIsSelectActive((prev) => !prev);
@@ -19,8 +22,14 @@ export default function SelectElement(props: SelectElementProps) {
   return (
     <label className={styles.selectLabel}>
       Select an option:
-      <select className={styles.selectOptions} onBlur={handleBlur} onClick={handleSelectClick}>
-        <SpecialOptions type="select" options={props.options} />
+      <select
+        className={styles.selectOptions}
+        {...register(props.name, {
+          onBlur: handleBlur,
+          onChange: handleSelectClick,
+        })}
+      >
+        <SpecialOptions name={props.name} type="select" options={props.options} />
       </select>
       <img
         className={`${styles.selectArrow} ${isSelectActive && styles.selectArrowActive}`}

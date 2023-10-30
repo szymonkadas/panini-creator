@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { formContext } from "../../../../../pages/PaniniCreator";
 import styles from "./CheckboxOption.module.css";
 import { OptionProps } from "./OptionProps";
 
-export default function CheckboxOption(props: OptionProps) {
+export interface CheckboxOptionProps extends OptionProps {
+  name: string;
+}
+
+export default function CheckboxOption(props: CheckboxOptionProps) {
+  const { register } = useContext(formContext);
   const [isChecked, setIsChecked] = useState(false);
   const handleUserCheckToggle = () => {
     setIsChecked((prev) => !prev);
@@ -24,9 +30,11 @@ export default function CheckboxOption(props: OptionProps) {
         key={`checkboxInput${props.option}${props.index}`}
         className={styles.checkboxOption}
         type="checkbox"
-        value={props.option}
-        onChange={handleCheckboxChange}
-        checked
+        {...register(props.name, {
+          onChange: handleCheckboxChange,
+          value: props.option,
+        })}
+        checked={isChecked}
       />
     </label>
   );
