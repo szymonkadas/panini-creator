@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { NavLink, useOutletContext } from "react-router-dom";
-import Form from "../components/paniniCreator/Form";
+import FormCard from "../components/paniniCreator/FormCard";
 import CheckboxButtonSection from "../components/paniniCreator/formSections/CheckboxButtonSection";
 import CheckboxSection from "../components/paniniCreator/formSections/CheckboxSection";
 import RadioSection from "../components/paniniCreator/formSections/RadioSection";
@@ -50,7 +50,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
             Randomize Panini
           </button>
         </div>
-        <Form title="Configure Base">
+        <FormCard title="Configure Base">
           <div className={styles.formSections}>
             <SwipeSection removable={false} name="bread" title="bread" options={breadVariants}>
               <img src="/src/images/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img>
@@ -65,8 +65,8 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
               options={vegetableVariant}
             ></CheckboxButtonSection>
           </div>
-        </Form>
-        <Form title="Configure Extras">
+        </FormCard>
+        <FormCard title="Configure Extras">
           <div className={styles.formSections}>
             <SelectSection removable={true} name="egg" title="egg" options={eggVariants}></SelectSection>
             <CheckboxSection removable={false} name="spread" title="spread" options={spreadVariant}></CheckboxSection>
@@ -78,8 +78,8 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
               options={toppingVariant}
             ></CheckboxSection>
           </div>
-        </Form>
-        <Form title="Finalize Order">
+        </FormCard>
+        <FormCard title="Finalize Order">
           <div className={styles.formSections}>
             <TextSection name={"name_panini"} title="name panini"></TextSection>
             <CheckboxSection
@@ -109,7 +109,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
             </NavLink>
             <input type="submit" value={"ehu"} />
           </div>
-        </Form>
+        </FormCard>
       </form>
     </FormProvider>
   );

@@ -5,7 +5,7 @@ export type FormProps = {
   children?: React.ReactNode;
 };
 
-export default function Form(props: FormProps) {
+export default function FormCard(props: FormProps) {
   return (
     <article className={styles.form}>
       <h3 className={styles.formTitle}>{props.title}</h3>
