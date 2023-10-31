@@ -21,7 +21,7 @@ export default function SwipeSection(props: SwipeSectionProps) {
       {props.removable && <Removals isActive={areRemovalsActive} toggleActive={handleActiveToggle} />}
       <div className={styles.optionsWrapper}>
         {showElements && (
-          <SwipeElement name={props.name} options={props.options}>
+          <SwipeElement name={`${props.name}1`} options={props.options}>
             {props.children}
           </SwipeElement>
         )}
@@ -31,7 +31,7 @@ export default function SwipeSection(props: SwipeSectionProps) {
           </div>
         )}
         {showElements && (
-          <SwipeElement name={props.name} options={props.options}>
+          <SwipeElement name={`${props.name}2`} options={props.options}>
             {props.children}
           </SwipeElement>
         )}

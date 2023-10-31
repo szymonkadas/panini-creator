@@ -14,7 +14,13 @@ export default function TextSection(props: TextSectionProps) {
   return (
     <FormSectionTemplate title={props.title}>
       <div className={`${styles.optionsWrapper} ${styles.textOptionWrapper}`}>
-        <input type="text" placeholder="eg. Club Panini" className={styles.textOption} {...register(props.name)} />
+        <input
+          type="text"
+          placeholder="eg. Club Panini"
+          className={styles.textOption}
+          required
+          {...register(props.name)}
+        />
       </div>
     </FormSectionTemplate>
   );

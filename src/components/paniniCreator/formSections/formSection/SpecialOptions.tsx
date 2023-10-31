@@ -42,6 +42,7 @@ export default function SpecialOptions(props: SpecialOptionsProps) {
         return (
           <RadioOption
             option={option}
+            defaultVal={props.options[props.checkedRadioIndex]}
             index={index}
             checkedIndex={props.checkedRadioIndex}
             setCheckedRadioIndex={props.setCheckedRadioIndex}

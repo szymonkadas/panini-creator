@@ -6,6 +6,7 @@ import styles from "./RadioOption.module.css";
 
 interface RadioOptionProps extends OptionProps {
   name: string;
+  defaultVal: string;
   checkedIndex: number;
   setCheckedRadioIndex: (radioIndex: number) => void;
 }
@@ -31,7 +32,7 @@ export default function RadioOption(props: RadioOptionProps) {
       <Controller
         name={props.name}
         control={control}
-        defaultValue=""
+        defaultValue={props.defaultVal}
         render={({ field }) => <input className={styles.radioOption} type="radio" {...field} />}
       ></Controller>
     </label>

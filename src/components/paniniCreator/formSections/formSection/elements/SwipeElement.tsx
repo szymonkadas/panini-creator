@@ -1,4 +1,5 @@
 import { ReactNode, useContext, useState } from "react";
+import { Controller } from "react-hook-form";
 import { formContext } from "../../../../../pages/PaniniCreator";
 import styles from "./SwipeElement.module.css";
 
@@ -9,13 +10,19 @@ type SwipeSectionProps = {
 };
 
 export default function SwipeOption(props: SwipeSectionProps) {
-  const { register } = useContext(formContext);
+  const { control, setValue } = useContext(formContext);
   const [currentOption, setCurrentOption] = useState(0);
   const handleOptionDecrease = () => {
-    currentOption > 0 && setCurrentOption((prev) => prev - 1);
+    if (currentOption > 0) {
+      setValue(props.name, props.options[currentOption - 1]);
+      setCurrentOption((prev) => prev - 1);
+    }
   };
   const handleOptionIncrease = () => {
-    currentOption < props.options.length - 1 && setCurrentOption((prev) => prev + 1);
+    if (currentOption < props.options.length - 1) {
+      setValue(props.name, props.options[currentOption + 1]);
+      setCurrentOption((prev) => prev + 1);
+    }
   };
   return (
     <div className={styles.swipeElement}>
@@ -25,12 +32,12 @@ export default function SwipeOption(props: SwipeSectionProps) {
       <label className={styles.label}>
         {props.children}
         {props.options[currentOption]}
-        <input
-          type="text"
-          className={styles.swipeOption}
-          readOnly
-          {...register(props.name, { value: props.options[currentOption] })}
-        />
+        <Controller
+          name={props.name}
+          control={control}
+          defaultValue={props.options[0]}
+          render={({ field }) => <input className={styles.swipeOption} type="text" readOnly {...field} />}
+        ></Controller>
       </label>
       <button type="button" className={styles.swipeOptionRightButton} onClick={handleOptionIncrease}>
         right
