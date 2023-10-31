@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
-import { Controller } from "react-hook-form";
-import { formContext } from "../../../../../pages/PaniniCreator";
+import { useState } from "react";
+import { useController, useFormContext } from "react-hook-form";
 import styles from "./CheckboxOption.module.css";
 import { OptionProps } from "./OptionProps";
+
 export interface CheckboxOptionProps extends OptionProps {
   name: string;
   checkedItems: string[];
@@ -10,7 +10,13 @@ export interface CheckboxOptionProps extends OptionProps {
 
 export default function CheckboxOption(props: CheckboxOptionProps) {
   const [isChecked, setIsChecked] = useState(false);
-  const { control, setValue } = useContext(formContext);
+  const { setValue, control } = useFormContext();
+  const { field } = useController({
+    name: props.name,
+    control,
+    defaultValue: [],
+  });
+
   const handleUserCheckToggle = () => {
     setIsChecked((prev) => !prev);
     const updatedItems = isChecked
@@ -18,6 +24,7 @@ export default function CheckboxOption(props: CheckboxOptionProps) {
       : [...props.checkedItems, props.option];
     setValue(props.name, updatedItems);
   };
+
   return (
     <label key={`checkboxLabel${props.option}${props.index}`} className={styles.checkboxLabel}>
       {props.option}
@@ -27,19 +34,12 @@ export default function CheckboxOption(props: CheckboxOptionProps) {
         className={`${styles.checkboxButton} ${isChecked ? styles.checked : ""}`}
         onClick={handleUserCheckToggle}
       ></button>
-      <Controller
-        name={props.name}
-        control={control}
-        defaultValue={[]}
-        render={({ field }) => (
-          <input
-            key={`checkboxInput${props.option}${props.index}`}
-            className={styles.checkboxOption}
-            type="checkbox"
-            {...field}
-          />
-        )}
-      ></Controller>
+      <input
+        key={`checkboxInput${props.option}${props.index}`}
+        className={styles.checkboxOption}
+        type="checkbox"
+        {...field}
+      />
     </label>
   );
 }

@@ -1,6 +1,5 @@
-import { useContext, useMemo } from "react";
-import { Controller } from "react-hook-form";
-import { formContext } from "../../../../../pages/PaniniCreator";
+import { useMemo } from "react";
+import { useController, useFormContext } from "react-hook-form";
 import { OptionProps } from "./OptionProps";
 import styles from "./RadioOption.module.css";
 
@@ -16,7 +15,13 @@ export default function RadioOption(props: RadioOptionProps) {
   const isChecked = useMemo(() => {
     return props.checkedIndex === props.index;
   }, [props.checkedIndex]);
-  const { control, setValue } = useContext(formContext);
+  const { control, setValue } = useFormContext();
+  const { field } = useController({
+    name: props.name,
+    control,
+    defaultValue: props.defaultVal,
+    rules: { required: true },
+  });
   const handleRadioClick = () => {
     props.setCheckedRadioIndex(props.index);
     setValue(props.name, props.option);
@@ -29,12 +34,7 @@ export default function RadioOption(props: RadioOptionProps) {
         className={`${styles.radioButton} ${isChecked && styles.checked}`}
         onClick={handleRadioClick}
       ></button>
-      <Controller
-        name={props.name}
-        control={control}
-        defaultValue={props.defaultVal}
-        render={({ field }) => <input className={styles.radioOption} type="radio" {...field} />}
-      ></Controller>
+      <input className={styles.radioOption} type="radio" {...field} />
     </label>
   );
 }

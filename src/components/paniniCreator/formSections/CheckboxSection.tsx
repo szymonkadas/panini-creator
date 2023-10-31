@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { formContext } from "../../../pages/PaniniCreator";
+import { useFormContext } from "react-hook-form";
 import styles from "./FormSection.module.css";
 import { FormSectionProps } from "./FormSectionProps";
 import FormSectionTemplate from "./FormSectionTemplate";
@@ -11,7 +10,7 @@ interface CheckboxSectionProps extends FormSectionProps {
 
 export default function CheckboxSection(props: CheckboxSectionProps) {
   // form handling to be implemented
-  const { watch } = useContext(formContext);
+  const { watch } = useFormContext();
   const checkedItems = watch(props.name, []);
   return (
     <FormSectionTemplate title={props.title}>

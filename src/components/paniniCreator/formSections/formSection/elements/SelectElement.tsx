@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { formContext } from "../../../../../pages/PaniniCreator";
+import { useState } from "react";
+import { useFormContext } from "react-hook-form";
 import SpecialOptions from "../SpecialOptions";
 import styles from "./SelectElement.module.css";
 
@@ -11,7 +11,7 @@ type SelectElementProps = {
 };
 
 export default function SelectElement(props: SelectElementProps) {
-  const { register } = useContext(formContext);
+  const { register } = useFormContext();
   const [isSelectActive, setIsSelectActive] = useState(false);
   const handleSelectClick = () => {
     setIsSelectActive((prev) => !prev);
