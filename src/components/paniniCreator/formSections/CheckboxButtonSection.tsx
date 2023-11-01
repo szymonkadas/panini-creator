@@ -4,7 +4,7 @@ import { FormSectionProps } from "./FormSectionProps";
 import FormSectionTemplate from "./FormSectionTemplate";
 import SpecialOptions from "./formSection/SpecialOptions";
 
-export default function CheckboxButtonSection(props: FormSectionProps) {
+export default function CheckboxButtonSection(props: Omit<FormSectionProps, "removable">) {
   const { watch } = useFormContext();
   const checkedItems = watch(props.name, []);
   return (

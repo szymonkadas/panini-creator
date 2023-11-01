@@ -1,11 +1,52 @@
+import { useEffect, useMemo, useState } from "react";
 import styles from "./Removals.module.css";
 
 type RemovalsProps = {
   isActive: boolean;
+  maxElements: number;
+  defaultVal: string;
+  formElementsValues: string[];
+  setFormElementsValues: React.Dispatch<React.SetStateAction<string[]>>;
   toggleActive: () => void;
 };
 
 export default function Removals(props: RemovalsProps) {
+  const [isAdditionPossible, setIsAdditionPossible] = useState(true);
+  useEffect(() => {
+    setIsAdditionPossible(props.isActive);
+  }, [props.isActive]);
+
+  const subtractButtons = useMemo(() => {
+    const result = [];
+    // skip first val cuz it can only be removed when there is no add button
+    for (let i = 1; i < props.formElementsValues.length; i++) {
+      result.push(
+        <div className={styles.removal} key={`subtractRemoval${i}`}>
+          <button
+            key={`subtractRemovalbutton${i}`}
+            type="button"
+            className={styles.removeButton}
+            onClick={() => handleSubtraction(i)}
+          ></button>
+        </div>
+      );
+    }
+    return result;
+  }, [props.formElementsValues]);
+
+  const handleAddition = () => {
+    if (props.formElementsValues.length < props.maxElements) {
+      isAdditionPossible === false && setIsAdditionPossible(true);
+      props.setFormElementsValues((prev) => [...prev, props.defaultVal]);
+    }
+    // if it's last possible addition:
+    if (props.formElementsValues.length === props.maxElements - 1) setIsAdditionPossible(false);
+  };
+
+  const handleSubtraction = (indexToDel: number) => {
+    props.setFormElementsValues((prev) => prev.filter((val, index) => index !== indexToDel));
+    isAdditionPossible === false && setIsAdditionPossible(true);
+  };
   return (
     <div
       className={`${styles.removalsWrapper} ${
@@ -23,12 +64,14 @@ export default function Removals(props: RemovalsProps) {
           />
           <span className={styles.switchSlider}></span>
         </label>
-        {/* adding and removing will be implemented later on, with form logic */}
-        {props.isActive && <button type="button" className={styles.addButton}></button>}
+        {props.isActive &&
+          (isAdditionPossible ? (
+            <button type="button" className={styles.addButton} onClick={handleAddition} />
+          ) : (
+            <button type="button" className={styles.removeButton} onClick={() => handleSubtraction(0)}></button>
+          ))}
       </div>
-      <div className={styles.removal}>
-        {props.isActive && <button type="button" className={styles.removeButton}></button>}
-      </div>
+      {subtractButtons.length > 0 && props.isActive && <>{...subtractButtons}</>}
     </div>
   );
 }

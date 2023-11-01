@@ -25,7 +25,6 @@ type PaniniCreatorProps = {
 
 export default function PaniniCreator(props: PaniniCreatorProps) {
   const methods = useForm();
-  const { control, register, handleSubmit, setValue, watch } = methods;
   const { setOrderData } = useOutletContext() as LayoutContext;
   const resetOrderData = () => {
     setOrderData({});
@@ -42,7 +41,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
   };
   return (
     <FormProvider {...methods}>
-      <form className={styles.paniniCreator} onSubmit={handleSubmit(handleSave)}>
+      <form className={styles.paniniCreator} onSubmit={methods.handleSubmit(handleSave)}>
         <div className={styles.formsInterface}>
           <h2 className={styles.formsLabel}>Panini Creator</h2>
           <button type="button" className={styles.button}>
@@ -55,11 +54,28 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
             <SwipeSection removable={false} name="bread" title="bread" options={breadVariants}>
               <img src="/src/images/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img>
             </SwipeSection>
-            <SelectSection removable={true} name="cheese" title="cheese" options={cheeseVariants}></SelectSection>
-            <SelectSection removable={true} name="meat" title="meat" options={meatVariants}></SelectSection>
-            <SwipeSection removable={true} name="dressing" title="dressing" options={dressingVariants}></SwipeSection>
-            <CheckboxButtonSection
+            <SelectSection
               removable={true}
+              name="cheese"
+              title="cheese"
+              options={cheeseVariants}
+              maxElements={3}
+            ></SelectSection>
+            <SelectSection
+              removable={true}
+              name="meat"
+              title="meat"
+              options={meatVariants}
+              maxElements={2}
+            ></SelectSection>
+            <SwipeSection
+              removable={true}
+              name="dressing"
+              title="dressing"
+              options={dressingVariants}
+              maxElements={3}
+            ></SwipeSection>
+            <CheckboxButtonSection
               name="vegetables"
               title="vegetables"
               options={vegetableVariant}
@@ -68,32 +84,23 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
         </FormCard>
         <FormCard title="Configure Extras">
           <div className={styles.formSections}>
-            <SelectSection removable={true} name="egg" title="egg" options={eggVariants}></SelectSection>
-            <CheckboxSection removable={false} name="spread" title="spread" options={spreadVariant}></CheckboxSection>
-            <RadioSection removable={false} name="serving" title="serving" options={servingVariant}></RadioSection>
-            <CheckboxSection
-              removable={false}
-              name="topping"
-              title="topping"
-              options={toppingVariant}
-            ></CheckboxSection>
+            <SelectSection
+              removable={true}
+              name="egg"
+              title="egg"
+              options={eggVariants}
+              maxElements={3}
+            ></SelectSection>
+            <CheckboxSection name="spread" title="spread" options={spreadVariant}></CheckboxSection>
+            <RadioSection name="serving" title="serving" options={servingVariant}></RadioSection>
+            <CheckboxSection name="topping" title="topping" options={toppingVariant}></CheckboxSection>
           </div>
         </FormCard>
         <FormCard title="Finalize Order">
           <div className={styles.formSections}>
             <TextSection name={"name_panini"} title="name panini"></TextSection>
-            <CheckboxSection
-              removable={false}
-              name="cutlery"
-              title="cutlery"
-              options={["Add to order"]}
-            ></CheckboxSection>
-            <CheckboxSection
-              removable={false}
-              name="napkins"
-              title="napkins"
-              options={["Add to order"]}
-            ></CheckboxSection>
+            <CheckboxSection name="cutlery" title="cutlery" options={["Add to order"]}></CheckboxSection>
+            <CheckboxSection name="napkins" title="napkins" options={["Add to order"]}></CheckboxSection>
           </div>
           <div className={styles.formsSubmitInterfaceWrapper}>
             <NavLink to={props.navTo} onClick={setOrderDataToTrue}>

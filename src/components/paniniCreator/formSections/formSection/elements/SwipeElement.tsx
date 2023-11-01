@@ -5,28 +5,43 @@ import styles from "./SwipeElement.module.css";
 type SwipeSectionProps = {
   options: string[];
   name: string;
+  setFormElementsValues: React.Dispatch<React.SetStateAction<string[]>>;
+  orderVal: number;
+  defaultVal?: string;
   children?: ReactNode;
 };
 
 export default function SwipeOption(props: SwipeSectionProps) {
-  const { setValue, control } = useFormContext();
-  const [currentOption, setCurrentOption] = useState(0);
+  const { control } = useFormContext();
+  const [currentOption, setCurrentOption] = useState(
+    props.defaultVal ? props.options.findIndex((val) => val === props.defaultVal) : 0
+  );
   const { field } = useController({
     name: props.name,
     control: control,
-    defaultValue: props.options[0],
+    defaultValue: props.options[currentOption],
   });
 
   const handleOptionDecrease = () => {
     if (currentOption > 0) {
-      setValue(props.name, props.options[currentOption - 1]);
+      props.setFormElementsValues((prev) =>
+        prev
+          .slice(0, props.orderVal)
+          .concat(props.options[currentOption - 1])
+          .concat(prev.slice(props.orderVal + 1))
+      );
       setCurrentOption((prev) => prev - 1);
     }
   };
 
   const handleOptionIncrease = () => {
     if (currentOption < props.options.length - 1) {
-      setValue(props.name, props.options[currentOption + 1]);
+      props.setFormElementsValues((prev) =>
+        prev
+          .slice(0, props.orderVal)
+          .concat(props.options[currentOption + 1])
+          .concat(prev.slice(props.orderVal + 1))
+      );
       setCurrentOption((prev) => prev + 1);
     }
   };

@@ -1,33 +1,53 @@
 import { useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 import SpecialOptions from "../SpecialOptions";
 import styles from "./SelectElement.module.css";
 
-// options: ((string | number)[] | undefined)[];
 type SelectElementProps = {
   name: string;
   options: string[];
-  usedOption: number;
+  setFormElementsValues: React.Dispatch<React.SetStateAction<string[]>>;
+  orderVal: number;
+  defaultVal?: string;
 };
 
 export default function SelectElement(props: SelectElementProps) {
-  const { register } = useFormContext();
+  const { control } = useFormContext();
   const [isSelectActive, setIsSelectActive] = useState(false);
+
+  const { field } = useController({
+    name: props.name,
+    control: control,
+  });
+
   const handleSelectClick = () => {
     setIsSelectActive((prev) => !prev);
   };
+
   const handleBlur = () => {
+    field.onBlur();
     setIsSelectActive(false);
   };
+
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    field.onChange(event);
+    props.setFormElementsValues((prev) =>
+      prev
+        .slice(0, props.orderVal)
+        .concat(event.target.value)
+        .concat(prev.slice(props.orderVal + 1))
+    );
+  };
+
   return (
     <label className={styles.selectLabel}>
       Select an option:
       <select
         className={styles.selectOptions}
-        {...register(props.name, {
-          onBlur: handleBlur,
-          onChange: handleSelectClick,
-        })}
+        {...field}
+        onBlur={handleBlur}
+        onClick={handleSelectClick}
+        onChange={handleChange}
       >
         <SpecialOptions name={props.name} type="select" options={props.options} />
       </select>

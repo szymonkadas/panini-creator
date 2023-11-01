@@ -1,1 +1,1 @@
-export const dressingVariants = ['OLIVE OIL', "HONEY_MUSTARD", "RANCH", "MAYO"]
+export const dressingVariants = ["OLIVE OIL", "HONEY MUSTARD", "RANCH", "MAYO"];
