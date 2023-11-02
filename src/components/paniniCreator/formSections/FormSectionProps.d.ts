@@ -1,5 +1,14 @@
-export type FormSectionProps = {
-  removable: boolean;
-  title: string;
-  options: string[];
-};
+export type FormSectionProps =
+  | {
+      removable: true;
+      maxElements: number;
+      title: string;
+      name: string;
+      options: string[];
+    }
+  | {
+      removable: false;
+      title: string;
+      name: string;
+      options: string[];
+    };

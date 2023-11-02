@@ -1,16 +1,30 @@
 import { useState } from "react";
+import { useController, useFormContext } from "react-hook-form";
 import styles from "./CheckboxOption.module.css";
 import { OptionProps } from "./OptionProps";
 
-export default function CheckboxOption(props: OptionProps) {
+export interface CheckboxOptionProps extends OptionProps {
+  name: string;
+  checkedItems: string[];
+}
+
+export default function CheckboxOption(props: CheckboxOptionProps) {
   const [isChecked, setIsChecked] = useState(false);
+  const { setValue, control } = useFormContext();
+  const { field } = useController({
+    name: props.name,
+    control,
+    defaultValue: [],
+  });
+
   const handleUserCheckToggle = () => {
     setIsChecked((prev) => !prev);
+    const updatedItems = isChecked
+      ? props.checkedItems.filter((item) => item !== props.option)
+      : [...props.checkedItems, props.option];
+    setValue(props.name, updatedItems);
   };
-  const handleCheckboxChange = () => {
-    // since i don't know the way i'll need to work with forms later on, this function is here solely for removing console.error purpose.
-    let o = 2 + 2;
-  };
+
   return (
     <label key={`checkboxLabel${props.option}${props.index}`} className={styles.checkboxLabel}>
       {props.option}
@@ -24,9 +38,7 @@ export default function CheckboxOption(props: OptionProps) {
         key={`checkboxInput${props.option}${props.index}`}
         className={styles.checkboxOption}
         type="checkbox"
-        value={props.option}
-        onChange={handleCheckboxChange}
-        checked
+        {...field}
       />
     </label>
   );

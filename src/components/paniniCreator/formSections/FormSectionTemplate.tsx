@@ -8,11 +8,11 @@ type FormSectionTemplateProps = {
 
 export default function FormSectionTemplate(props: FormSectionTemplateProps) {
   return (
-    <div className={styles.formSection}>
+    <section className={styles.formSection}>
       <div className={styles.formSectionTitleWrapper}>
         <h4 className={styles.formSectionTitle}>{props.title}</h4>
       </div>
       {props.children}
-    </div>
+    </section>
   );
 }

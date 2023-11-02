@@ -5,8 +5,15 @@ import SelectOption from "./options/SelectOption";
 
 type SpecialOptionsProps =
   | {
-      type: "checkboxButton" | "checkbox" | "select";
+      type: "checkbox" | "checkboxButton";
       options: string[];
+      name: string;
+      checkedItems: string[];
+    }
+  | {
+      type: "select";
+      options: string[];
+      name: string;
     }
   | {
       type: "radio";
@@ -20,15 +27,22 @@ export default function SpecialOptions(props: SpecialOptionsProps) {
   const options = props.options.map((option, index) => {
     switch (props.type) {
       case "checkboxButton":
-        return <CheckboxButtonOption {...{ option, index }} />;
+        return (
+          <CheckboxButtonOption
+            {...{ option: option, index: index, name: props.name, checkedItems: props.checkedItems }}
+          />
+        );
         break;
       case "checkbox":
-        return <CheckboxOption {...{ option, index }} />;
+        return (
+          <CheckboxOption {...{ option: option, index: index, name: props.name, checkedItems: props.checkedItems }} />
+        );
         break;
       case "radio":
         return (
           <RadioOption
             option={option}
+            defaultVal={props.options[props.checkedRadioIndex]}
             index={index}
             checkedIndex={props.checkedRadioIndex}
             setCheckedRadioIndex={props.setCheckedRadioIndex}

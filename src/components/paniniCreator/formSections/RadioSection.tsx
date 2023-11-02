@@ -4,11 +4,7 @@ import { FormSectionProps } from "./FormSectionProps";
 import FormSectionTemplate from "./FormSectionTemplate";
 import SpecialOptions from "./formSection/SpecialOptions";
 
-interface RadioSectionProps extends FormSectionProps {
-  name: string;
-}
-
-export default function RadioSection(props: RadioSectionProps) {
+export default function RadioSection(props: Omit<FormSectionProps, "removable">) {
   const [checkedRadioIndex, setCheckedRadioIndex] = useState(0);
   const handleRadioChange = (radioIndex: number) => {
     if (radioIndex >= 0 && radioIndex < props.options.length) {
