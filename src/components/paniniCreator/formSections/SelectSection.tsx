@@ -33,7 +33,6 @@ export default function SelectSection(props: FormSectionProps) {
 
   const content = useMemo(() => {
     return formElementsValues.map((val, index) => {
-      console.log(val, index);
       return (
         <SelectElement
           key={`${props.name}${index}${val}selectkey`}

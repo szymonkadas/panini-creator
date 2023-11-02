@@ -39,6 +39,27 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
     console.log(formValues);
     return;
   };
+
+  enum PaniniNames {
+    cheese = "cheese",
+    meat = "meat",
+    dressing = "dressing",
+    vegetables = "vegetables",
+    egg = "egg",
+    spread = "spread",
+    serving = "serving",
+    topping = "topping",
+    namePanini = "namePanini",
+    cutlery = "cutlery",
+    napkins = "napkins",
+  }
+  enum PaniniFormSectionMaxElements {
+    cheese = 3,
+    meat = 2,
+    dressing = 3,
+    egg = 3,
+  }
+
   return (
     <FormProvider {...methods}>
       <form className={styles.paniniCreator} onSubmit={methods.handleSubmit(handleSave)}>
@@ -55,25 +76,25 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
               <img src="/src/images/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img>
             </SwipeSection>
             <SelectSection
-              removable={true}
-              name="cheese"
+              removable={PaniniFormSectionMaxElements.cheese ? true : false}
+              name={PaniniNames.cheese}
               title="cheese"
               options={cheeseVariants}
-              maxElements={3}
+              maxElements={PaniniFormSectionMaxElements.cheese}
             ></SelectSection>
             <SelectSection
               removable={true}
-              name="meat"
+              name={PaniniNames.meat}
               title="meat"
               options={meatVariants}
-              maxElements={2}
+              maxElements={PaniniFormSectionMaxElements.meat}
             ></SelectSection>
             <SwipeSection
               removable={true}
-              name="dressing"
+              name={PaniniNames.dressing}
               title="dressing"
               options={dressingVariants}
-              maxElements={3}
+              maxElements={PaniniFormSectionMaxElements.dressing}
             ></SwipeSection>
             <CheckboxButtonSection
               name="vegetables"
@@ -86,10 +107,10 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
           <div className={styles.formSections}>
             <SelectSection
               removable={true}
-              name="egg"
+              name={PaniniNames.egg}
               title="egg"
               options={eggVariants}
-              maxElements={3}
+              maxElements={PaniniFormSectionMaxElements.egg}
             ></SelectSection>
             <CheckboxSection name="spread" title="spread" options={spreadVariant}></CheckboxSection>
             <RadioSection name="serving" title="serving" options={servingVariant}></RadioSection>

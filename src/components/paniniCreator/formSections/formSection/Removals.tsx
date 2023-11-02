@@ -45,7 +45,7 @@ export default function Removals(props: RemovalsProps) {
 
   const handleSubtraction = (indexToDel: number) => {
     props.setFormElementsValues((prev) => prev.filter((val, index) => index !== indexToDel));
-    isAdditionPossible === false && setIsAdditionPossible(true);
+    if (!isAdditionPossible) setIsAdditionPossible(true);
   };
   return (
     <div
