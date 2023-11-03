@@ -67,3 +67,6 @@
   border: var(--border-width) solid var(--border-color);
   outline: transparent;
 }
+.error {
+  color: #a22;
+}

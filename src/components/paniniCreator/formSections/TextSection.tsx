@@ -7,7 +7,7 @@ interface TextSectionProps extends Omit<FormSectionProps, "options" | "removable
   options?: never;
 }
 export default function TextSection(props: TextSectionProps) {
-  const { register } = useFormContext();
+  const { register, formState } = useFormContext();
   return (
     <FormSectionTemplate title={props.title}>
       <div className={`${styles.optionsWrapper} ${styles.textOptionWrapper}`}>
@@ -18,6 +18,9 @@ export default function TextSection(props: TextSectionProps) {
           required
           {...register(props.name)}
         />
+        {formState.errors?.sandwichName && (
+          <p className={styles.error}>{`${formState.errors?.sandwichName?.message}`}</p>
+        )}
       </div>
     </FormSectionTemplate>
   );

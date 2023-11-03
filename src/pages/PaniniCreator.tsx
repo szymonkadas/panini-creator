@@ -26,7 +26,10 @@ type PaniniCreatorProps = {
 };
 
 export default function PaniniCreator(props: PaniniCreatorProps) {
-  const methods = useForm({ defaultValues: SandwichDefaultVals, resolver: zodResolver(SandwichPayload) });
+  const methods = useForm<SandwichPayload>({
+    defaultValues: SandwichDefaultVals,
+    resolver: zodResolver(SandwichPayload),
+  });
   const { setOrderData } = useOutletContext() as LayoutContext;
   const resetOrderData = () => {
     setOrderData({});
@@ -36,12 +39,12 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
     setOrderData({ order: true });
   };
 
-  const handleSave = (formValues: any) => {
+  const handleSave = (formValues: SandwichPayload) => {
     console.log("D:");
     console.log(formValues);
     return;
   };
-  // console.log(methods.formState.errors);
+
   return (
     <FormProvider {...methods}>
       <form className={styles.paniniCreator} onSubmit={methods.handleSubmit(handleSave)}>
