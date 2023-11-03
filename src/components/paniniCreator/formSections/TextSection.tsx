@@ -7,7 +7,6 @@ interface TextSectionProps extends Omit<FormSectionProps, "options" | "removable
   options?: never;
 }
 export default function TextSection(props: TextSectionProps) {
-  // logic to be implemented
   const { register } = useFormContext();
   return (
     <FormSectionTemplate title={props.title}>

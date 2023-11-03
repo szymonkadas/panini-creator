@@ -11,9 +11,11 @@ type SwipeSectionProps = FormSectionProps & {
 };
 
 export default function SwipeSection(props: SwipeSectionProps) {
-  const { setValue } = useFormContext();
-  const [areRemovalsActive, setAreRemovalsActive] = useState(props.removable);
-  const [formElementsValues, setFormElementsValues] = useState([props.options[0]]);
+  const { setValue, getValues } = useFormContext();
+  const [formElementsValues, setFormElementsValues] = useState(
+    Array.isArray(getValues(props.name)) ? [...getValues(props.name)] : [getValues(props.name)] || [props.options[0]]
+  );
+  const [areRemovalsActive, setAreRemovalsActive] = useState(formElementsValues.length > 0 ? true : false);
   // control values in form
   useEffect(() => {
     if (props.removable) {

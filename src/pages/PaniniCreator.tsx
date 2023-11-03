@@ -26,7 +26,7 @@ type PaniniCreatorProps = {
 };
 
 export default function PaniniCreator(props: PaniniCreatorProps) {
-  const methods = useForm({ resolver: zodResolver(SandwichPayload) });
+  const methods = useForm({ defaultValues: SandwichDefaultVals, resolver: zodResolver(SandwichPayload) });
   const { setOrderData } = useOutletContext() as LayoutContext;
   const resetOrderData = () => {
     setOrderData({});
@@ -41,7 +41,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
     console.log(formValues);
     return;
   };
-  console.log(methods.formState.errors);
+  // console.log(methods.formState.errors);
   return (
     <FormProvider {...methods}>
       <form className={styles.paniniCreator} onSubmit={methods.handleSubmit(handleSave)}>
@@ -94,16 +94,36 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
               options={eggVariants}
               maxElements={PaniniFormSectionMaxElements.egg}
             ></SelectSection>
-            <CheckboxSection name={PaniniNames.spread} title="spread" options={spreadVariant}></CheckboxSection>
+            <CheckboxSection
+              name={PaniniNames.spreads}
+              title="spread"
+              options={spreadVariant}
+              isBoolean={false}
+            ></CheckboxSection>
             <RadioSection name={PaniniNames.serving} title="serving" options={servingVariant}></RadioSection>
-            <CheckboxSection name={PaniniNames.topping} title="topping" options={toppingVariant}></CheckboxSection>
+            <CheckboxSection
+              name={PaniniNames.topping}
+              title="topping"
+              options={toppingVariant}
+              isBoolean={false}
+            ></CheckboxSection>
           </div>
         </FormCard>
         <FormCard title="Finalize Order">
           <div className={styles.formSections}>
             <TextSection name={PaniniNames.sandwichName} title="name panini"></TextSection>
-            <CheckboxSection name={PaniniNames.cutlery} title="cutlery" options={["Add to order"]}></CheckboxSection>
-            <CheckboxSection name={PaniniNames.napkins} title="napkins" options={["Add to order"]}></CheckboxSection>
+            <CheckboxSection
+              name={PaniniNames.cutlery}
+              title="cutlery"
+              options={["Add to order"]}
+              isBoolean={true}
+            ></CheckboxSection>
+            <CheckboxSection
+              name={PaniniNames.napkins}
+              title="napkins"
+              options={["Add to order"]}
+              isBoolean={true}
+            ></CheckboxSection>
           </div>
           <div className={styles.formsSubmitInterfaceWrapper}>
             <NavLink to={props.navTo} onClick={setOrderDataToTrue}>
@@ -125,6 +145,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
   );
 }
 
+// possible bugs later on with generating due to HONEY_MUSTARD -> HONEY MUSTARD. Change later on if needed, also added pecorino.
 interface SandwichPayload {
   sandwichName: string; // Max. 35 characters
   cutlery: boolean;
@@ -152,7 +173,7 @@ const literalMapper = function (val: string[]) {
 };
 
 const SandwichPayload = z.object({
-  sandwichName: z.string().max(35),
+  sandwichName: z.string().min(1).max(35),
   cutlery: z.boolean(),
   napkins: z.boolean(),
   base: z.object({
@@ -170,24 +191,24 @@ const SandwichPayload = z.object({
   }),
 });
 
-// const SandwichDefaultVals: SandwichPayload = {
-//   sandwichName: "Default Panini",
-//   cutlery: false,
-//   napkins: false,
-//   base: {
-//     bread: breadVariants[0] as "WHEAT",
-//     cheese: [cheeseVariants[0] as "EDAM"],
-//     meat: [meatVariants[0] as "SALAMI"],
-//     dressing: [dressingVariants[0] as "OLIVE OIL"],
-//     vegetables: [],
-//   },
-//   extras: {
-//     egg: [eggVariants[0] as "FRIED EGG"],
-//     spreads: [],
-//     serving: servingVariant[0] as "GRILLED",
-//     topping: null,
-//   },
-// };
+const SandwichDefaultVals: SandwichPayload = {
+  sandwichName: "Default Panini",
+  cutlery: false,
+  napkins: false,
+  base: {
+    bread: breadVariants[1] as "FULL GRAIN",
+    cheese: [cheeseVariants[4] as "PECORINO", cheeseVariants[1] as "MOZZARELLA"],
+    meat: [],
+    dressing: [dressingVariants[0] as "OLIVE OIL", dressingVariants[1] as "HONEY MUSTARD"],
+    vegetables: [vegetableVariant[0] as "SALAD", vegetableVariant[8] as "OBERGINE", vegetableVariant[7] as "BEETROOT"],
+  },
+  extras: {
+    egg: [eggVariants[0] as "FRIED EGG"],
+    spreads: [spreadVariant[0] as "BUTTER"],
+    serving: servingVariant[1] as "WARM",
+    topping: null,
+  },
+};
 
 enum PaniniNames {
   bread = "base.bread",
@@ -196,7 +217,7 @@ enum PaniniNames {
   dressing = "base.dressing",
   vegetables = "base.vegetables",
   egg = "extras.egg",
-  spread = "extras.spread",
+  spreads = "extras.spreads",
   serving = "extras.serving",
   topping = "extras.topping",
   sandwichName = "sandwichName",

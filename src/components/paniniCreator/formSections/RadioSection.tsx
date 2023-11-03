@@ -11,7 +11,6 @@ export default function RadioSection(props: Omit<FormSectionProps, "removable">)
       setCheckedRadioIndex(radioIndex);
     }
   };
-  // form handling to be implemented
 
   return (
     <FormSectionTemplate title={props.title}>
