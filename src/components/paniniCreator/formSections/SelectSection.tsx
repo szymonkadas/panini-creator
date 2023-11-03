@@ -7,27 +7,20 @@ import Removals from "./formSection/Removals";
 import SelectElement from "./formSection/elements/SelectElement";
 
 export default function SelectSection(props: FormSectionProps) {
-  const { getValues, setValue } = useFormContext();
+  const { setValue } = useFormContext();
   const [areRemovalsActive, setAreRemovalsActive] = useState(props.removable);
   const [formElementsValues, setFormElementsValues] = useState([props.options[0]]);
   // control values in form
   useEffect(() => {
     if (props.removable) {
-      for (let i = 0; i < props.maxElements; i++) {
-        setValue(`${props.name}${i}`, formElementsValues[i] || undefined);
-      }
+      setValue(props.name, formElementsValues);
+    } else {
+      setValue(props.name, formElementsValues[0]);
     }
   }, [formElementsValues]);
 
   const handleActiveToggle = () => {
     areRemovalsActive ? setFormElementsValues([]) : setFormElementsValues([props.options[0]]);
-    if (props.removable) {
-      for (let i = 0; i < props.maxElements; i++) {
-        if (getValues(`${props.name}${i}`)) {
-          setValue(`${props.name}${i}`, undefined);
-        }
-      }
-    }
     setAreRemovalsActive((prev) => !prev);
   };
 
@@ -36,15 +29,16 @@ export default function SelectSection(props: FormSectionProps) {
       return (
         <SelectElement
           key={`${props.name}${index}${val}selectkey`}
-          name={`${props.name}${index}`}
+          name={props.name}
           options={props.options}
+          formElementsValues={formElementsValues}
           setFormElementsValues={setFormElementsValues}
           orderVal={index}
           defaultVal={val}
         />
       );
     });
-  }, [formElementsValues.length, areRemovalsActive]);
+  }, [formElementsValues, areRemovalsActive, props.options, props.name]);
 
   return (
     <FormSectionTemplate title={props.title}>

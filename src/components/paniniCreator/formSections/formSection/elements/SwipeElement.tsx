@@ -1,5 +1,6 @@
 import { ReactNode, useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
+import updateArrayStateVal from "../../../../../utils/updateArrayStateVal";
 import styles from "./SwipeElement.module.css";
 
 type SwipeSectionProps = {
@@ -25,10 +26,7 @@ export default function SwipeOption(props: SwipeSectionProps) {
   const handleOptionDecrease = () => {
     if (currentOption > 0) {
       props.setFormElementsValues((prev) =>
-        prev
-          .slice(0, props.orderVal)
-          .concat(props.options[currentOption - 1])
-          .concat(prev.slice(props.orderVal + 1))
+        updateArrayStateVal(prev, props.orderVal, props.options[currentOption - 1])
       );
       setCurrentOption((prev) => prev - 1);
     }
@@ -37,10 +35,7 @@ export default function SwipeOption(props: SwipeSectionProps) {
   const handleOptionIncrease = () => {
     if (currentOption < props.options.length - 1) {
       props.setFormElementsValues((prev) =>
-        prev
-          .slice(0, props.orderVal)
-          .concat(props.options[currentOption + 1])
-          .concat(prev.slice(props.orderVal + 1))
+        updateArrayStateVal(prev, props.orderVal, props.options[currentOption + 1])
       );
       setCurrentOption((prev) => prev + 1);
     }

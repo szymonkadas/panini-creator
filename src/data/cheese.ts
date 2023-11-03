@@ -1,1 +1,1 @@
-export const cheeseVariants = ['EDAM', "MOZZARELLA", "STRACIATELLA", "GOUDA"]
+export const cheeseVariants = ["EDAM", "MOZZARELLA", "STRACIATELLA", "GOUDA", "PECORINO"];

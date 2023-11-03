@@ -47,6 +47,7 @@ export default function Removals(props: RemovalsProps) {
     props.setFormElementsValues((prev) => prev.filter((val, index) => index !== indexToDel));
     if (!isAdditionPossible) setIsAdditionPossible(true);
   };
+
   return (
     <div
       className={`${styles.removalsWrapper} ${

@@ -11,35 +11,28 @@ type SwipeSectionProps = FormSectionProps & {
 };
 
 export default function SwipeSection(props: SwipeSectionProps) {
-  const { getValues, setValue } = useFormContext();
+  const { setValue } = useFormContext();
   const [areRemovalsActive, setAreRemovalsActive] = useState(props.removable);
   const [formElementsValues, setFormElementsValues] = useState([props.options[0]]);
-  const handleActiveToggle = () => {
-    areRemovalsActive ? setFormElementsValues([]) : setFormElementsValues([props.options[0]]);
-    if (props.removable) {
-      for (let i = 0; i < props.maxElements; i++) {
-        if (getValues(`${props.name}${i}`)) {
-          setValue(`${props.name}${i}`, undefined);
-        }
-      }
-    }
-    setAreRemovalsActive((prev) => !prev);
-  };
   // control values in form
   useEffect(() => {
     if (props.removable) {
-      for (let i = 0; i < props.maxElements; i++) {
-        setValue(`${props.name}${i}`, formElementsValues[i] || undefined);
-      }
-    }
+      setValue(props.name, formElementsValues);
+    } else [setValue(props.name, formElementsValues[0])];
   }, [formElementsValues]);
+
+  const handleActiveToggle = () => {
+    areRemovalsActive ? setFormElementsValues([]) : setFormElementsValues([props.options[0]]);
+    setAreRemovalsActive((prev) => !prev);
+  };
+
   const content = useMemo(
     () =>
       formElementsValues.map((val, index, array) => {
         const swipe = (
           <SwipeElement
             key={`${props.name}${index}${val}swipekey`}
-            name={`${props.name}${index}`}
+            name={props.name}
             options={props.options}
             setFormElementsValues={setFormElementsValues}
             orderVal={index}

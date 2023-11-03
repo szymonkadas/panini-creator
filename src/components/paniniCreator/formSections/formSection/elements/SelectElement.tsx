@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
+import updateArrayStateVal from "../../../../../utils/updateArrayStateVal";
 import SpecialOptions from "../SpecialOptions";
 import styles from "./SelectElement.module.css";
 
 type SelectElementProps = {
   name: string;
   options: string[];
+  formElementsValues: string[];
   setFormElementsValues: React.Dispatch<React.SetStateAction<string[]>>;
   orderVal: number;
   defaultVal?: string;
@@ -30,13 +32,7 @@ export default function SelectElement(props: SelectElementProps) {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    field.onChange(event);
-    props.setFormElementsValues((prev) =>
-      prev
-        .slice(0, props.orderVal)
-        .concat(event.target.value)
-        .concat(prev.slice(props.orderVal + 1))
-    );
+    props.setFormElementsValues((prev) => updateArrayStateVal(prev, props.orderVal, event.target.value));
   };
 
   return (
@@ -48,6 +44,7 @@ export default function SelectElement(props: SelectElementProps) {
         onBlur={handleBlur}
         onClick={handleSelectClick}
         onChange={handleChange}
+        value={props.formElementsValues[props.orderVal]}
       >
         <SpecialOptions name={props.name} type="select" options={props.options} />
       </select>
