@@ -18,13 +18,10 @@ type SpecialOptionsProps =
   | {
       type: "select";
       options: string[];
-      name: string;
     }
   | {
       type: "radio";
       options: string[];
-      checkedRadioIndex: number;
-      setCheckedRadioIndex: (radioIndex: number) => void;
       name: string;
     };
 
@@ -38,16 +35,7 @@ export default function SpecialOptions(props: SpecialOptionsProps) {
         return <CheckboxOption {...{ option: option, index: index, name: props.name, isBoolean: props.isBoolean }} />;
         break;
       case "radio":
-        return (
-          <RadioOption
-            option={option}
-            defaultVal={props.options[props.checkedRadioIndex]}
-            index={index}
-            checkedIndex={props.checkedRadioIndex}
-            setCheckedRadioIndex={props.setCheckedRadioIndex}
-            name={props.name}
-          />
-        );
+        return <RadioOption option={option} index={index} name={props.name} />;
         break;
       case "select":
         return <SelectOption {...{ option, index }} />;

@@ -46,7 +46,7 @@ export default function SelectElement(props: SelectElementProps) {
         onChange={handleChange}
         value={props.formElementsValues[props.orderVal]}
       >
-        <SpecialOptions name={props.name} type="select" options={props.options} />
+        <SpecialOptions type="select" options={props.options} />
       </select>
       <img
         className={`${styles.selectArrow} ${isSelectActive && styles.selectArrowActive}`}
