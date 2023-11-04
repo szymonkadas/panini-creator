@@ -1,19 +1,13 @@
 import { useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import styles from "./CheckboxOption.module.css";
-import { OptionProps } from "./OptionProps";
-
-export interface CheckboxOptionProps extends OptionProps {
-  name: string;
-  isBoolean: boolean;
-}
 
 export default function CheckboxOption(props: CheckboxOptionProps) {
   const { getValues } = useFormContext();
 
   const [isChecked, setIsChecked] = useState(() => {
     const currentValue = getValues(props.name);
-    return props.isBoolean
+    return props.isValBoolean
       ? (currentValue as boolean)
       : Array.isArray(currentValue)
       ? currentValue.includes(props.option)
@@ -29,7 +23,7 @@ export default function CheckboxOption(props: CheckboxOptionProps) {
 
   const handleUserCheckToggle = () => {
     const value = getValues(props.name);
-    if (props.isBoolean) {
+    if (props.isValBoolean) {
       setValue(props.name, !value);
     } else {
       if (Array.isArray(value)) {

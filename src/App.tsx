@@ -1,20 +1,13 @@
-import { useState } from "react";
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import "./App.css";
 import Layout from "./pages/Layout";
 import PaniniCreator from "./pages/PaniniCreator";
 import SplashScreenLayout from "./pages/SplashScreenLayout";
 
-export type SetOrderData = (val: object) => void;
-
 function App() {
-  const [orderData, setOrderData] = useState<object>({});
-  const handleSetOrderData: SetOrderData = (val: object) => {
-    setOrderData(val);
-  };
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<Layout setOrderData={handleSetOrderData} />}>
+      <Route path="/" element={<Layout />}>
         <Route
           index
           element={

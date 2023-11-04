@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import getInitialFormValues from "../../../utils/getInitialFormValues";
 import styles from "./FormSection.module.css";
 import { FormSectionProps } from "./FormSectionProps";
 import FormSectionTemplate from "./FormSectionTemplate";
@@ -9,9 +10,9 @@ import SelectElement from "./formSection/elements/SelectElement";
 export default function SelectSection(props: FormSectionProps) {
   const { setValue, getValues } = useFormContext();
   const [formElementsValues, setFormElementsValues] = useState(
-    Array.isArray(getValues(props.name)) ? [...getValues(props.name)] : [getValues(props.name)] || [props.options[0]]
+    getInitialFormValues(getValues, props.name, props.options[0])
   );
-  const [areRemovalsActive, setAreRemovalsActive] = useState(formElementsValues.length > 0 ? true : false);
+  const [areRemovalsActive, setAreRemovalsActive] = useState(formElementsValues.length > 0);
   // control values in form
   useEffect(() => {
     if (props.removable) {

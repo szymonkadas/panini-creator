@@ -4,15 +4,6 @@ import updateArrayStateVal from "../../../../../utils/updateArrayStateVal";
 import SpecialOptions from "../SpecialOptions";
 import styles from "./SelectElement.module.css";
 
-type SelectElementProps = {
-  name: string;
-  options: string[];
-  formElementsValues: string[];
-  setFormElementsValues: React.Dispatch<React.SetStateAction<string[]>>;
-  orderVal: number;
-  defaultVal?: string;
-};
-
 export default function SelectElement(props: SelectElementProps) {
   const { control } = useFormContext();
   const [isSelectActive, setIsSelectActive] = useState(false);

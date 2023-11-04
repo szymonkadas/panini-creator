@@ -1,12 +1,5 @@
 import styles from "./Circle.module.css";
 
-type CircleProps = {
-  columnLayout: boolean;
-  shouldTransition: boolean;
-  defaultPos: boolean;
-  children?: React.ReactNode;
-};
-
 export default function Circle(props: CircleProps) {
   // const defaultStyle = props.defaultPos ? styles.default : styles.transformed;
   let defaultStyle = "";

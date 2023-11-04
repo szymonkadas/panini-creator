@@ -1,19 +1,15 @@
-import { ReactNode, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import getInitialFormValues from "../../../utils/getInitialFormValues";
 import styles from "./FormSection.module.css";
-import { FormSectionProps } from "./FormSectionProps";
 import FormSectionTemplate from "./FormSectionTemplate";
 import Removals from "./formSection/Removals";
 import SwipeElement from "./formSection/elements/SwipeElement";
 
-type SwipeSectionProps = FormSectionProps & {
-  children?: ReactNode;
-};
-
 export default function SwipeSection(props: SwipeSectionProps) {
   const { setValue, getValues } = useFormContext();
   const [formElementsValues, setFormElementsValues] = useState(
-    Array.isArray(getValues(props.name)) ? [...getValues(props.name)] : [getValues(props.name)] || [props.options[0]]
+    getInitialFormValues(getValues, props.name, props.options[0])
   );
   const [areRemovalsActive, setAreRemovalsActive] = useState(formElementsValues.length > 0 ? true : false);
   // control values in form

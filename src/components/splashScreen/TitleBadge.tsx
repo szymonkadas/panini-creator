@@ -1,12 +1,5 @@
 import styles from "./TitleBadge.module.css";
 
-type TitleBadgeProps = {
-  shouldTransition: boolean;
-  handleClick: () => void;
-  title?: string;
-  actionDesc?: string;
-};
-
 export default function TitleBadge(props: TitleBadgeProps) {
   return (
     <div className={`${styles.titleBadge} ${props.shouldTransition && styles.titleBadgeEscape}`}>

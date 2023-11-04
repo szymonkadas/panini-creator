@@ -3,28 +3,6 @@ import CheckboxOption from "./options/CheckboxOption";
 import RadioOption from "./options/RadioOption";
 import SelectOption from "./options/SelectOption";
 
-type SpecialOptionsProps =
-  | {
-      type: "checkboxButton";
-      options: string[];
-      name: string;
-    }
-  | {
-      type: "checkbox";
-      options: string[];
-      name: string;
-      isBoolean: boolean;
-    }
-  | {
-      type: "select";
-      options: string[];
-    }
-  | {
-      type: "radio";
-      options: string[];
-      name: string;
-    };
-
 export default function SpecialOptions(props: SpecialOptionsProps) {
   const options = props.options.map((option, index) => {
     switch (props.type) {
@@ -32,7 +10,9 @@ export default function SpecialOptions(props: SpecialOptionsProps) {
         return <CheckboxButtonOption {...{ option: option, index: index, name: props.name }} />;
         break;
       case "checkbox":
-        return <CheckboxOption {...{ option: option, index: index, name: props.name, isBoolean: props.isBoolean }} />;
+        return (
+          <CheckboxOption {...{ option: option, index: index, name: props.name, isValBoolean: props.isValBoolean }} />
+        );
         break;
       case "radio":
         return <RadioOption option={option} index={index} name={props.name} />;

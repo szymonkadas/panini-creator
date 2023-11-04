@@ -4,14 +4,6 @@ import styles from "./SplashScreen.module.css";
 import Circle from "./splashScreen/Circle";
 import TitleBadge from "./splashScreen/TitleBadge";
 
-type SplashScreenProps = {
-  shouldTransition: boolean;
-  defaultPos: boolean;
-  navTo: string;
-  title?: string;
-  actionDesc?: string;
-};
-
 export default function SplashScreen(props: SplashScreenProps) {
   // delay and this state are neccessary for transition applied on route transition, so the animation still happens.
   const [isDefaultPositionOn, setIsDefaultPositionOn] = useState(props.defaultPos);

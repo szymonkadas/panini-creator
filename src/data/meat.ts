@@ -1,1 +1,1 @@
-export const meatVariants = ['SALAMI', "HAM", "BACON", "CHICKEN"]
+export const meatVariants = ["SALAMI", "HAM", "BACON", "CHICKEN"] as const;
