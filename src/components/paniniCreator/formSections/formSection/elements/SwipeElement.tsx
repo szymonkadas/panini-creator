@@ -38,7 +38,7 @@ export default function SwipeOption(props: SwipeElementProps) {
       <label className={styles.label}>
         {props.children}
         {props.options[currentOption]}
-        <input className={styles.swipeOption} type="text" readOnly {...register} />
+        <input className={styles.swipeOption} type="text" readOnly {...register(props.name)} />
       </label>
       <button type="button" className={styles.swipeOptionRightButton} onClick={handleOptionIncrease}>
         right

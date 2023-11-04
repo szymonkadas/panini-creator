@@ -1,6 +1,7 @@
 type SelectElementProps = {
   name: string;
   options: readonly string[];
+  val: Record<"id", string>;
 } & (
   | {
       index: number;

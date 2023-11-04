@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
+import isActiveToggle from "../../../utils/isActiveToggle";
 import styles from "./FormSection.module.css";
 import FormSectionTemplate from "./FormSectionTemplate";
 import Removals from "./formSection/Removals";
@@ -31,20 +32,17 @@ export default function MultiSwipeSection(props: MultiSwipeSectionProps) {
     });
   }, [fields.length, props.name, props.options]);
 
-  const handleActiveToggle = () => {
-    fields.length > 0 ? remove() : prepareInitialField();
-  };
-  const prepareInitialField = () => {
-    append(props.options[0]);
+  const handleIsActiveToggle = () => {
+    isActiveToggle(fields, append, props.options[0], remove);
   };
 
   return (
     <FormSectionTemplate title={props.title}>
       <Removals
         isActive={fields.length > 0}
-        toggleActive={handleActiveToggle}
+        toggleActive={handleIsActiveToggle}
         defaultVal={props.options[0]}
-        currentLength={fields.length}
+        fieldsCurrentLength={fields.length}
         append={append}
         remove={remove}
         maxElements={props.maxElements}

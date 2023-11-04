@@ -28,7 +28,7 @@ type RemovalsProps = {
   isActive: boolean;
   maxElements: number;
   defaultVal: string;
-  currentLength: number;
+  fieldsCurrentLength: number;
   append: UseFieldArrayAppend<FieldValues, string>;
   remove: UseFieldArrayRemove;
   toggleActive: () => void;

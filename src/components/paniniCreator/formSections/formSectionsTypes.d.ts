@@ -31,3 +31,7 @@ type MultiSwipeSectionProps = SwipeSectionProps & {
 type CheckboxSectionProps = Omit<FormSectionProps, "removable"> & {
   isValBoolean: boolean;
 };
+
+type SelectSectionProps = Omit<FormSectionProps, "removable"> & {
+  maxElements: number;
+};

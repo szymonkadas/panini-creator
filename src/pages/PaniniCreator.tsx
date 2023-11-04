@@ -6,6 +6,7 @@ import FormCard from "../components/paniniCreator/FormCard";
 import CheckboxSection from "../components/paniniCreator/formSections/CheckboxSection";
 import MultiSwipeSection from "../components/paniniCreator/formSections/MultiSwipeSection";
 import RadioSection from "../components/paniniCreator/formSections/RadioSection";
+import SelectSection from "../components/paniniCreator/formSections/SelectSection";
 import SwipeSection from "../components/paniniCreator/formSections/SwipeSection";
 import TextSection from "../components/paniniCreator/formSections/TextSection";
 import { breadVariants } from "../data/bread";
@@ -113,20 +114,18 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
             <SwipeSection name={PaniniNames.bread} title="bread" options={breadVariants}>
               <img src="/src/images/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img>
             </SwipeSection>
-            {/* <SelectSection
-              removable={PaniniFormSectionMaxElements.cheese ? true : false}
+            <SelectSection
               name={PaniniNames.cheese}
               title="cheese"
               options={cheeseVariants}
               maxElements={PaniniFormSectionMaxElements.cheese}
-            ></SelectSection> */}
-            {/* <SelectSection
-              removable={true}
+            ></SelectSection>
+            <SelectSection
               name={PaniniNames.meat}
               title="meat"
               options={meatVariants}
               maxElements={PaniniFormSectionMaxElements.meat}
-            ></SelectSection> */}
+            ></SelectSection>
             <MultiSwipeSection
               name={PaniniNames.dressing}
               title="dressing"
@@ -142,13 +141,12 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
         </FormCard>
         <FormCard title="Configure Extras">
           <div className={styles.formSections}>
-            {/* <SelectSection
-              removable={true}
+            <SelectSection
               name={PaniniNames.egg}
               title="egg"
               options={eggVariants}
               maxElements={PaniniFormSectionMaxElements.egg}
-            ></SelectSection> */}
+            ></SelectSection>
             {/* <CheckboxSection
               name={PaniniNames.spreads}
               title="spread"
