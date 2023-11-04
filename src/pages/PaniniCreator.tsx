@@ -19,6 +19,7 @@ import { spreadVariant } from "../data/spread";
 import { toppingVariant } from "../data/topping";
 import { vegetableVariant } from "../data/vegetable";
 import styles from "./PaniniCreator.module.css";
+import { PaniniFormSectionMaxElements, PaniniNames } from "./enums";
 
 const apiKey = process.env.VITE_APP_API_KEY;
 const apiUrl = process.env.VITE_APP_API_URL;
