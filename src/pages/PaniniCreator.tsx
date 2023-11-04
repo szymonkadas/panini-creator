@@ -3,10 +3,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import FormCard from "../components/paniniCreator/FormCard";
-import CheckboxButtonSection from "../components/paniniCreator/formSections/CheckboxButtonSection";
 import CheckboxSection from "../components/paniniCreator/formSections/CheckboxSection";
+import MultiSwipeSection from "../components/paniniCreator/formSections/MultiSwipeSection";
 import RadioSection from "../components/paniniCreator/formSections/RadioSection";
-import SelectSection from "../components/paniniCreator/formSections/SelectSection";
 import SwipeSection from "../components/paniniCreator/formSections/SwipeSection";
 import TextSection from "../components/paniniCreator/formSections/TextSection";
 import { breadVariants } from "../data/bread";
@@ -19,7 +18,7 @@ import { spreadVariant } from "../data/spread";
 import { toppingVariant } from "../data/topping";
 import { vegetableVariant } from "../data/vegetable";
 import styles from "./PaniniCreator.module.css";
-import { PaniniNames } from "./enums";
+import { PaniniFormSectionMaxElements, PaniniNames, formFieldVariantsMap } from "./formMappedData";
 
 const apiKey = process.env.VITE_APP_API_KEY;
 const apiUrl = process.env.VITE_APP_API_URL;
@@ -35,29 +34,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
   const resetOrderData = () => {
     console.log("reset");
   };
-  const formFieldVariantsMap = {
-    [PaniniNames.bread]: breadVariants,
-    [PaniniNames.cheese]: cheeseVariants,
-    [PaniniNames.meat]: meatVariants,
-    [PaniniNames.dressing]: dressingVariants,
-    [PaniniNames.vegetables]: vegetableVariant,
-    [PaniniNames.egg]: eggVariants,
-    [PaniniNames.spreads]: spreadVariant,
-    [PaniniNames.serving]: servingVariant,
-    [PaniniNames.topping]: toppingVariant,
-    [PaniniNames.sandwichName]: [
-      ...breadVariants,
-      ...cheeseVariants,
-      ...meatVariants,
-      ...vegetableVariant,
-      ...eggVariants,
-      ...spreadVariant,
-      ...servingVariant,
-      ...toppingVariant,
-    ], // No specific variant provided for sandwichName, setting it as null for demonstration
-    [PaniniNames.cutlery]: [true, false],
-    [PaniniNames.napkins]: [true, false],
-  };
+
   const randomizeOrderData = () => {
     const getRandomVal = (array: readonly string[] | boolean[]) => array[Math.floor(Math.random() * array.length)];
     for (const [nameKey, nameVal] of Object.entries(PaniniNames)) {
@@ -88,31 +65,33 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
   };
 
   const handleSave = (formValues: SandwichPayload) => {
-    if (apiUrl && apiKey) {
-      fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `${apiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formValues),
-      })
-        .then((response) =>
-          response.json().then((data) => {
-            redirectUserOnSuccess(data.imageUrl, formValues.sandwichName);
-          })
-        )
-        .catch((error) => console.error("Error:", error));
-      return;
-    } else {
-      console.error("internal communication api error.");
-    }
+    // if (apiUrl && apiKey) {
+    //   fetch(apiUrl, {
+    //     method: "POST",
+    //     headers: {
+    //       Authorization: `${apiKey}`,
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(formValues),
+    //   })
+    //     .then((response) =>
+    //       response.json().then((data) => {
+    //         redirectUserOnSuccess(data.imageUrl, formValues.sandwichName);
+    //       })
+    //     )
+    //     .catch((error) => console.error("Error:", error));
+    //   return;
+    // } else {
+    //   console.error("internal communication api error.");
+    // }
+    console.log(formValues);
   };
 
   const redirectUserOnSuccess = (imageUrl: string, fileName: string) => {
     navigate(`${props.navTo}`, { state: { imageUrl, fileName } });
   };
-
+  const values = methods.getValues();
+  console.log(values);
   return (
     <FormProvider {...methods}>
       <form
@@ -131,52 +110,51 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
         </div>
         <FormCard title="Configure Base">
           <div className={styles.formSections}>
-            <SwipeSection removable={false} name={PaniniNames.bread} title="bread" options={breadVariants}>
+            <SwipeSection name={PaniniNames.bread} title="bread" options={breadVariants}>
               <img src="/src/images/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img>
             </SwipeSection>
-            <SelectSection
+            {/* <SelectSection
               removable={PaniniFormSectionMaxElements.cheese ? true : false}
               name={PaniniNames.cheese}
               title="cheese"
               options={cheeseVariants}
               maxElements={PaniniFormSectionMaxElements.cheese}
-            ></SelectSection>
-            <SelectSection
+            ></SelectSection> */}
+            {/* <SelectSection
               removable={true}
               name={PaniniNames.meat}
               title="meat"
               options={meatVariants}
               maxElements={PaniniFormSectionMaxElements.meat}
-            ></SelectSection>
-            <SwipeSection
-              removable={true}
+            ></SelectSection> */}
+            <MultiSwipeSection
               name={PaniniNames.dressing}
               title="dressing"
               options={dressingVariants}
               maxElements={PaniniFormSectionMaxElements.dressing}
-            ></SwipeSection>
-            <CheckboxButtonSection
+            ></MultiSwipeSection>
+            {/* <CheckboxButtonSection
               name={PaniniNames.vegetables}
               title="vegetables"
               options={vegetableVariant}
-            ></CheckboxButtonSection>
+            ></CheckboxButtonSection> */}
           </div>
         </FormCard>
         <FormCard title="Configure Extras">
           <div className={styles.formSections}>
-            <SelectSection
+            {/* <SelectSection
               removable={true}
               name={PaniniNames.egg}
               title="egg"
               options={eggVariants}
               maxElements={PaniniFormSectionMaxElements.egg}
-            ></SelectSection>
-            <CheckboxSection
+            ></SelectSection> */}
+            {/* <CheckboxSection
               name={PaniniNames.spreads}
               title="spread"
               options={spreadVariant}
               isValBoolean={false}
-            ></CheckboxSection>
+            ></CheckboxSection> */}
             <RadioSection name={PaniniNames.serving} title="serving" options={servingVariant}></RadioSection>
             <CheckboxSection
               name={PaniniNames.topping}
@@ -258,11 +236,4 @@ const SandwichDefaultVals: SandwichPayload = {
     serving: servingVariant[1],
     topping: null,
   },
-};
-
-const PaniniFormSectionMaxElements: PaniniFormSectionMaxElements = {
-  cheese: 3,
-  meat: 2,
-  dressing: 3,
-  egg: 3,
 };

@@ -1,33 +1,31 @@
 import { useState } from "react";
-import { useController, useFormContext } from "react-hook-form";
-import updateArrayStateVal from "../../../../../utils/updateArrayStateVal";
+import { useFormContext } from "react-hook-form";
 import styles from "./SwipeElement.module.css";
 
 export default function SwipeOption(props: SwipeElementProps) {
-  const { control } = useFormContext();
+  const { getValues, register, setValue } = useFormContext();
+  const currVal = props.index !== undefined ? getValues(props.name)[props.index] : getValues(props.name);
+
   const [currentOption, setCurrentOption] = useState(
-    props.defaultVal ? props.options.findIndex((val) => val === props.defaultVal) : 0
+    props.options.findIndex((val) => {
+      return val === currVal;
+    })
   );
-  const { field } = useController({
-    name: props.name,
-    control: control,
-    defaultValue: props.options[currentOption],
-  });
 
   const handleOptionDecrease = () => {
     if (currentOption > 0) {
-      props.setFormElementsValues((prev) =>
-        updateArrayStateVal(prev, props.orderVal, props.options[currentOption - 1])
-      );
+      props?.update
+        ? props.update(props?.index, props.options[currentOption - 1])
+        : setValue(props.name, props.options[currentOption - 1]);
       setCurrentOption((prev) => prev - 1);
     }
   };
 
   const handleOptionIncrease = () => {
     if (currentOption < props.options.length - 1) {
-      props.setFormElementsValues((prev) =>
-        updateArrayStateVal(prev, props.orderVal, props.options[currentOption + 1])
-      );
+      props?.update
+        ? props?.update(props.index, props.options[currentOption + 1])
+        : setValue(props.name, props.options[currentOption + 1]);
       setCurrentOption((prev) => prev + 1);
     }
   };
@@ -40,7 +38,7 @@ export default function SwipeOption(props: SwipeElementProps) {
       <label className={styles.label}>
         {props.children}
         {props.options[currentOption]}
-        <input className={styles.swipeOption} type="text" readOnly {...field} />
+        <input className={styles.swipeOption} type="text" readOnly {...register} />
       </label>
       <button type="button" className={styles.swipeOptionRightButton} onClick={handleOptionIncrease}>
         right

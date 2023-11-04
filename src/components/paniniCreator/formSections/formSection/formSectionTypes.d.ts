@@ -1,5 +1,3 @@
-import React from "react";
-
 type BaseSpecialOptionsProps = {
   options: readonly string[];
 };
@@ -30,7 +28,8 @@ type RemovalsProps = {
   isActive: boolean;
   maxElements: number;
   defaultVal: string;
-  formElementsValues: string[];
-  setFormElementsValues: React.Dispatch<React.SetStateAction<string[]>>;
+  currentLength: number;
+  append: UseFieldArrayAppend<FieldValues, string>;
+  remove: UseFieldArrayRemove;
   toggleActive: () => void;
 };

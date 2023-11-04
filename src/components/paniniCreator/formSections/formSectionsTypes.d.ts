@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 type FormSectionProps =
   | {
       removable: true;
@@ -19,13 +18,14 @@ type FormSectionTemplateProps = {
   children: ReactNode;
 };
 
-interface TextSectionProps extends Omit<FormSectionProps, "options" | "removable"> {
-  removable?: never;
-  options?: never;
-}
+type TextSectionProps = Omit<FormSectionProps, "options" | "removable">;
 
-type SwipeSectionProps = FormSectionProps & {
+type SwipeSectionProps = Omit<FormSectionProps, "removable"> & {
   children?: ReactNode;
+};
+
+type MultiSwipeSectionProps = SwipeSectionProps & {
+  maxElements: number;
 };
 
 type CheckboxSectionProps = Omit<FormSectionProps, "removable"> & {
