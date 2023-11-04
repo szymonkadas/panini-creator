@@ -1,11 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import styles from "./FormSection.module.css";
-import { FormSectionProps } from "./FormSectionProps";
 import FormSectionTemplate from "./FormSectionTemplate";
-interface TextSectionProps extends Omit<FormSectionProps, "options" | "removable"> {
-  removable?: never;
-  options?: never;
-}
+
 export default function TextSection(props: TextSectionProps) {
   const { register, formState } = useFormContext();
   return (

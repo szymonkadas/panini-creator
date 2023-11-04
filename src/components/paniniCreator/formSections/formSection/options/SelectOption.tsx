@@ -1,5 +1,3 @@
-import { OptionProps } from "./OptionProps";
-
 export default function SelectOption(props: OptionProps) {
   return (
     <option

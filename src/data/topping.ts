@@ -1,1 +1,1 @@
-export const toppingVariant = ["SESAME"]
+export const toppingVariant = ["SESAME"] as const;

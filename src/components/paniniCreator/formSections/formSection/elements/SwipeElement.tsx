@@ -1,18 +1,9 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import updateArrayStateVal from "../../../../../utils/updateArrayStateVal";
 import styles from "./SwipeElement.module.css";
 
-type SwipeSectionProps = {
-  options: string[];
-  name: string;
-  setFormElementsValues: React.Dispatch<React.SetStateAction<string[]>>;
-  orderVal: number;
-  defaultVal?: string;
-  children?: ReactNode;
-};
-
-export default function SwipeOption(props: SwipeSectionProps) {
+export default function SwipeOption(props: SwipeElementProps) {
   const { control } = useFormContext();
   const [currentOption, setCurrentOption] = useState(
     props.defaultVal ? props.options.findIndex((val) => val === props.defaultVal) : 0

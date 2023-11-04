@@ -1,1 +1,1 @@
-export const eggVariants = ['FRIED EGG', "OMELET", "SCRAMBLED EGG", "POACHED EGG"]
+export const eggVariants = ["FRIED EGG", "OMELET", "SCRAMBLED EGG", "POACHED EGG"] as const;

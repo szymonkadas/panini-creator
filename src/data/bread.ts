@@ -1,1 +1,1 @@
-export const breadVariants = ['WHEAT', "FULL GRAIN"]
+export const breadVariants = ["WHEAT", "FULL GRAIN"] as const;

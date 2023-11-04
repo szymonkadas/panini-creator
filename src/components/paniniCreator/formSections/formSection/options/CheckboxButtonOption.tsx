@@ -1,12 +1,8 @@
 import { useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import styles from "./CheckboxButtonOption.module.css";
-import { OptionProps } from "./OptionProps";
-interface CheckboxButtonOptionProps extends OptionProps {
-  name: string;
-}
 
-export default function CheckboxButtonOption(props: CheckboxButtonOptionProps) {
+export default function CheckboxButtonOption(props: NamedOptionProps) {
   const { getValues } = useFormContext();
   const checkedItems: string[] = getValues(props.name);
   const [isChecked, setIsChecked] = useState(checkedItems.includes(props.option));

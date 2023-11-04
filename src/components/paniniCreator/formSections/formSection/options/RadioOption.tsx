@@ -1,12 +1,7 @@
 import { useController, useFormContext } from "react-hook-form";
-import { OptionProps } from "./OptionProps";
 import styles from "./RadioOption.module.css";
 
-interface RadioOptionProps extends OptionProps {
-  name: string;
-}
-
-export default function RadioOption(props: RadioOptionProps) {
+export default function RadioOption(props: NamedOptionProps) {
   const { getValues } = useFormContext();
   // for styling purposes
   const value = getValues(props.name);

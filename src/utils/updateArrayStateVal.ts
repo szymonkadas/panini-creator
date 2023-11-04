@@ -1,4 +1,4 @@
-export default function updateArrayStateVal(prevVals: any[], indexToChange: number, val: any) {
+export default function updateArrayStateVal(prevVals: string[], indexToChange: number, val: string) {
   prevVals[indexToChange] = val;
   const copy = [...prevVals];
   return copy;

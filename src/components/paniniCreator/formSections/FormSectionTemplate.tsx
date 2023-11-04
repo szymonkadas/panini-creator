@@ -1,10 +1,4 @@
-import { ReactNode } from "react";
 import styles from "./FormSection.module.css";
-
-type FormSectionTemplateProps = {
-  title: string;
-  children: ReactNode;
-};
 
 export default function FormSectionTemplate(props: FormSectionTemplateProps) {
   return (
