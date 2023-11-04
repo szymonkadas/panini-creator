@@ -49,9 +49,11 @@ enum PaniniNames {
   napkins = "napkins",
 }
 
-enum PaniniFormSectionMaxElements {
-  cheese = 3,
-  meat = 2,
-  dressing = 3,
-  egg = 3,
+interface PaniniFormSectionMaxElements {
+  [key: string]: number;
+  cheese: number;
+  meat: number;
+  dressing: number;
+  egg: number;
+  // Add more properties as needed
 }

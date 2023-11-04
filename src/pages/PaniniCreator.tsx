@@ -34,6 +34,57 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
   const resetOrderData = () => {
     console.log("reset");
   };
+  const formFieldVariantsMap = {
+    [PaniniNames.bread]: breadVariants,
+    [PaniniNames.cheese]: cheeseVariants,
+    [PaniniNames.meat]: meatVariants,
+    [PaniniNames.dressing]: dressingVariants,
+    [PaniniNames.vegetables]: vegetableVariant,
+    [PaniniNames.egg]: eggVariants,
+    [PaniniNames.spreads]: spreadVariant,
+    [PaniniNames.serving]: servingVariant,
+    [PaniniNames.topping]: toppingVariant,
+    [PaniniNames.sandwichName]: [
+      ...breadVariants,
+      ...cheeseVariants,
+      ...meatVariants,
+      ...vegetableVariant,
+      ...eggVariants,
+      ...spreadVariant,
+      ...servingVariant,
+      ...toppingVariant,
+    ], // No specific variant provided for sandwichName, setting it as null for demonstration
+    [PaniniNames.cutlery]: [true, false],
+    [PaniniNames.napkins]: [true, false],
+  };
+  const randomizeOrderData = () => {
+    const getRandomVal = (array: readonly string[] | boolean[]) => array[Math.floor(Math.random() * array.length)];
+    for (const [nameKey, nameVal] of Object.entries(PaniniNames)) {
+      const currentVal = methods.getValues(nameVal);
+      const options = formFieldVariantsMap[nameVal];
+
+      if (Array.isArray(currentVal)) {
+        const newVal: (string | boolean)[] = [];
+        if (PaniniFormSectionMaxElements.hasOwnProperty(nameKey)) {
+          const fieldCap = PaniniFormSectionMaxElements[nameKey];
+          const randomCap = Math.round(Math.random() * fieldCap);
+          for (let i = 0; i < randomCap; i++) {
+            newVal.push(getRandomVal(options));
+          }
+        } else {
+          const randomCap = Math.round(Math.random() * (options.length - 1));
+          for (let i = 0; i < randomCap; i++) {
+            newVal.push(getRandomVal(options));
+          }
+        }
+        // @ts-ignore
+        methods.setValue(nameVal, newVal);
+      } else {
+        const newVal = getRandomVal(options);
+        methods.setValue(nameVal, newVal);
+      }
+    }
+  };
 
   const handleSave = (formValues: SandwichPayload) => {
     if (apiUrl && apiKey) {
@@ -72,7 +123,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
       >
         <div className={styles.formsInterface}>
           <h2 className={styles.formsLabel}>Panini Creator</h2>
-          <button type="button" className={styles.button}>
+          <button type="button" className={styles.button} onClick={randomizeOrderData}>
             <img className={styles.diceIcon} src="/src/images/dices.svg" alt="dices icon"></img>
             Randomize Panini
           </button>
@@ -206,4 +257,11 @@ const SandwichDefaultVals: SandwichPayload = {
     serving: servingVariant[1],
     topping: null,
   },
+};
+
+const PaniniFormSectionMaxElements: PaniniFormSectionMaxElements = {
+  cheese: 3,
+  meat: 2,
+  dressing: 3,
+  egg: 3,
 };
