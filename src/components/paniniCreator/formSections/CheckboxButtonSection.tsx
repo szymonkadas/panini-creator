@@ -2,7 +2,7 @@ import styles from "./FormSection.module.css";
 import FormSectionTemplate from "./FormSectionTemplate";
 import SpecialOptions from "./formSection/SpecialOptions";
 
-export default function CheckboxButtonSection(props: Omit<FormSectionProps, "removable">) {
+export default function CheckboxButtonSection(props: CheckboxSectionProps) {
   return (
     <FormSectionTemplate title={props.title}>
       <div className={`${styles.optionsWrapper} ${styles.checkboxButtonsWrapper}`}>

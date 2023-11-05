@@ -3,6 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import FormCard from "../components/paniniCreator/FormCard";
+import CheckboxButtonSection from "../components/paniniCreator/formSections/CheckboxButtonSection";
 import CheckboxSection from "../components/paniniCreator/formSections/CheckboxSection";
 import MultiSwipeSection from "../components/paniniCreator/formSections/MultiSwipeSection";
 import RadioSection from "../components/paniniCreator/formSections/RadioSection";
@@ -36,6 +37,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
     console.log("reset");
   };
 
+  // zastanowić się co z duplikatami w checkboxach + sezam. Mimo wszystko chyba będzie potrzebny refactor ehu
   const randomizeOrderData = () => {
     const getRandomVal = (array: readonly string[] | boolean[]) => array[Math.floor(Math.random() * array.length)];
     for (const [nameKey, nameVal] of Object.entries(PaniniNames)) {
@@ -132,11 +134,11 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
               options={dressingVariants}
               maxElements={PaniniFormSectionMaxElements.dressing}
             ></MultiSwipeSection>
-            {/* <CheckboxButtonSection
+            <CheckboxButtonSection
               name={PaniniNames.vegetables}
               title="vegetables"
               options={vegetableVariant}
-            ></CheckboxButtonSection> */}
+            ></CheckboxButtonSection>
           </div>
         </FormCard>
         <FormCard title="Configure Extras">
@@ -147,36 +149,16 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
               options={eggVariants}
               maxElements={PaniniFormSectionMaxElements.egg}
             ></SelectSection>
-            {/* <CheckboxSection
-              name={PaniniNames.spreads}
-              title="spread"
-              options={spreadVariant}
-              isValBoolean={false}
-            ></CheckboxSection> */}
+            <CheckboxSection name={PaniniNames.spreads} title="spread" options={spreadVariant}></CheckboxSection>
             <RadioSection name={PaniniNames.serving} title="serving" options={servingVariant}></RadioSection>
-            <CheckboxSection
-              name={PaniniNames.topping}
-              title="topping"
-              options={toppingVariant}
-              isValBoolean={false}
-            ></CheckboxSection>
+            <CheckboxSection name={PaniniNames.topping} title="topping" options={toppingVariant}></CheckboxSection>
           </div>
         </FormCard>
         <FormCard title="Finalize Order">
           <div className={styles.formSections}>
             <TextSection name={PaniniNames.sandwichName} title="name panini"></TextSection>
-            <CheckboxSection
-              name={PaniniNames.cutlery}
-              title="cutlery"
-              options={["Add to order"]}
-              isValBoolean={true}
-            ></CheckboxSection>
-            <CheckboxSection
-              name={PaniniNames.napkins}
-              title="napkins"
-              options={["Add to order"]}
-              isValBoolean={true}
-            ></CheckboxSection>
+            <CheckboxSection name={PaniniNames.cutlery} title="cutlery" options={["Add to order"]}></CheckboxSection>
+            <CheckboxSection name={PaniniNames.napkins} title="napkins" options={["Add to order"]}></CheckboxSection>
           </div>
           <div className={styles.formsSubmitInterfaceWrapper}>
             {/* <NavLink to={props.navTo} onClick={setOrderDataToTrue}> */}
@@ -190,7 +172,6 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
                 start again
               </button>
             </NavLink>
-            <input type="submit" value={"ehu"} />
           </div>
         </FormCard>
       </form>

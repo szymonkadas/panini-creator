@@ -1,13 +1,11 @@
 type FormSectionProps =
   | {
-      removable: true;
       maxElements: number;
       title: string;
       name: string;
       options: readonly string[];
     }
   | {
-      removable: false;
       title: string;
       name: string;
       options: readonly string[];
@@ -18,9 +16,9 @@ type FormSectionTemplateProps = {
   children: ReactNode;
 };
 
-type TextSectionProps = Omit<FormSectionProps, "options" | "removable">;
+type TextSectionProps = Omit<FormSectionProps, "options">;
 
-type SwipeSectionProps = Omit<FormSectionProps, "removable"> & {
+type SwipeSectionProps = FormSectionProps & {
   children?: ReactNode;
 };
 
@@ -28,10 +26,8 @@ type MultiSwipeSectionProps = SwipeSectionProps & {
   maxElements: number;
 };
 
-type CheckboxSectionProps = Omit<FormSectionProps, "removable"> & {
-  isValBoolean: boolean;
-};
+type CheckboxSectionProps = Omit<FormSectionProps, "maxElements">;
 
-type SelectSectionProps = Omit<FormSectionProps, "removable"> & {
+type SelectSectionProps = FormSectionProps & {
   maxElements: number;
 };

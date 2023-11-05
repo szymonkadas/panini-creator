@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import styles from "./CheckboxButtonOption.module.css";
 
@@ -6,6 +6,11 @@ export default function CheckboxButtonOption(props: NamedOptionProps) {
   const { getValues } = useFormContext();
   const checkedItems: string[] = getValues(props.name);
   const [isChecked, setIsChecked] = useState(checkedItems.includes(props.option));
+  useEffect(() => {
+    const isCurrentOptionChecked = checkedItems.includes(props.option);
+    if (isCurrentOptionChecked !== isChecked) setIsChecked(isCurrentOptionChecked);
+  }, [checkedItems, props.option]);
+
   const { setValue, control } = useFormContext();
   const { field } = useController({
     name: props.name,
@@ -14,7 +19,6 @@ export default function CheckboxButtonOption(props: NamedOptionProps) {
   });
 
   const handleUserCheckToggle = () => {
-    setIsChecked((prev) => !prev);
     const updatedItems = isChecked
       ? checkedItems.filter((item) => item !== props.option)
       : [...checkedItems, props.option];

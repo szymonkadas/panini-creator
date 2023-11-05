@@ -10,7 +10,6 @@ type CheckboxButtonProps = BaseSpecialOptionsProps & {
 type CheckboxProps = BaseSpecialOptionsProps & {
   type: "checkbox";
   name: string;
-  isValBoolean: boolean;
 };
 
 type SelectProps = BaseSpecialOptionsProps & {
