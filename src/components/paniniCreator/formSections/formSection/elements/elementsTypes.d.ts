@@ -1,6 +1,6 @@
 type SelectElementProps = {
   name: string;
-  options: string[];
+  options: readonly string[];
   formElementsValues: string[];
   setFormElementsValues: React.Dispatch<React.SetStateAction<string[]>>;
   orderVal: number;
@@ -8,5 +8,6 @@ type SelectElementProps = {
 };
 
 interface SwipeElementProps extends SelectElementProps {
+  formElementsValues?: never;
   children?: ReactNode;
 }
