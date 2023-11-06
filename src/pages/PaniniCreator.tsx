@@ -1,5 +1,7 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
-import { NavLink, useOutletContext } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { z } from "zod";
 import FormCard from "../components/paniniCreator/FormCard";
 import CheckboxButtonSection from "../components/paniniCreator/formSections/CheckboxButtonSection";
 import CheckboxSection from "../components/paniniCreator/formSections/CheckboxSection";
@@ -16,49 +18,24 @@ import { servingVariant } from "../data/serving";
 import { spreadVariant } from "../data/spread";
 import { toppingVariant } from "../data/topping";
 import { vegetableVariant } from "../data/vegetable";
-import { LayoutContext } from "./Layout";
 import styles from "./PaniniCreator.module.css";
-
-type PaniniCreatorProps = {
-  navTo: string;
-};
+import { PaniniFormSectionMaxElements, PaniniNames } from "./enums";
 
 export default function PaniniCreator(props: PaniniCreatorProps) {
-  const methods = useForm();
-  const { setOrderData } = useOutletContext() as LayoutContext;
+  const methods = useForm<SandwichPayload>({
+    defaultValues: SandwichDefaultVals,
+    resolver: zodResolver(SandwichPayload),
+  });
+
   const resetOrderData = () => {
-    setOrderData({});
-  };
-  // for now this will do.
-  const setOrderDataToTrue = () => {
-    setOrderData({ order: true });
+    console.log("reset");
   };
 
-  const handleSave = (formValues: any) => {
+  const handleSave = (formValues: SandwichPayload) => {
     console.log("D:");
     console.log(formValues);
     return;
   };
-
-  enum PaniniNames {
-    cheese = "cheese",
-    meat = "meat",
-    dressing = "dressing",
-    vegetables = "vegetables",
-    egg = "egg",
-    spread = "spread",
-    serving = "serving",
-    topping = "topping",
-    namePanini = "namePanini",
-    cutlery = "cutlery",
-    napkins = "napkins",
-  }
-  enum PaniniFormSectionMaxElements {
-    cheese = 3,
-    meat = 2,
-    dressing = 3,
-    egg = 3,
-  }
 
   return (
     <FormProvider {...methods}>
@@ -72,7 +49,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
         </div>
         <FormCard title="Configure Base">
           <div className={styles.formSections}>
-            <SwipeSection removable={false} name="bread" title="bread" options={breadVariants}>
+            <SwipeSection removable={false} name={PaniniNames.bread} title="bread" options={breadVariants}>
               <img src="/src/images/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img>
             </SwipeSection>
             <SelectSection
@@ -97,7 +74,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
               maxElements={PaniniFormSectionMaxElements.dressing}
             ></SwipeSection>
             <CheckboxButtonSection
-              name="vegetables"
+              name={PaniniNames.vegetables}
               title="vegetables"
               options={vegetableVariant}
             ></CheckboxButtonSection>
@@ -112,19 +89,39 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
               options={eggVariants}
               maxElements={PaniniFormSectionMaxElements.egg}
             ></SelectSection>
-            <CheckboxSection name="spread" title="spread" options={spreadVariant}></CheckboxSection>
-            <RadioSection name="serving" title="serving" options={servingVariant}></RadioSection>
-            <CheckboxSection name="topping" title="topping" options={toppingVariant}></CheckboxSection>
+            <CheckboxSection
+              name={PaniniNames.spreads}
+              title="spread"
+              options={spreadVariant}
+              isValBoolean={false}
+            ></CheckboxSection>
+            <RadioSection name={PaniniNames.serving} title="serving" options={servingVariant}></RadioSection>
+            <CheckboxSection
+              name={PaniniNames.topping}
+              title="topping"
+              options={toppingVariant}
+              isValBoolean={false}
+            ></CheckboxSection>
           </div>
         </FormCard>
         <FormCard title="Finalize Order">
           <div className={styles.formSections}>
-            <TextSection name={"name_panini"} title="name panini"></TextSection>
-            <CheckboxSection name="cutlery" title="cutlery" options={["Add to order"]}></CheckboxSection>
-            <CheckboxSection name="napkins" title="napkins" options={["Add to order"]}></CheckboxSection>
+            <TextSection name={PaniniNames.sandwichName} title="name panini"></TextSection>
+            <CheckboxSection
+              name={PaniniNames.cutlery}
+              title="cutlery"
+              options={["Add to order"]}
+              isValBoolean={true}
+            ></CheckboxSection>
+            <CheckboxSection
+              name={PaniniNames.napkins}
+              title="napkins"
+              options={["Add to order"]}
+              isValBoolean={true}
+            ></CheckboxSection>
           </div>
           <div className={styles.formsSubmitInterfaceWrapper}>
-            <NavLink to={props.navTo} onClick={setOrderDataToTrue}>
+            <NavLink to={props.navTo}>
               <label className={styles.formsSubmitLabel}>
                 place order or start again
                 <input type="submit" className={styles.formsSubmit} value={"place order"} />
@@ -142,3 +139,41 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
     </FormProvider>
   );
 }
+
+const SandwichPayload = z.object({
+  sandwichName: z.string().min(1).max(35),
+  cutlery: z.boolean(),
+  napkins: z.boolean(),
+  base: z.object({
+    bread: z.enum([...breadVariants]),
+    cheese: z.array(z.enum([...cheeseVariants])),
+    meat: z.array(z.enum([...meatVariants])),
+    dressing: z.array(z.enum([...dressingVariants])),
+    vegetables: z.array(z.enum([...vegetableVariant])),
+  }),
+  extras: z.object({
+    egg: z.array(z.enum([...eggVariants])),
+    spreads: z.array(z.enum([...spreadVariant])),
+    serving: z.enum([...servingVariant]),
+    topping: z.union([z.literal(toppingVariant[0]), z.null()]),
+  }),
+});
+
+const SandwichDefaultVals: SandwichPayload = {
+  sandwichName: "Default Panini",
+  cutlery: false,
+  napkins: false,
+  base: {
+    bread: breadVariants[1],
+    cheese: [cheeseVariants[4], cheeseVariants[1]],
+    meat: [],
+    dressing: [dressingVariants[0], dressingVariants[1]],
+    vegetables: [vegetableVariant[0], vegetableVariant[8], vegetableVariant[7]],
+  },
+  extras: {
+    egg: [eggVariants[0]],
+    spreads: [spreadVariant[0]],
+    serving: servingVariant[1],
+    topping: null,
+  },
+};

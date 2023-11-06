@@ -1,15 +1,10 @@
 import { Outlet } from "react-router-dom";
-import { SetOrderData } from "../App";
 import styles from "./Layout.module.css";
 
-export type LayoutContext = {
-  setOrderData: SetOrderData;
-};
-
-export default function Layout(props: LayoutContext) {
+export default function Layout() {
   return (
     <div className={styles.siteWrapper}>
-      <Outlet context={{ ...props }}></Outlet>
+      <Outlet></Outlet>
     </div>
   );
 }

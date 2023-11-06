@@ -1,1 +1,1 @@
-export const servingVariant = ['GRILLED', "WARM", "COLD"]
+export const servingVariant = ["GRILLED", "WARM", "COLD"] as const;

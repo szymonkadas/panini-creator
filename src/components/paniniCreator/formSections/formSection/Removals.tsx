@@ -1,15 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import styles from "./Removals.module.css";
 
-type RemovalsProps = {
-  isActive: boolean;
-  maxElements: number;
-  defaultVal: string;
-  formElementsValues: string[];
-  setFormElementsValues: React.Dispatch<React.SetStateAction<string[]>>;
-  toggleActive: () => void;
-};
-
 export default function Removals(props: RemovalsProps) {
   const [isAdditionPossible, setIsAdditionPossible] = useState(true);
   useEffect(() => {
@@ -47,6 +38,7 @@ export default function Removals(props: RemovalsProps) {
     props.setFormElementsValues((prev) => prev.filter((val, index) => index !== indexToDel));
     if (!isAdditionPossible) setIsAdditionPossible(true);
   };
+
   return (
     <div
       className={`${styles.removalsWrapper} ${
