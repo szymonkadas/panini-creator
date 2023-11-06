@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { get as lodashGet } from "lodash";
 import { useCallback } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import FormCard from "../components/paniniCreator/FormCard";
 import CheckboxButtonSection from "../components/paniniCreator/formSections/CheckboxButtonSection";
@@ -36,7 +36,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
   const navigate = useNavigate();
 
   const resetOrderData = () => {
-    console.log("reset");
+    methods.reset();
   };
 
   const randomizeOrderData = useCallback(() => {
@@ -165,17 +165,13 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
             <CheckboxSection name={PaniniNames.napkins} title="napkins" options={["Add to order"]}></CheckboxSection>
           </div>
           <div className={styles.formsSubmitInterfaceWrapper}>
-            {/* <NavLink to={props.navTo} onClick={setOrderDataToTrue}> */}
             <label className={styles.formsSubmitLabel}>
               place order or start again
               <input type="submit" className={styles.formsSubmit} value={"place order"} />
             </label>
-            {/* </NavLink> */}
-            <NavLink to="/panini_creator" onClick={resetOrderData} className={styles.formsResetNavLink}>
-              <button type="submit" className={styles.formsReset}>
-                start again
-              </button>
-            </NavLink>
+            <button type="button" className={styles.formsReset} onClick={resetOrderData}>
+              start again
+            </button>
           </div>
         </FormCard>
       </form>
