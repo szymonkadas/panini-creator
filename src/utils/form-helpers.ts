@@ -1,6 +1,6 @@
 import { FieldValues, UseFormGetValues } from "react-hook-form";
 
-export default function getInitialFormValues(
+export function getInitialFormValues(
   getValues: UseFormGetValues<FieldValues>,
   formElementName: string,
   backupOption: string
@@ -8,4 +8,8 @@ export default function getInitialFormValues(
   return Array.isArray(getValues(formElementName))
     ? [...getValues(formElementName)]
     : [getValues(formElementName)] || [backupOption];
+}
+
+export function updateValueAtIndex(prevVals: string[], indexToChange: number, val: string): string[] {
+  return prevVals.map((item, index) => (index === indexToChange ? val : item));
 }

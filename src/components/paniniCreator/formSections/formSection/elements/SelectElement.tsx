@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
-import updateArrayStateVal from "../../../../../utils/updateArrayStateVal";
+import { updateValueAtIndex } from "../../../../../utils/form-helpers";
 import SpecialOptions from "../SpecialOptions";
 import styles from "./SelectElement.module.css";
 
@@ -23,7 +23,7 @@ export default function SelectElement(props: SelectElementProps) {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    props.setFormElementsValues((prev) => updateArrayStateVal(prev, props.orderVal, event.target.value));
+    props.setFormElementsValues((prev) => updateValueAtIndex(prev, props.orderVal, event.target.value));
   };
 
   return (

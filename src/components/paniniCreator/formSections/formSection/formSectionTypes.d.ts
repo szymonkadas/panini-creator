@@ -1,5 +1,3 @@
-import React from "react";
-
 type BaseSpecialOptionsProps = {
   options: readonly string[];
 };

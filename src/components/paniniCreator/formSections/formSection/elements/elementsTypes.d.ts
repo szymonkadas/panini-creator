@@ -7,6 +7,7 @@ type SelectElementProps = {
   defaultVal?: string;
 };
 
-interface SwipeElementProps extends Omit<SelectElementProps, "formElementsValues"> {
-  children?: React.ReactNode;
+interface SwipeElementProps extends SelectElementProps {
+  formElementsValues?: never;
+  children?: ReactNode;
 }
