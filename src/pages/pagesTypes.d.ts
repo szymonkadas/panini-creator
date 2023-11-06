@@ -41,3 +41,7 @@ interface PaniniFormSectionMaxElements {
   egg: number;
   // Add more properties as needed
 }
+
+type FormField = readonly string[] | Array<boolean | (string | null)>;
+type MutableFormField = Array<string | boolean | (string | null)>;
+type MutableFormFieldSet = Set<string | boolean | (string | null)>;

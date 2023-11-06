@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { get as lodashGet } from "lodash";
 import { FormProvider, useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -20,7 +21,7 @@ import { spreadVariant } from "../data/spread";
 import { toppingVariant } from "../data/topping";
 import { vegetableVariant } from "../data/vegetable";
 import styles from "./PaniniCreator.module.css";
-import { PaniniFormSectionMaxElements, PaniniNames, formFieldVariantsMap } from "./formMappedData";
+import { PaniniFormSectionMaxElements, PaniniNames, PaniniNamesSets, formFieldVariantsMap } from "./formMappedData";
 
 const apiKey = process.env.VITE_APP_API_KEY;
 const apiUrl = process.env.VITE_APP_API_URL;
@@ -37,64 +38,66 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
     console.log("reset");
   };
 
-  // zastanowić się co z duplikatami w checkboxach + sezam. Mimo wszystko chyba będzie potrzebny refactor ehu
   const randomizeOrderData = () => {
-    const getRandomVal = (array: readonly string[] | boolean[]) => array[Math.floor(Math.random() * array.length)];
-    for (const [nameKey, nameVal] of Object.entries(PaniniNames)) {
-      const currentVal = methods.getValues(nameVal);
-      const options = formFieldVariantsMap[nameVal];
-
-      if (Array.isArray(currentVal)) {
-        const newVal: (string | boolean)[] = [];
-        if (PaniniFormSectionMaxElements.hasOwnProperty(nameKey)) {
-          const fieldCap = PaniniFormSectionMaxElements[nameKey];
-          const randomCap = Math.round(Math.random() * fieldCap);
-          for (let i = 0; i < randomCap; i++) {
-            newVal.push(getRandomVal(options));
-          }
-        } else {
-          const randomCap = Math.round(Math.random() * (options.length - 1));
-          for (let i = 0; i < randomCap; i++) {
-            newVal.push(getRandomVal(options));
-          }
-        }
-        // @ts-ignore
-        methods.setValue(nameVal, newVal);
-      } else {
-        const newVal = getRandomVal(options);
-        methods.setValue(nameVal, newVal);
-      }
+    function getRandomVal<T>(array: T[]): T {
+      return array[Math.floor(Math.random() * array.length)];
     }
+    const formValues: SandwichPayload = methods.getValues();
+
+    Object.entries(PaniniNames).forEach(([keyName, stringPath]: [string, PaniniNames]) => {
+      const val = lodashGet(formValues, stringPath);
+      const possibleValues = formFieldVariantsMap[stringPath];
+      const mutablePossibleValues: MutableFormField = [...possibleValues];
+      const optionsCap = Math.round(Math.random() * PaniniFormSectionMaxElements[keyName] || possibleValues.length);
+      if (Array.isArray(val)) {
+        if (PaniniNamesSets.has(stringPath)) {
+          const newVal: MutableFormFieldSet = new Set();
+          for (let i = 0; i < optionsCap; i++) {
+            newVal.add(getRandomVal(mutablePossibleValues));
+          }
+          // @ts-ignore Nie wiem jak sprawić by w obu przypadkach te ogólne typy były przyjmowane przez tamte literały.
+          methods.setValue(stringPath, Array.from(newVal));
+        } else {
+          const newVal: MutableFormField = [];
+          for (let i = 0; i < optionsCap; i++) {
+            newVal.push(getRandomVal(mutablePossibleValues));
+          }
+          // @ts-ignore
+          methods.setValue(stringPath, newVal);
+        }
+      } else {
+        const newVal = getRandomVal(mutablePossibleValues);
+        methods.setValue(stringPath, newVal);
+      }
+    });
   };
 
   const handleSave = (formValues: SandwichPayload) => {
-    // if (apiUrl && apiKey) {
-    //   fetch(apiUrl, {
-    //     method: "POST",
-    //     headers: {
-    //       Authorization: `${apiKey}`,
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(formValues),
-    //   })
-    //     .then((response) =>
-    //       response.json().then((data) => {
-    //         redirectUserOnSuccess(data.imageUrl, formValues.sandwichName);
-    //       })
-    //     )
-    //     .catch((error) => console.error("Error:", error));
-    //   return;
-    // } else {
-    //   console.error("internal communication api error.");
-    // }
-    console.log(formValues);
+    if (apiUrl && apiKey) {
+      fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          Authorization: `${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
+      })
+        .then((response) =>
+          response.json().then((data) => {
+            redirectUserOnSuccess(data.imageUrl, formValues.sandwichName);
+          })
+        )
+        .catch((error) => console.error("Error:", error));
+      return;
+    } else {
+      console.error("internal communication api error.");
+    }
   };
 
   const redirectUserOnSuccess = (imageUrl: string, fileName: string) => {
     navigate(`${props.navTo}`, { state: { imageUrl, fileName } });
   };
-  const values = methods.getValues();
-  console.log(values);
+
   return (
     <FormProvider {...methods}>
       <form

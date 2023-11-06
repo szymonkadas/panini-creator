@@ -23,6 +23,8 @@ export enum PaniniNames {
   napkins = "napkins",
 }
 
+export const PaniniNamesSets = new Set([PaniniNames.vegetables, PaniniNames.spreads]);
+
 export const formFieldVariantsMap = {
   [PaniniNames.bread]: breadVariants,
   [PaniniNames.cheese]: cheeseVariants,
@@ -32,7 +34,7 @@ export const formFieldVariantsMap = {
   [PaniniNames.egg]: eggVariants,
   [PaniniNames.spreads]: spreadVariant,
   [PaniniNames.serving]: servingVariant,
-  [PaniniNames.topping]: toppingVariant,
+  [PaniniNames.topping]: [...toppingVariant, null],
   [PaniniNames.sandwichName]: [
     ...breadVariants,
     ...cheeseVariants,
