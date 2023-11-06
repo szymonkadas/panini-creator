@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import isActiveToggle from "../../../utils/isActiveToggle";
+import { isActiveToggle } from "../../../utils/form-helpers";
 import styles from "./FormSection.module.css";
 import FormSectionTemplate from "./FormSectionTemplate";
 import Removals from "./formSection/Removals";

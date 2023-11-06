@@ -1,5 +1,6 @@
 import { FieldValues, UseFieldArrayAppend, UseFieldArrayRemove } from "react-hook-form";
-export default function isActiveToggle(
+
+export function isActiveToggle(
   fields: Record<"id", string>[],
   append: UseFieldArrayAppend<FieldValues, string>,
   appendWhat: string,

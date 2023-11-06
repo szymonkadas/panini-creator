@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { get as lodashGet } from "lodash";
+import { useCallback } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -38,7 +39,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
     console.log("reset");
   };
 
-  const randomizeOrderData = () => {
+  const randomizeOrderData = useCallback(() => {
     function getRandomVal<T>(array: T[]): T {
       return array[Math.floor(Math.random() * array.length)];
     }
@@ -70,7 +71,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
         methods.setValue(stringPath, newVal);
       }
     });
-  };
+  }, []);
 
   const handleSave = (formValues: SandwichPayload) => {
     if (apiUrl && apiKey) {
