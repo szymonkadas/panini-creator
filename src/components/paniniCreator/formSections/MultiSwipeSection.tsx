@@ -4,7 +4,7 @@ import { isActiveToggle } from "../../../utils/form-helpers";
 import styles from "./FormSection.module.css";
 import FormSectionTemplate from "./FormSectionTemplate";
 import Removals from "./formSection/Removals";
-import SwipeElement from "./formSection/elements/SwipeElement";
+import MultiSwipe from "./formSection/elements/MultiSwipe";
 
 export default function MultiSwipeSection(props: MultiSwipeSectionProps) {
   const { control } = useFormContext();
@@ -15,9 +15,9 @@ export default function MultiSwipeSection(props: MultiSwipeSectionProps) {
   const content = useMemo(() => {
     return fields.map((field, index, array) => {
       const swipe = (
-        <SwipeElement key={`${field.id}`} name={props.name} update={update} index={index} options={props.options}>
+        <MultiSwipe key={`${field.id}`} name={props.name} update={() => update} index={index} options={props.options}>
           {props?.children}
-        </SwipeElement>
+        </MultiSwipe>
       );
       return index < array.length - 1 ? (
         <>
