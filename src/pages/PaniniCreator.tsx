@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import { z } from "zod";
+import postOrderSandwich from "../Api";
 import FormCard from "../components/paniniCreator/FormCard";
 import CheckboxButtonSection from "../components/paniniCreator/formSections/CheckboxButtonSection";
 import CheckboxSection from "../components/paniniCreator/formSections/CheckboxSection";
@@ -23,9 +24,6 @@ import { toppingVariant } from "../data/topping";
 import { vegetableVariant } from "../data/vegetable";
 import styles from "./PaniniCreator.module.css";
 import { PaniniFormSectionMaxElements, PaniniNames, PaniniNamesSets, formFieldVariantsMap } from "./formMappedData";
-
-const apiKey = process.env.VITE_APP_API_KEY;
-const apiUrl = process.env.VITE_APP_API_URL;
 
 export default function PaniniCreator(props: PaniniCreatorProps) {
   const methods = useForm<SandwichPayload>({
@@ -73,41 +71,17 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
     });
   }, []);
 
-  const handleSave = (formValues: SandwichPayload) => {
-    if (apiUrl && apiKey) {
-      fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `${apiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formValues),
-      })
-        .then((response) =>
-          response.json().then((data) => {
-            redirectUserOnSuccess(data.imageUrl, formValues.sandwichName);
-          })
-        )
-        .catch((error) => console.error("Error:", error));
-      return;
-    } else {
-      console.error("internal communication api error.");
-    }
-  };
-
   const redirectUserOnSuccess = (imageUrl: string, fileName: string) => {
     navigate(`${props.navTo}`, { state: { imageUrl, fileName } });
   };
 
+  const handleSave = (formValues: SandwichPayload) => {
+    postOrderSandwich(formValues, redirectUserOnSuccess);
+  };
+
   return (
     <FormProvider {...methods}>
-      <form
-        className={styles.paniniCreator}
-        onSubmit={(e) => {
-          e.preventDefault();
-          methods.handleSubmit(handleSave)(e);
-        }}
-      >
+      <form className={styles.paniniCreator} onSubmit={methods.handleSubmit(handleSave)}>
         <div className={styles.formsInterface}>
           <h2 className={styles.formsLabel}>Panini Creator</h2>
           <button type="button" className={styles.button} onClick={randomizeOrderData}>
@@ -165,12 +139,10 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
             <CheckboxSection name={PaniniNames.napkins} title="napkins" options={["Add to order"]}></CheckboxSection>
           </div>
           <div className={styles.formsSubmitInterfaceWrapper}>
-            {/* <NavLink to={props.navTo} onClick={setOrderDataToTrue}> */}
             <label className={styles.formsSubmitLabel}>
               place order or start again
               <input type="submit" className={styles.formsSubmit} value={"place order"} />
             </label>
-            {/* </NavLink> */}
             <NavLink to="/panini_creator" onClick={resetOrderData} className={styles.formsResetNavLink}>
               <button type="submit" className={styles.formsReset}>
                 start again

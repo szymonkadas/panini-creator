@@ -1,16 +1,15 @@
-import { useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useController, useFormContext } from "react-hook-form";
 import styles from "./SwipeElement.module.css";
 
 export default function SwipeOption(props: SwipeElementProps) {
-  const { getValues, register, setValue } = useFormContext();
+  const { getValues, control, setValue } = useFormContext();
   const currVal = props.index !== undefined ? getValues(props.name)[props.index] : getValues(props.name);
 
-  const [currentOption, setCurrentOption] = useState(
-    props.options.findIndex((val) => {
-      return val === currVal;
-    })
-  );
+  const [currentOption, setCurrentOption] = useState(props.options.findIndex((val) => val === currVal));
+  useEffect(() => {
+    setCurrentOption(props.options.findIndex((val) => val === currVal));
+  }, [currVal]);
 
   const handleOptionDecrease = () => {
     if (currentOption > 0) {
@@ -30,6 +29,8 @@ export default function SwipeOption(props: SwipeElementProps) {
     }
   };
 
+  const { field } = useController({ name: props.name, control: control });
+
   return (
     <div className={styles.swipeElement}>
       <button type="button" className={styles.swipeOptionLeftButton} onClick={handleOptionDecrease}>
@@ -38,7 +39,7 @@ export default function SwipeOption(props: SwipeElementProps) {
       <label className={styles.label}>
         {props.children}
         {props.options[currentOption]}
-        <input className={styles.swipeOption} type="text" readOnly {...register(props.name)} />
+        <input className={styles.swipeOption} type="text" readOnly {...field} />
       </label>
       <button type="button" className={styles.swipeOptionRightButton} onClick={handleOptionIncrease}>
         right
