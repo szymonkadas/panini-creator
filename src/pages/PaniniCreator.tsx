@@ -42,16 +42,9 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
     postOrderSandwich(formValues, redirectUserOnSuccess);
   };
 
-  methods.handleSubmit(handleSave);
   return (
     <FormProvider {...methods}>
-      <form
-        className={styles.paniniCreator}
-        onSubmit={(e) => {
-          e.preventDefault();
-          methods.handleSubmit(handleSave)(e);
-        }}
-      >
+      <form className={styles.paniniCreator} onSubmit={methods.handleSubmit(handleSave)}>
         <div className={styles.formsInterface}>
           <h2 className={styles.formsLabel}>Panini Creator</h2>
           <button type="button" className={styles.button}>
