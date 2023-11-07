@@ -1,5 +1,4 @@
 import styles from "./FormSection.module.css";
-import { FormSectionProps } from "./FormSectionProps";
 import FormSectionTemplate from "./FormSectionTemplate";
 import SpecialOptions from "./formSection/SpecialOptions";
 
