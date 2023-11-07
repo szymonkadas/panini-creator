@@ -7,8 +7,7 @@ export default function CheckboxButtonOption(props: NamedOptionProps) {
   const checkedItems: string[] = getValues(props.name);
   const [isChecked, setIsChecked] = useState(checkedItems.includes(props.option));
   useEffect(() => {
-    const isCurrentOptionChecked = checkedItems.includes(props.option);
-    if (isCurrentOptionChecked !== isChecked) setIsChecked(isCurrentOptionChecked);
+    setIsChecked(checkedItems.includes(props.option));
   }, [checkedItems, props.option]);
 
   const { setValue, control } = useFormContext();

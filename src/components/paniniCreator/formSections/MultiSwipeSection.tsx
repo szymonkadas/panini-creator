@@ -4,7 +4,7 @@ import { isActiveToggle } from "../../../utils/form-helpers";
 import styles from "./FormSection.module.css";
 import FormSectionTemplate from "./FormSectionTemplate";
 import Removals from "./formSection/Removals";
-import MultiSwipe from "./formSection/elements/MultiSwipe";
+import MultiSwipeElement from "./formSection/elements/MultiSwipeElement";
 
 export default function MultiSwipeSection(props: MultiSwipeSectionProps) {
   const { control } = useFormContext();
@@ -15,9 +15,15 @@ export default function MultiSwipeSection(props: MultiSwipeSectionProps) {
   const content = useMemo(() => {
     return fields.map((field, index, array) => {
       const swipe = (
-        <MultiSwipe key={`${field.id}`} name={props.name} update={() => update} index={index} options={props.options}>
+        <MultiSwipeElement
+          key={`${field.id}`}
+          name={props.name}
+          onUpdate={update}
+          index={index}
+          options={props.options}
+        >
           {props?.children}
-        </MultiSwipe>
+        </MultiSwipeElement>
       );
       return index < array.length - 1 ? (
         <>
@@ -43,8 +49,8 @@ export default function MultiSwipeSection(props: MultiSwipeSectionProps) {
         toggleActive={handleIsActiveToggle}
         defaultVal={props.options[0]}
         fieldsCurrentLength={fields.length}
-        append={append}
-        remove={remove}
+        onAppend={append}
+        onRemove={remove}
         maxElements={props.maxElements}
       />
       <div className={styles.optionsWrapper}>{...content}</div>

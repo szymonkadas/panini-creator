@@ -14,7 +14,7 @@ export default function SelectElement(props: SelectElementProps) {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    props.update(props.index, event.target.value);
+    props.onUpdate(props.index, event.target.value);
   };
 
   return (

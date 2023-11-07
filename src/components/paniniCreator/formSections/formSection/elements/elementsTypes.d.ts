@@ -3,7 +3,7 @@ type SelectElementProps = {
   options: readonly string[];
   val: Record<"id", string>;
   index: number;
-  update: UseFieldArrayUpdate<FieldValues, string>;
+  onUpdate: (index: number, value: string) => void;
 };
 
 type SingleSwipeElementProps = {
@@ -14,7 +14,7 @@ type SingleSwipeElementProps = {
 
 interface MultiSwipeElementProps extends SingleSwipeElementProps {
   index: number;
-  update: UseFieldArrayUpdate<FieldValues, string>;
+  onUpdate: (index: number, value: string) => void;
 }
 
 interface SwipeElementProps {
