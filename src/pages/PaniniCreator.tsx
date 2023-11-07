@@ -1,7 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { z } from "zod";
+import postOrderSandwich from "../Api";
 import FormCard from "../components/paniniCreator/FormCard";
 import CheckboxButtonSection from "../components/paniniCreator/formSections/CheckboxButtonSection";
 import CheckboxSection from "../components/paniniCreator/formSections/CheckboxSection";
@@ -27,19 +28,30 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
     resolver: zodResolver(SandwichPayload),
   });
 
+  const navigate = useNavigate();
+
   const resetOrderData = () => {
     console.log("reset");
   };
 
-  const handleSave = (formValues: SandwichPayload) => {
-    console.log("D:");
-    console.log(formValues);
-    return;
+  const redirectUserOnSuccess = (imageUrl: string, fileName: string) => {
+    navigate(`${props.navTo}`, { state: { imageUrl, fileName } });
   };
 
+  const handleSave = (formValues: SandwichPayload) => {
+    postOrderSandwich(formValues, redirectUserOnSuccess);
+  };
+
+  methods.handleSubmit(handleSave);
   return (
     <FormProvider {...methods}>
-      <form className={styles.paniniCreator} onSubmit={methods.handleSubmit(handleSave)}>
+      <form
+        className={styles.paniniCreator}
+        onSubmit={(e) => {
+          e.preventDefault();
+          methods.handleSubmit(handleSave)(e);
+        }}
+      >
         <div className={styles.formsInterface}>
           <h2 className={styles.formsLabel}>Panini Creator</h2>
           <button type="button" className={styles.button}>
@@ -121,12 +133,10 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
             ></CheckboxSection>
           </div>
           <div className={styles.formsSubmitInterfaceWrapper}>
-            <NavLink to={props.navTo}>
-              <label className={styles.formsSubmitLabel}>
-                place order or start again
-                <input type="submit" className={styles.formsSubmit} value={"place order"} />
-              </label>
-            </NavLink>
+            <label className={styles.formsSubmitLabel}>
+              place order or start again
+              <input type="submit" className={styles.formsSubmit} value={"place order"} />
+            </label>
             <NavLink to="/panini_creator" onClick={resetOrderData} className={styles.formsResetNavLink}>
               <button type="submit" className={styles.formsReset}>
                 start again
