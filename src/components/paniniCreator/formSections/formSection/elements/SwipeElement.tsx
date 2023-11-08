@@ -2,7 +2,7 @@ import { useController, useFormContext } from "react-hook-form";
 import styles from "./SwipeElement.module.css";
 
 export default function SwipeElement(props: SwipeElementProps) {
-  const { control } = useFormContext();
+  const { control, getValues } = useFormContext();
   const { field } = useController({ name: props.name, control: control });
   return (
     <div className={styles.swipeElement}>
@@ -11,8 +11,8 @@ export default function SwipeElement(props: SwipeElementProps) {
       </button>
       <label className={styles.label}>
         {props.children}
-        {field.value}
-        <input className={styles.swipeOption} type="text" readOnly {...field} />
+        {props?.value || field.value}
+        <input className={styles.swipeOption} type="text" readOnly value={props?.value || field.value} />
       </label>
       <button type="button" className={styles.swipeOptionRightButton} onClick={props.handleOptionIncrease}>
         right

@@ -21,5 +21,6 @@ interface SwipeElementProps {
   name: string;
   handleOptionDecrease: () => void;
   handleOptionIncrease: () => void;
+  value?: string;
   children?: React.ReactNode;
 }

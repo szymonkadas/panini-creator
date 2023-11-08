@@ -22,8 +22,14 @@ import { servingVariant } from "../data/serving";
 import { spreadVariant } from "../data/spread";
 import { toppingVariant } from "../data/topping";
 import { vegetableVariant } from "../data/vegetable";
+import {
+  generateRandomName,
+  randomArrayValues,
+  randomElementArray,
+  randomSetValues,
+} from "../utils/panini-randomization-helpers";
 import styles from "./PaniniCreator.module.css";
-import { PaniniFormSectionMaxElements, PaniniNames, PaniniNamesSets, formFieldVariantsMap } from "./formMappedData";
+import { PaniniFormSectionMaxElements, PaniniNames } from "./PaniniCreatorEnums";
 
 export default function PaniniCreator(props: PaniniCreatorProps) {
   const methods = useForm<SandwichPayload>({
@@ -38,36 +44,27 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
   };
 
   const randomizeOrderData = useCallback(() => {
-    function getRandomVal<T>(array: T[]): T {
-      return array[Math.floor(Math.random() * array.length)];
-    }
-    const formValues: SandwichPayload = methods.getValues();
-
-    Object.entries(PaniniNames).forEach(([keyName, stringPath]: [string, PaniniNames]) => {
-      const val = lodashGet(formValues, stringPath);
-      const possibleValues = formFieldVariantsMap[stringPath];
-      const mutablePossibleValues: MutableFormField = [...possibleValues];
-      const optionsCap = Math.round(Math.random() * PaniniFormSectionMaxElements[keyName] || possibleValues.length);
-      if (Array.isArray(val)) {
-        if (PaniniNamesSets.has(stringPath)) {
-          const newVal: MutableFormFieldSet = new Set();
-          for (let i = 0; i < optionsCap; i++) {
-            newVal.add(getRandomVal(mutablePossibleValues));
-          }
-          // @ts-ignore Nie wiem jak sprawić by w obu przypadkach te ogólne typy były przyjmowane przez tamte literały.
-          methods.setValue(stringPath, Array.from(newVal));
-        } else {
-          const newVal: MutableFormField = [];
-          for (let i = 0; i < optionsCap; i++) {
-            newVal.push(getRandomVal(mutablePossibleValues));
-          }
-          // @ts-ignore
-          methods.setValue(stringPath, newVal);
-        }
-      } else {
-        const newVal = getRandomVal(mutablePossibleValues);
-        methods.setValue(stringPath, newVal);
-      }
+    const newFormVals = {
+      sandwichName: generateRandomName(),
+      cutlery: Math.random() < 0.5,
+      napkins: Math.random() < 0.5,
+      base: {
+        bread: randomElementArray(breadVariants),
+        cheese: randomArrayValues(cheeseVariants, PaniniFormSectionMaxElements.cheese),
+        meat: randomArrayValues(meatVariants, PaniniFormSectionMaxElements.meat),
+        dressing: randomArrayValues(dressingVariants, PaniniFormSectionMaxElements.dressing),
+        vegetables: randomSetValues(vegetableVariant, vegetableVariant.length),
+      },
+      extras: {
+        egg: randomArrayValues(eggVariants, eggVariants.length),
+        spreads: randomSetValues(spreadVariant, spreadVariant.length),
+        serving: randomElementArray(servingVariant),
+        topping: Math.random() < 0.5 ? "SESAME" : null,
+      },
+    };
+    Object.values(PaniniNames).forEach((stringPath) => {
+      const val = lodashGet(newFormVals, stringPath);
+      methods.setValue(stringPath, val);
     });
   }, []);
 
@@ -76,7 +73,8 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
   };
 
   const handleSave = (formValues: SandwichPayload) => {
-    postOrderSandwich(formValues, redirectUserOnSuccess);
+    // If it gets to this point, zod resolver did pass through this data, so such assertion is okay, right?
+    postOrderSandwich(formValues as StrictSandwichPayload, redirectUserOnSuccess);
   };
 
   return (
@@ -174,7 +172,7 @@ const SandwichPayload = z.object({
   }),
 });
 
-const SandwichDefaultVals: SandwichPayload = {
+const SandwichDefaultVals: StrictSandwichPayload = {
   sandwichName: "Default Panini",
   cutlery: false,
   napkins: false,
