@@ -41,7 +41,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
 
   const navigate = useNavigate();
 
-  const resetOrderData = () => {
+  const resetPanini = () => {
     methods.reset();
   };
 
@@ -82,7 +82,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
   };
   const handleFormSaveError = (errorMessage: string) => {
     setFormSaveError(errorMessage);
-    resetOrderData();
+    resetPanini();
   };
   const handleUserErrorAcknowledgment = () => {
     setFormSaveError("");
@@ -163,7 +163,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
                 place order or start again
                 <input type="submit" className={styles.formsSubmit} value={"place order"} />
               </label>
-              <button type="submit" className={styles.formsReset} onClick={resetOrderData}>
+              <button type="submit" className={styles.formsReset} onClick={resetPanini}>
                 start again
               </button>
             </div>
