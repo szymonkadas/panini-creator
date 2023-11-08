@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { get as lodashGet } from "lodash";
 import { useCallback, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import postOrderSandwich from "../Api";
 import FormCard from "../components/paniniCreator/FormCard";
@@ -33,7 +33,7 @@ import styles from "./PaniniCreator.module.css";
 import { PaniniFormSectionMaxElements, PaniniNames } from "./PaniniCreatorEnums";
 
 export default function PaniniCreator(props: PaniniCreatorProps) {
-  const [formSaveError, setFormSaveError] = useState("2");
+  const [formSaveError, setFormSaveError] = useState("");
   const methods = useForm<SandwichPayload>({
     defaultValues: SandwichDefaultVals,
     resolver: zodResolver(SandwichPayload),
@@ -41,8 +41,8 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
 
   const navigate = useNavigate();
 
-  const resetOrderData = () => {
-    console.log("reset");
+  const resetPanini = () => {
+    methods.reset();
   };
 
   const randomizeOrderData = useCallback(() => {
@@ -51,8 +51,8 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
       cutlery: Math.random() < 0.5,
       napkins: Math.random() < 0.5,
       base: {
-        bread: `${randomElementArray(breadVariants)}` as const,
-        cheese: `${randomArrayValues(cheeseVariants, PaniniFormSectionMaxElements.cheese)}`,
+        bread: randomElementArray(breadVariants),
+        cheese: randomArrayValues(cheeseVariants, PaniniFormSectionMaxElements.cheese),
         meat: randomArrayValues(meatVariants, PaniniFormSectionMaxElements.meat),
         dressing: randomArrayValues(dressingVariants, PaniniFormSectionMaxElements.dressing),
         vegetables: randomSetValues(vegetableVariant, vegetableVariant.length),
@@ -82,7 +82,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
   };
   const handleFormSaveError = (errorMessage: string) => {
     setFormSaveError(errorMessage);
-    resetOrderData();
+    resetPanini();
   };
   const handleUserErrorAcknowledgment = () => {
     setFormSaveError("");
@@ -163,11 +163,9 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
                 place order or start again
                 <input type="submit" className={styles.formsSubmit} value={"place order"} />
               </label>
-              <NavLink to="/panini_creator" onClick={resetOrderData} className={styles.formsResetNavLink}>
-                <button type="submit" className={styles.formsReset}>
-                  start again
-                </button>
-              </NavLink>
+              <button type="submit" className={styles.formsReset} onClick={resetPanini}>
+                start again
+              </button>
             </div>
           </FormCard>
         </form>
