@@ -2,24 +2,25 @@ type SelectElementProps = {
   name: string;
   options: readonly string[];
   val: Record<"id", string>;
-} & (
-  | {
-      index: number;
-      update: UseFieldArrayUpdate<FieldValues, string>;
-    }
-  | { index?: never; update?: never }
-);
-type SwipeElementProps = {
+  index: number;
+  onUpdate: (index: number, value: string) => void;
+};
+
+type SingleSwipeElementProps = {
   name: string;
   options: readonly string[];
   children?: React.ReactNode;
-} & (
-  | {
-      index: number;
-      update: UseFieldArrayUpdate<FieldValues, string>;
-    }
-  | {
-      index?: never;
-      update?: never;
-    }
-);
+};
+
+interface MultiSwipeElementProps extends SingleSwipeElementProps {
+  index: number;
+  onUpdate: (index: number, value: string) => void;
+}
+
+interface SwipeElementProps {
+  name: string;
+  handleOptionDecrease: () => void;
+  handleOptionIncrease: () => void;
+  value?: string;
+  children?: React.ReactNode;
+}

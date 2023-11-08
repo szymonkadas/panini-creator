@@ -23,12 +23,12 @@ export default function Removals(props: RemovalsProps) {
 
   const handleAddition = () => {
     if (props.fieldsCurrentLength < props.maxElements) {
-      props.append(props.defaultVal);
+      props.onAppend(props.defaultVal);
     }
   };
 
   const handleSubtraction = (indexToDel: number) => {
-    props.remove(indexToDel);
+    props.onRemove(indexToDel);
   };
 
   return (

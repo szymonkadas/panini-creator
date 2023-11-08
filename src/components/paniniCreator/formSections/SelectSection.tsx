@@ -21,7 +21,7 @@ export default function SelectSection(props: SelectSectionProps) {
           name={props.name}
           options={props.options}
           index={index}
-          update={update}
+          onUpdate={update}
           val={val}
         />
       );
@@ -33,8 +33,8 @@ export default function SelectSection(props: SelectSectionProps) {
       <Removals
         isActive={fields.length > 0}
         toggleActive={handleIsActiveToggle}
-        append={append}
-        remove={remove}
+        onAppend={append}
+        onRemove={remove}
         fieldsCurrentLength={fields.length}
         defaultVal={props.options[0]}
         maxElements={props.maxElements}
