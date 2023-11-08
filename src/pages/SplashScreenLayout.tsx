@@ -22,7 +22,9 @@ export default function SplashScreenLayout(props: SplashScreenLayoutProps) {
   };
 
   useEffect(() => {
-    download(imageUrl, fileName);
+    setTimeout(() => {
+      download(imageUrl, fileName);
+    }, 2000);
   }, [imageUrl, fileName]);
   // end of download section
   return (
