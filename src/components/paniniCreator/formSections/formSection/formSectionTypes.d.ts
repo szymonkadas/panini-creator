@@ -10,7 +10,6 @@ type CheckboxButtonProps = BaseSpecialOptionsProps & {
 type CheckboxProps = BaseSpecialOptionsProps & {
   type: "checkbox";
   name: string;
-  isValBoolean: boolean;
 };
 
 type SelectProps = BaseSpecialOptionsProps & {
@@ -28,7 +27,8 @@ type RemovalsProps = {
   isActive: boolean;
   maxElements: number;
   defaultVal: string;
-  formElementsValues: string[];
-  setFormElementsValues: React.Dispatch<React.SetStateAction<string[]>>;
+  fieldsCurrentLength: number;
+  onAppend: (value: string) => void;
+  onRemove: (index: number) => void;
   toggleActive: () => void;
 };

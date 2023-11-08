@@ -13,7 +13,7 @@ type PaniniCreatorProps = {
 };
 
 // possible bugs later on with generating due to HONEY_MUSTARD -> HONEY MUSTARD. Change later on if needed, also added pecorino.
-interface SandwichPayload {
+interface StrictSandwichPayload {
   sandwichName: string; // Max. 35 characters
   cutlery: boolean;
   napkins: boolean;
@@ -33,3 +33,26 @@ interface SandwichPayload {
     topping: "SESAME" | null;
   };
 }
+
+interface SandwichPayload {
+  sandwichName: readonly string; // Max. 35 characters
+  cutlery: boolean;
+  napkins: boolean;
+  base: {
+    bread: readonly string;
+    cheese: readonly string[];
+    meat: readonly string[];
+    dressing: readonly string[];
+    vegetables: readonly string[];
+  };
+  extras: {
+    egg: readonly string[];
+    spreads: readonly string[];
+    serving: readonly string;
+    topping: "SESAME" | null;
+  };
+}
+
+type FormField = readonly string[] | Array<boolean | (string | null)>;
+type MutableFormField = Array<string | boolean | (string | null)>;
+type MutableFormFieldSet = Set<string | boolean | (string | null)>;

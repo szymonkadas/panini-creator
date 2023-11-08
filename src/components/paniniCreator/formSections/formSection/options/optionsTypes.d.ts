@@ -6,7 +6,3 @@ type OptionProps = {
 interface NamedOptionProps extends OptionProps {
   name: string;
 }
-
-interface CheckboxOptionProps extends NamedOptionProps {
-  isValBoolean: boolean;
-}
