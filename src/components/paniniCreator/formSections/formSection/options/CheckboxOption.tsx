@@ -1,20 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import styles from "./CheckboxOption.module.css";
 
-export default function CheckboxOption(props: CheckboxOptionProps) {
-  const { getValues } = useFormContext();
+// 3 possible values are kinda problematic, kinda weird schema ehu.
+export default function CheckboxOption(props: NamedOptionProps) {
+  const { getValues, setValue, control } = useFormContext();
+  const currentValue = getValues(props.name);
 
   const [isChecked, setIsChecked] = useState(() => {
-    const currentValue = getValues(props.name);
-    return props.isValBoolean
+    return typeof currentValue === "boolean"
       ? (currentValue as boolean)
       : Array.isArray(currentValue)
       ? currentValue.includes(props.option)
-      : false;
+      : currentValue === props.option;
   });
 
-  const { setValue, control } = useFormContext();
+  useEffect(() => {
+    if (typeof currentValue === "boolean") {
+      currentValue !== isChecked && setIsChecked(currentValue);
+    } else if (Array.isArray(currentValue)) {
+      const newCheckState = currentValue.includes(props.option);
+      newCheckState !== isChecked && setIsChecked(newCheckState);
+    } else {
+      if (currentValue === props.option) {
+        if (!isChecked) setIsChecked(true);
+      } else if (isChecked) setIsChecked(false);
+    }
+  }, [props.name, props.option, currentValue]);
+
   const { field } = useController({
     name: props.name,
     control,
@@ -22,18 +35,14 @@ export default function CheckboxOption(props: CheckboxOptionProps) {
   });
 
   const handleUserCheckToggle = () => {
-    const value = getValues(props.name);
-    if (props.isValBoolean) {
-      setValue(props.name, !value);
+    if (typeof currentValue === "boolean") {
+      setValue(props.name, !currentValue);
+    } else if (Array.isArray(currentValue)) {
+      const filtered = currentValue.filter((val) => val !== props.option);
+      setValue(props.name, isChecked ? filtered : [...currentValue, props.option]);
     } else {
-      if (Array.isArray(value)) {
-        const filtered = value.filter((val) => val !== props.option);
-        setValue(props.name, isChecked ? filtered : [...value, props.option]);
-      } else {
-        setValue(props.name, isChecked ? null : props.option);
-      }
+      setValue(props.name, isChecked ? null : props.option);
     }
-    setIsChecked((prev) => !prev);
   };
 
   return (

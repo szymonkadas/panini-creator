@@ -101,3 +101,45 @@
 .formsResetNavLink {
   margin: auto;
 }
+
+.formSaveErrorWrapper {
+  position: fixed;
+  z-index: 100;
+  height: 100dvh;
+  width: 100dvw;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.formSaveError {
+  height: 50%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  font-size: 4vh;
+  font-family: var(--primary-font-family);
+  align-items: center;
+  border: var(--border-width) solid var(--border-color);
+  text-align: center;
+  background-color: white;
+  padding: 5vh 5vw;
+}
+
+.formSaveErrorButton {
+  width: 6dvw;
+  height: 6dvh;
+  border: var(--border-width) solid var(--border-color);
+  background-color: white;
+  font: var(--secondary-font);
+  font-size: 2vh;
+  text-transform: uppercase;
+  transition: 0.2s var(--transition-function);
+}
+
+.formSaveErrorButton:hover {
+  width: 6.5dvw;
+  height: 6.5dvh;
+}

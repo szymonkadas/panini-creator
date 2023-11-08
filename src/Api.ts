@@ -2,7 +2,7 @@ const apiKey = process.env.VITE_APP_API_KEY;
 const apiUrl = process.env.VITE_APP_API_URL;
 
 export default function postOrderSandwich(
-  formValues: SandwichPayload,
+  formValues: StrictSandwichPayload,
   redirectOnSuccess: (imageUrl: string, fileName: string) => void
 ) {
   if (apiUrl && apiKey) {

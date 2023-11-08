@@ -1,29 +1,20 @@
 import { useState } from "react";
-import { useController, useFormContext } from "react-hook-form";
-import { updateValueAtIndex } from "../../../../../utils/form-helpers";
 import SpecialOptions from "../SpecialOptions";
 import styles from "./SelectElement.module.css";
 
 export default function SelectElement(props: SelectElementProps) {
-  const { control } = useFormContext();
   const [isSelectActive, setIsSelectActive] = useState(false);
-
-  const { field } = useController({
-    name: props.name,
-    control: control,
-  });
-
+  const value = Object.values(props.val).slice(0, -1).join("");
   const handleSelectClick = () => {
     setIsSelectActive((prev) => !prev);
   };
 
   const handleBlur = () => {
-    field.onBlur();
     setIsSelectActive(false);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    props.setFormElementsValues((prev) => updateValueAtIndex(prev, props.orderVal, event.target.value));
+    props.onUpdate(props.index, event.target.value);
   };
 
   return (
@@ -31,11 +22,10 @@ export default function SelectElement(props: SelectElementProps) {
       Select an option:
       <select
         className={styles.selectOptions}
-        {...field}
         onBlur={handleBlur}
         onClick={handleSelectClick}
         onChange={handleChange}
-        value={props.formElementsValues[props.orderVal]}
+        value={value}
       >
         <SpecialOptions type="select" options={props.options} />
       </select>

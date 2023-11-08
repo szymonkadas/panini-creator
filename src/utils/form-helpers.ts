@@ -1,15 +1,33 @@
-import { FieldValues, UseFormGetValues } from "react-hook-form";
+import { FieldValues, UseFieldArrayAppend, UseFieldArrayRemove } from "react-hook-form";
 
-export function getInitialFormValues(
-  getValues: UseFormGetValues<FieldValues>,
-  formElementName: string,
-  backupOption: string
+export function isActiveToggle(
+  fields: Record<"id", string>[],
+  append: UseFieldArrayAppend<FieldValues, string>,
+  appendWhat: string,
+  remove: UseFieldArrayRemove
 ) {
-  return Array.isArray(getValues(formElementName))
-    ? [...getValues(formElementName)]
-    : [getValues(formElementName)] || [backupOption];
+  fields.length > 0 ? remove() : append(appendWhat);
 }
 
-export function updateValueAtIndex(prevVals: string[], indexToChange: number, val: string): string[] {
-  return prevVals.map((item, index) => (index === indexToChange ? val : item));
+export function handleOptionDecrease(
+  currentOptionIndex: number,
+  setCurrentOption: React.Dispatch<React.SetStateAction<number>>,
+  action: () => void
+) {
+  if (currentOptionIndex > 0) {
+    action();
+    setCurrentOption((prev) => prev - 1);
+  }
+}
+
+export function handleOptionIncrease(
+  currentOptionIndex: number,
+  optionsLength: number,
+  setCurrentOption: React.Dispatch<React.SetStateAction<number>>,
+  action: () => void
+) {
+  if (currentOptionIndex < optionsLength - 1) {
+    action();
+    setCurrentOption((prev) => prev + 1);
+  }
 }

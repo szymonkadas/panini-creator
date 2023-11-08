@@ -10,9 +10,7 @@ export default function SpecialOptions(props: SpecialOptionsProps) {
         return <CheckboxButtonOption {...{ option: option, index: index, name: props.name }} />;
         break;
       case "checkbox":
-        return (
-          <CheckboxOption {...{ option: option, index: index, name: props.name, isValBoolean: props.isValBoolean }} />
-        );
+        return <CheckboxOption {...{ option: option, index: index, name: props.name }} />;
         break;
       case "radio":
         return <RadioOption option={option} index={index} name={props.name} />;

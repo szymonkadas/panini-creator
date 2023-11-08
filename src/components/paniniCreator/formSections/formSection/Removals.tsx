@@ -1,16 +1,12 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import styles from "./Removals.module.css";
 
 export default function Removals(props: RemovalsProps) {
-  const [isAdditionPossible, setIsAdditionPossible] = useState(true);
-  useEffect(() => {
-    setIsAdditionPossible(props.isActive);
-  }, [props.isActive]);
-
+  const isAdditionPossible = props.fieldsCurrentLength < props.maxElements;
   const subtractButtons = useMemo(() => {
     const result = [];
     // skip first val cuz it can only be removed when there is no add button
-    for (let i = 1; i < props.formElementsValues.length; i++) {
+    for (let i = 1; i < props.fieldsCurrentLength; i++) {
       result.push(
         <div className={styles.removal} key={`subtractRemoval${i}`}>
           <button
@@ -23,20 +19,16 @@ export default function Removals(props: RemovalsProps) {
       );
     }
     return result;
-  }, [props.formElementsValues]);
+  }, [props.fieldsCurrentLength]);
 
   const handleAddition = () => {
-    if (props.formElementsValues.length < props.maxElements) {
-      isAdditionPossible === false && setIsAdditionPossible(true);
-      props.setFormElementsValues((prev) => [...prev, props.defaultVal]);
+    if (props.fieldsCurrentLength < props.maxElements) {
+      props.onAppend(props.defaultVal);
     }
-    // if it's last possible addition:
-    if (props.formElementsValues.length === props.maxElements - 1) setIsAdditionPossible(false);
   };
 
   const handleSubtraction = (indexToDel: number) => {
-    props.setFormElementsValues((prev) => prev.filter((val, index) => index !== indexToDel));
-    if (!isAdditionPossible) setIsAdditionPossible(true);
+    props.onRemove(indexToDel);
   };
 
   return (
