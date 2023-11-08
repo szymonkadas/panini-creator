@@ -54,12 +54,11 @@ export function formatSandwichData(sandwichData: SandwichPayload): {
   data: StrictSandwichPayload | null;
   errorMessage?: string;
 } {
-  // Validate sandwichName length
   if (sandwichData.sandwichName.length > 35) {
     return { data: null, errorMessage: "Sandwich name exceeds maximum length." };
   }
 
-  // Validate and transform base properties
+  // form base:
   let bread: "FULL GRAIN" | "WHEAT";
   let cheese: Array<"MOZZARELLA" | "STRACIATELLA" | "EDAM" | "GOUDA" | "PECORINO">;
   let meat: Array<"SALAMI" | "HAM" | "BACON" | "CHICKEN">;
@@ -67,6 +66,12 @@ export function formatSandwichData(sandwichData: SandwichPayload): {
   let vegetables: Array<
     "SALAD" | "TOMATO" | "OBERGINE" | "BEETROOT" | "PICKLES" | "ONION" | "PEPPER" | "ASPARAGUS" | "CUCUMBER"
   >;
+  let egg: Array<"FRIED EGG" | "OMELET" | "SCRAMBLED EGG">;
+  let spreads: Array<"BUTTER" | "HUMMUS" | "GUACAMOLE">;
+  let serving: "COLD" | "WARM" | "GRILLED";
+  let topping: "SESAME" | null;
+
+  // form base validation:
 
   if (sandwichData.base.bread === "FULL GRAIN" || sandwichData.base.bread === "WHEAT") {
     bread = sandwichData.base.bread;
@@ -74,40 +79,30 @@ export function formatSandwichData(sandwichData: SandwichPayload): {
     return { data: null, errorMessage: "Invalid bread type." };
   }
 
-  // Validate and transform cheese, meat, dressing, and vegetables arrays
   cheese = sandwichData.base.cheese.filter((type: string) =>
     ["MOZZARELLA", "STRACIATELLA", "EDAM", "GOUDA", "PECORINO"].includes(type)
-  ) as ("MOZZARELLA" | "STRACIATELLA" | "EDAM" | "GOUDA" | "PECORINO")[];
-  meat = sandwichData.base.meat.filter((type) => ["SALAMI", "HAM", "BACON", "CHICKEN"].includes(type)) as (
-    | "SALAMI"
-    | "HAM"
-    | "BACON"
-    | "CHICKEN"
-  )[];
+  ) as Array<"MOZZARELLA" | "STRACIATELLA" | "EDAM" | "GOUDA" | "PECORINO">;
+
+  meat = sandwichData.base.meat.filter((type) => ["SALAMI", "HAM", "BACON", "CHICKEN"].includes(type)) as Array<
+    "SALAMI" | "HAM" | "BACON" | "CHICKEN"
+  >;
 
   dressing = sandwichData.base.dressing.filter((type) =>
     ["OLIVE OIL", "HONEY MUSTARD", "RANCH", "MAYO"].includes(type)
-  ) as ("OLIVE OIL" | "HONEY MUSTARD" | "RANCH" | "MAYO")[];
+  ) as Array<"OLIVE OIL" | "HONEY MUSTARD" | "RANCH" | "MAYO">;
 
   vegetables = sandwichData.base.vegetables.filter((type) =>
     ["SALAD", "TOMATO", "OBERGINE", "BEETROOT", "PICKLES", "ONION", "PEPPER", "ASPARAGUS", "CUCUMBER"].includes(type)
-  ) as ("SALAD" | "TOMATO" | "OBERGINE" | "BEETROOT" | "PICKLES" | "ONION" | "PEPPER" | "ASPARAGUS" | "CUCUMBER")[];
+  ) as Array<"SALAD" | "TOMATO" | "OBERGINE" | "BEETROOT" | "PICKLES" | "ONION" | "PEPPER" | "ASPARAGUS" | "CUCUMBER">;
 
-  // Validate and transform extras properties
-  let egg: Array<"FRIED EGG" | "OMELET" | "SCRAMBLED EGG">;
-  let spreads: Array<"BUTTER" | "HUMMUS" | "GUACAMOLE">;
-  let serving: "COLD" | "WARM" | "GRILLED";
+  // form extras validation:
 
-  egg = sandwichData.extras.egg.filter((type) => ["FRIED EGG", "OMELET", "SCRAMBLED EGG"].includes(type)) as (
-    | "FRIED EGG"
-    | "OMELET"
-    | "SCRAMBLED EGG"
-  )[];
-  spreads = sandwichData.extras.spreads.filter((type) => ["BUTTER", "HUMMUS", "GUACAMOLE"].includes(type)) as (
-    | "BUTTER"
-    | "HUMMUS"
-    | "GUACAMOLE"
-  )[];
+  egg = sandwichData.extras.egg.filter((type) => ["FRIED EGG", "OMELET", "SCRAMBLED EGG"].includes(type)) as Array<
+    "FRIED EGG" | "OMELET" | "SCRAMBLED EGG"
+  >;
+  spreads = sandwichData.extras.spreads.filter((type) => ["BUTTER", "HUMMUS", "GUACAMOLE"].includes(type)) as Array<
+    "BUTTER" | "HUMMUS" | "GUACAMOLE"
+  >;
 
   if (
     sandwichData.extras.serving === "COLD" ||
@@ -119,8 +114,6 @@ export function formatSandwichData(sandwichData: SandwichPayload): {
     return { data: null, errorMessage: "Invalid serving type." };
   }
 
-  // Validate and transform topping
-  let topping: "SESAME" | null;
   if (sandwichData.extras.topping === "SESAME" || sandwichData.extras.topping === null) {
     topping = sandwichData.extras.topping;
   } else {
