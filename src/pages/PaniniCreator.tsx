@@ -101,10 +101,19 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
         </div>
       )}
       <FormProvider {...methods}>
-        <form className={styles.paniniCreator} onSubmit={methods.handleSubmit(handleSave)}>
+        <form
+          className={styles.paniniCreator}
+          onSubmit={methods.handleSubmit(handleSave)}
+          data-testid={`PaniniMainForm`}
+        >
           <div className={styles.formsInterface}>
             <h2 className={styles.formsLabel}>Panini Creator</h2>
-            <button type="button" className={styles.button} onClick={randomizeOrderData}>
+            <button
+              type="button"
+              className={styles.button}
+              onClick={randomizeOrderData}
+              data-testid="PaniniRandomizeButton"
+            >
               <img className={styles.diceIcon} src="/src/images/dices.svg" alt="dices icon"></img>
               Randomize Panini
             </button>
@@ -193,7 +202,7 @@ const SandwichPayload = z.object({
   }),
 });
 
-const SandwichDefaultVals: StrictSandwichPayload = {
+export const SandwichDefaultVals: StrictSandwichPayload = {
   sandwichName: "",
   cutlery: false,
   napkins: false,

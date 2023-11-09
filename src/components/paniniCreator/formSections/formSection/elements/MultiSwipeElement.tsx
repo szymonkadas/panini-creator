@@ -28,6 +28,7 @@ export default function MultiSwipe(props: MultiSwipeElementProps) {
     <SwipeElement
       name={props.name}
       value={currVal}
+      index={props.index}
       handleOptionDecrease={handleDecrease}
       handleOptionIncrease={handleIncrease}
     >
