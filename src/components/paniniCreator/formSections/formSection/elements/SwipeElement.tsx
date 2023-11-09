@@ -22,7 +22,6 @@ export default function SwipeElement(props: SwipeElementProps) {
           type="text"
           readOnly
           value={props?.value || field.value}
-          // 0 is falsy so.
           data-testid={`${props.name}${props?.index !== undefined ? props.index : ""}-swipeInputElement`}
         />
       </label>

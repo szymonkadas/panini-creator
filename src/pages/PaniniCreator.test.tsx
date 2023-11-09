@@ -4,6 +4,9 @@ import { get as lodashGet } from "lodash";
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import { describe, test } from "vitest";
 import { cheeseVariants } from "../data/cheese";
+import { dressingVariants } from "../data/dressing";
+import { eggVariants } from "../data/egg";
+import { meatVariants } from "../data/meat";
 import { randomElementArray } from "../utils/panini-randomization-helpers";
 import Layout from "./Layout";
 import PaniniCreator, { SandwichDefaultVals } from "./PaniniCreator";
@@ -48,7 +51,7 @@ describe("Test form submitting", () => {
       formDefaultValues = SandwichDefaultVals;
     });
 
-    describe(`${PaniniNames.bread} test`, () => {
+    describe(`Single swipe element test (${PaniniNames.sandwichName} field), `, () => {
       let inputElement: HTMLInputElement;
       let defaultVal: string;
       let leftSwipeButton: HTMLButtonElement;
@@ -76,36 +79,113 @@ describe("Test form submitting", () => {
       });
     });
 
-    describe(`${PaniniNames.cheese} test`, () => {
-      let selectElements: HTMLSelectElement[];
+    describe(`Multi swipe section test, ${PaniniNames.dressing}`, () => {
+      // najpierw usunąć elementy, potem sprawdzić wartość czy jest = [], potem dodać wszystkie (Panini max elements), zmienić wartości z każdego fieldów i sprawdzić z defaultowymi wartościami.
+      let dressingSwipeElements: HTMLInputElement[];
+      let leftSwipeButtons: HTMLButtonElement[];
+      let rightSwipeButtons: HTMLButtonElement[];
       let formFieldDefaultValues: string[];
+      beforeEach(() => {
+        dressingSwipeElements = Array.from(lodashGet(formDefaultValues, PaniniNames.dressing), (val, index) => {
+          return screen.getByTestId(`${PaniniNames.dressing}${index}-swipeInputElement`);
+        });
+        leftSwipeButtons = Array.from(lodashGet(formDefaultValues, PaniniNames.dressing), (val, index) => {
+          return screen.getByTestId(`${PaniniNames.dressing}${index}-swipeLeftButton`);
+        });
+        rightSwipeButtons = Array.from(lodashGet(formDefaultValues, PaniniNames.dressing), (val, index) => {
+          return screen.getByTestId(`${PaniniNames.dressing}${index}-swipeRightButton`);
+        });
+        formFieldDefaultValues = lodashGet(formDefaultValues, PaniniNames.dressing);
+      });
+      test.only("swipe fields values are indeed default on start", () => {
+        dressingSwipeElements.forEach((swipeElement, index) => {
+          expect(swipeElement.value).toBe(formFieldDefaultValues[index]);
+        });
+      });
+      test.only("swipe fields values are changed after user interaction", () => {
+        dressingSwipeElements.forEach((swipeElement, index) => {
+          const otherOption = randomElementArray(dressingVariants.filter((val) => val !== swipeElement.value));
+          try {
+            userEvent.click(leftSwipeButtons[index]);
+            waitFor(() => {
+              expect(swipeElement.value).toBe(otherOption);
+              expect(swipeElement.value).not.toBe(formFieldDefaultValues[index]);
+            });
+          } catch (e) {
+            userEvent.click(rightSwipeButtons[index]);
+            waitFor(() => {
+              expect(swipeElement.value).toBe(otherOption);
+              expect(swipeElement.value).not.toBe(formFieldDefaultValues[index]);
+            });
+          }
+        });
+      });
+    });
+
+    describe(`Select sections test (${PaniniNames.cheese}, ${PaniniNames.meat}, ${PaniniNames.egg} form fields)`, () => {
+      let cheeseSelectElements: HTMLSelectElement[];
+      let meatSelectElements: HTMLSelectElement[];
+      let eggSelectElements: HTMLSelectElement[];
+      let cheeseDefaultValues: string[];
+      let meatDefaultValues: string[];
+      let eggDefaultValues: string[];
 
       beforeEach(() => {
-        selectElements = Array.from(lodashGet(formDefaultValues, PaniniNames.cheese), (val, index) => {
+        cheeseSelectElements = Array.from(lodashGet(formDefaultValues, PaniniNames.cheese), (val, index) => {
           return screen.getByTestId(`${PaniniNames.cheese}${index}-selectElement`);
         });
-        formFieldDefaultValues = lodashGet(formDefaultValues, PaniniNames.cheese);
+        meatSelectElements = Array.from(lodashGet(formDefaultValues, PaniniNames.meat), (val, index) => {
+          return screen.getByTestId(`${PaniniNames.meat}${index}-selectElement`);
+        });
+        eggSelectElements = Array.from(lodashGet(formDefaultValues, PaniniNames.egg), (val, index) => {
+          return screen.getByTestId(`${PaniniNames.egg}${index}-selectElement`);
+        });
+        cheeseDefaultValues = lodashGet(formDefaultValues, PaniniNames.cheese);
+        meatDefaultValues = lodashGet(formDefaultValues, PaniniNames.meat);
+        eggDefaultValues = lodashGet(formDefaultValues, PaniniNames.egg);
       });
 
-      test(`value of ${PaniniNames.cheese} is indeed default on start`, () => {
-        selectElements.forEach((selectElement, index) => {
-          expect(selectElement.value).toBe(formFieldDefaultValues[index]);
+      test(`select fields values are indeed default on start`, () => {
+        cheeseSelectElements.forEach((selectElement, index) => {
+          expect(selectElement.value).toBe(cheeseDefaultValues[index]);
+        });
+        meatSelectElements.forEach((selectElement, index) => {
+          expect(selectElement.value).toBe(meatDefaultValues[index]);
+        });
+        eggSelectElements.forEach((selectElement, index) => {
+          expect(selectElement.value).toBe(eggDefaultValues[index]);
         });
       });
 
-      test(`value of ${PaniniNames.cheese} is changed after user interaction`, () => {
-        selectElements.forEach((selectElement, index) => {
-          const otherOption = randomElementArray(cheeseVariants.filter((val) => val !== formFieldDefaultValues[index]));
+      test(`select fields values are changed after user interaction`, () => {
+        cheeseSelectElements.forEach((selectElement, index) => {
+          const otherOption = randomElementArray(cheeseVariants.filter((val) => val !== cheeseDefaultValues[index]));
           userEvent.selectOptions(selectElement, otherOption);
           waitFor(() => {
-            expect(selectElement.value).not.toBe(formFieldDefaultValues[index]);
+            expect(selectElement.value).not.toBe(cheeseDefaultValues[index]);
+            expect(selectElement.value).toBe(otherOption);
+          });
+        });
+        meatSelectElements.forEach((selectElement, index) => {
+          const otherOption = randomElementArray(meatVariants.filter((val) => val !== meatDefaultValues[index]));
+          userEvent.selectOptions(selectElement, otherOption);
+          waitFor(() => {
+            expect(selectElement.value).not.toBe(meatDefaultValues[index]);
+            expect(selectElement.value).toBe(otherOption);
+          });
+        });
+        eggSelectElements.forEach((selectElement, index) => {
+          const otherOption = randomElementArray(eggVariants.filter((val) => val !== eggDefaultValues[index]));
+          userEvent.selectOptions(selectElement, otherOption);
+          waitFor(() => {
+            expect(selectElement.value).not.toBe(eggDefaultValues[index]);
             expect(selectElement.value).toBe(otherOption);
           });
         });
       });
     });
 
-    describe(`${PaniniNames.sandwichName} test`, () => {
+    describe(`Text section test (${PaniniNames.sandwichName} field)`, () => {
       let inputElement: HTMLInputElement;
       let defaultVal: string;
 
