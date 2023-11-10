@@ -5,7 +5,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import postOrderSandwich from "../Api";
+import WheatIcon from "../components/icons/WheatIcon";
 import FormCard from "../components/paniniCreator/FormCard";
+import RandomizeButton from "../components/paniniCreator/RandomizeButton";
 import CheckboxButtonSection from "../components/paniniCreator/formSections/CheckboxButtonSection";
 import CheckboxSection from "../components/paniniCreator/formSections/CheckboxSection";
 import MultiSwipeSection from "../components/paniniCreator/formSections/MultiSwipeSection";
@@ -31,10 +33,6 @@ import {
 } from "../utils/panini-randomization-helpers";
 import styles from "./PaniniCreator.module.css";
 import { PaniniFormSectionMaxElements, PaniniNames } from "./PaniniCreatorEnums";
-import "/dice1.svg";
-import "/dice2.svg";
-import "/downArrow.svg";
-import "/wheat.svg";
 
 export default function PaniniCreator(props: PaniniCreatorProps) {
   const [formSaveError, setFormSaveError] = useState("");
@@ -108,18 +106,13 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
         <form className={styles.paniniCreator} onSubmit={methods.handleSubmit(handleSave)}>
           <div className={styles.formsInterface}>
             <h2 className={styles.formsLabel}>Panini Creator</h2>
-            <button type="button" className={styles.button} onClick={randomizeOrderData}>
-              <div className={styles.dicesContainer}>
-                <img className={styles.diceIcon} src="/dice1.svg" alt="dice 1 icon"></img>
-                <img className={styles.diceIcon} src="/dice2.svg" alt="dice 2 icon"></img>
-              </div>
-              Randomize Panini
-            </button>
+            <RandomizeButton action={randomizeOrderData}></RandomizeButton>
           </div>
           <FormCard title="Configure Base">
             <div className={styles.formSections}>
               <SwipeSection name={PaniniNames.bread} title="bread" options={breadVariants}>
-                <img src="/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img>
+                {/* <img src="/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img> */}
+                <WheatIcon></WheatIcon>
               </SwipeSection>
               <SelectSection
                 name={PaniniNames.cheese}
