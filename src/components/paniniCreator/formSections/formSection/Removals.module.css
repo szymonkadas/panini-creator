@@ -98,11 +98,11 @@ input:checked + .switchSlider:before {
 }
 
 .addButton {
-  background: url("../../../../images/plus.svg") center no-repeat;
+  background: url("/plus.svg") center no-repeat;
 }
 
 .removeButton {
-  background: url("../../../../images/minus.svg") center no-repeat;
+  background: url("/minus.svg") center no-repeat;
 }
 
 .addButton:hover,
@@ -111,9 +111,9 @@ input:checked + .switchSlider:before {
 }
 
 .addButton:hover {
-  background-image: url("../../../../images/plus-white.svg");
+  background-image: url("/plus-white.svg");
 }
 
 .removeButton:hover {
-  background-image: url("../../../../images/minus-white.svg");
+  background-image: url("/minus-white.svg");
 }

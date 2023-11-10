@@ -105,14 +105,17 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
           <div className={styles.formsInterface}>
             <h2 className={styles.formsLabel}>Panini Creator</h2>
             <button type="button" className={styles.button} onClick={randomizeOrderData}>
-              <img className={styles.diceIcon} src="/src/images/dices.svg" alt="dices icon"></img>
+              <div className={styles.dicesContainer}>
+                <img className={styles.diceIcon} src="/dice1.svg" alt="dice 1 icon"></img>
+                <img className={styles.diceIcon} src="/dice2.svg" alt="dice 2 icon"></img>
+              </div>
               Randomize Panini
             </button>
           </div>
           <FormCard title="Configure Base">
             <div className={styles.formSections}>
               <SwipeSection name={PaniniNames.bread} title="bread" options={breadVariants}>
-                <img src="/src/images/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img>
+                <img src="/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img>
               </SwipeSection>
               <SelectSection
                 name={PaniniNames.cheese}
