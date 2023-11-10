@@ -16,15 +16,3 @@
   position: relative;
   z-index: 2;
 }
-
-.selectArrow {
-  font-size: 0px;
-  position: absolute;
-  width: 14px;
-  right: 9px;
-  top: calc((35px - 7px) / 2);
-  z-index: 1;
-}
-.selectArrowActive {
-  transform: rotate(180deg);
-}
