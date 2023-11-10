@@ -1,0 +1,13 @@
+/* file made for deploying images refferenced only by img's in jsx */
+.dice1Matte {
+  background-image: url("/dice1.svg");
+}
+.dice2Matte {
+  background-image: url("/dice2.svg");
+}
+.wheatMatte {
+  background-image: url("/wheat.svg");
+}
+.downArrowMatte {
+  background-image: url("/downArrow.svg");
+}

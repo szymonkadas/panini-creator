@@ -31,6 +31,10 @@ import {
 } from "../utils/panini-randomization-helpers";
 import styles from "./PaniniCreator.module.css";
 import { PaniniFormSectionMaxElements, PaniniNames } from "./PaniniCreatorEnums";
+import "/dice1.svg";
+import "/dice2.svg";
+import "/downArrow.svg";
+import "/wheat.svg";
 
 export default function PaniniCreator(props: PaniniCreatorProps) {
   const [formSaveError, setFormSaveError] = useState("");
@@ -106,8 +110,8 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
             <h2 className={styles.formsLabel}>Panini Creator</h2>
             <button type="button" className={styles.button} onClick={randomizeOrderData}>
               <div className={styles.dicesContainer}>
-                <img className={styles.diceIcon} src="/src/images/dice1.svg" alt="dice 1 icon"></img>
-                <img className={styles.diceIcon} src="/src/images/dice2.svg" alt="dice 2 icon"></img>
+                <img className={styles.diceIcon} src="/dice1.svg" alt="dice 1 icon"></img>
+                <img className={styles.diceIcon} src="/dice2.svg" alt="dice 2 icon"></img>
               </div>
               Randomize Panini
             </button>
@@ -115,7 +119,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
           <FormCard title="Configure Base">
             <div className={styles.formSections}>
               <SwipeSection name={PaniniNames.bread} title="bread" options={breadVariants}>
-                <img src="/src/images/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img>
+                <img src="/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img>
               </SwipeSection>
               <SelectSection
                 name={PaniniNames.cheese}

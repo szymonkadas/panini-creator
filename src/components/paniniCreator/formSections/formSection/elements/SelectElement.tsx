@@ -31,7 +31,7 @@ export default function SelectElement(props: SelectElementProps) {
       </select>
       <img
         className={`${styles.selectArrow} ${isSelectActive && styles.selectArrowActive}`}
-        src="/src/images/downArrow.svg"
+        src="/downArrow.svg"
         alt="select arrow"
       ></img>
     </label>
