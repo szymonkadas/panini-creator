@@ -34,44 +34,6 @@
   transition: border 0.3s var(--transition-function);
 }
 
-.button:hover {
-  border: var(--border-width) solid var(--border-color);
-}
-.dicesContainer {
-  position: relative;
-}
-
-.diceIcon {
-  font-size: 0px;
-  transition: var(--transition-function) 0.3s;
-}
-.diceIcon:first-child {
-  position: relative;
-  top: 3.5px;
-}
-.diceIcon:last-child {
-  position: relative;
-  right: 5px;
-  top: -3px;
-}
-.button:hover .diceIcon:first-child {
-  /* transform: rotate3D(1, 0, 0, 180deg); */
-  top: -3.5px;
-  transform: rotate(45deg);
-}
-.button:hover .diceIcon:last-child {
-  /* transform: rotate3D(1, 0, 0, 180deg); */
-  top: 5px;
-  right: 4.5px;
-  transform: rotate(-45deg);
-}
-
-.wheatIcon {
-  max-height: 20px;
-  max-width: 20px;
-  font-size: 0px;
-}
-
 .formSections {
   width: 100%;
   display: flex;
