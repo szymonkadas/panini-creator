@@ -1,4 +1,5 @@
 import { useState } from "react";
+import DownArrowIcon from "../../../../icons/DownArrowIcon";
 import SpecialOptions from "../SpecialOptions";
 import styles from "./SelectElement.module.css";
 
@@ -30,11 +31,12 @@ export default function SelectElement(props: SelectElementProps) {
       >
         <SpecialOptions type="select" options={props.options} />
       </select>
-      <img
+      {/* <img
         className={`${styles.selectArrow} ${isSelectActive && styles.selectArrowActive}`}
-        src="/src/images/downArrow.svg"
+        src="/downArrow.svg"
         alt="select arrow"
-      ></img>
+      ></img> */}
+      <DownArrowIcon active={isSelectActive}></DownArrowIcon>
     </label>
   );
 }

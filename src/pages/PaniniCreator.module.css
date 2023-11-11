@@ -31,21 +31,7 @@
   padding: var(--secondary-spacing) var(--primary-spacing);
   font: var(--secondary-font);
   text-transform: var(--secondary-font-transform);
-}
-
-.button:hover {
-  border: var(--border-width) solid var(--border-color);
-}
-
-.diceIcon {
-  max-height: 17px;
-  max-width: 15px;
-  font-size: 0px;
-}
-.wheatIcon {
-  max-height: 20px;
-  max-width: 20px;
-  font-size: 0px;
+  transition: border 0.3s var(--transition-function);
 }
 
 .formSections {
@@ -81,14 +67,17 @@
   background-color: var(--border-color);
   color: white;
   border: var(--border-width) solid var(--border-color);
+  text-decoration: underline transparent;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 0.5px;
 }
 .formsSubmit:hover {
   border: var(--border-width) solid white;
-  text-decoration: underline;
+  text-decoration: underline white;
 }
 
 .formsReset {
-  transition: border 0.4s;
+  transition: border 0.4s var(--transition-function);
   width: fit-content;
   color: var(--border-color);
   background-color: transparent;

@@ -91,45 +91,29 @@ input:checked + .switchSlider:before {
   border-style: solid;
   border-width: var(--border-width);
   border-color: var(--border-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-weight: 100;
   transition: 0.4s;
   transition-timing-function: cubic-bezier(0.75, 0.03, 0.58, 1);
-}
-.addButton::after {
   position: relative;
-  left: -4px;
-  display: block;
-  width: 1px;
-  height: 8px;
-  background-color: black;
-  content: "";
 }
-.addButton::before {
-  position: relative;
-  display: block;
-  width: 8px;
-  height: 1px;
-  background-color: black;
-  content: "";
+
+.addButton {
+  background: url("/plus.svg") center no-repeat;
 }
-.removeButton::after {
-  position: relative;
-  display: block;
-  width: 8px;
-  height: 1px;
-  background-color: black;
-  content: "";
+
+.removeButton {
+  background: url("/minus.svg") center no-repeat;
 }
 
 .addButton:hover,
 .removeButton:hover {
   background-color: black;
 }
-.removeButton:hover::after,
-.addButton:hover::after,
-.addButton:hover::before {
-  background-color: white;
+
+.addButton:hover {
+  background-image: url("/plus-white.svg");
+}
+
+.removeButton:hover {
+  background-image: url("/minus-white.svg");
 }
