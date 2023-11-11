@@ -6,10 +6,14 @@ Master forms in React by creating sandwich configurator using React Hook Form, a
 
 ---
 
+### Where to find? :D
+
+https://szymonkadas.github.io/panini-creator/
+
 ### How to start 🚀
 
-1. Install dependencies with ``npm install``
-2. Run ``npm run dev`` to start developing
+1. Install dependencies with `npm install`
+2. Run `npm run dev` to start developing
 
 ### 📝 Project requirements
 
