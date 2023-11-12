@@ -164,8 +164,13 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
             </div>
             <div className={styles.formsSubmitInterfaceWrapper}>
               <label className={styles.formsSubmitLabel}>
-                place order or start again
-                <input type="submit" className={styles.formsSubmit} value={"place order"} />
+                place order
+                <input
+                  type="submit"
+                  className={styles.formsSubmit}
+                  value={"place order"}
+                  data-testid="PlaceOrderButton"
+                />
               </label>
               <button type="submit" className={styles.formsReset} onClick={resetPanini}>
                 start again

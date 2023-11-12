@@ -15,7 +15,7 @@ export default function RandomizeButton(props: { action: () => void }) {
               transform="rotate(-15 0.306186 3.00881)"
               fill="white"
               stroke="black"
-              stroke-width="0.5"
+              strokeWidth="0.5"
             />
             <circle cx="4.5" cy="5.5" r="0.5" fill="black" />
           </svg>
@@ -30,7 +30,7 @@ export default function RandomizeButton(props: { action: () => void }) {
               transform="rotate(35.1014 5.03905 0.34829)"
               fill="white"
               stroke="black"
-              stroke-width="0.5"
+              strokeWidth="0.5"
             />
             <circle cx="7.5" cy="4.5" r="0.5" fill="black" />
             <circle cx="4.5" cy="5.5" r="0.5" fill="black" />

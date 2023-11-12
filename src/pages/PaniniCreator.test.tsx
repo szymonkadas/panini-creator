@@ -1,7 +1,8 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { get as lodashGet } from "lodash";
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
-import { beforeEach, describe, test } from "vitest";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import vitestFetchMock from "vitest-fetch-mock";
 import { breadVariants } from "../data/bread";
 import { cheeseVariants } from "../data/cheese";
 import { dressingVariants } from "../data/dressing";
@@ -18,20 +19,24 @@ import { PaniniNames } from "./PaniniCreatorEnums";
 import SplashScreenLayout from "./SplashScreenLayout";
 
 describe("Test form submitting", () => {
+  const mockedImageUrl =
+    "https://oaidalleapiprodscus.blob.core.windows.net/private/org-SH1xtUjMVrHGqv2FjNQFVumv/user-ZM94ZPHYec9iAazGn7QUF9sX/img-mge9FHmtERBAlXiB8Wj4LJz9.png?st=2023-11-12T09%3A33%3A17Z&se=2023-11-12T11%3A33%3A17Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-11-12T06%3A01%3A54Z&ske=2023-11-13T06%3A01%3A54Z&sks=b&skv=2021-08-06&sig=CKBv3Pef5nc4wfwCUUgim3boRdJ1bYkbE05SY8iJZIM%3D";
+  const successPath = "/success";
+  const successTitle = "Panini ordered";
   let renderedApp;
   beforeEach(() => {
     const router = createBrowserRouter(
       createRoutesFromElements(
         <Route path="/" element={<Layout />}>
-          <Route index element={<PaniniCreator navTo="/success" />} />
+          <Route index element={<PaniniCreator navTo={successPath} />} />
           <Route
-            path="/success"
+            path={successPath}
             element={
               <SplashScreenLayout
                 shouldTransition={true}
                 defaultPos={false}
                 navTo="/panini_creator"
-                title="Panini ordered"
+                title={successTitle}
                 actionDesc="start again"
               ></SplashScreenLayout>
             }
@@ -45,7 +50,8 @@ describe("Test form submitting", () => {
 
   afterEach(() => {
     // Clean up router after each test
-    renderedApp = null;
+    cleanup();
+    vi.clearAllMocks();
   });
 
   describe("Being able to change default values of every element before clicking 'Place order' button", () => {
@@ -384,6 +390,36 @@ describe("Test form submitting", () => {
         fireEvent.change(inputElement, { target: { value: "Not default name" } });
         expect(inputElement.value).not.toBe(defaultVal);
         expect(inputElement.value).toBe("Not default name");
+      });
+    });
+  });
+
+  describe("Finalize order test suite: ", () => {
+    let randomizeButton: HTMLButtonElement;
+    let placeOrderButton: HTMLButtonElement;
+    beforeEach(() => {
+      const fetchMock = vitestFetchMock(vi);
+      fetchMock.enableMocks();
+      fetchMock.mockResponse(JSON.stringify({ imageUrl: mockedImageUrl }));
+      placeOrderButton = screen.getByTestId("PlaceOrderButton");
+      // so the values are changed properly and validation will succeed for the next steps to occur.
+      randomizeButton = screen.getByTestId("PaniniRandomizeButton");
+      fireEvent.click(randomizeButton);
+      fireEvent.click(placeOrderButton);
+    });
+    afterEach(() => {
+      fetchMock.mockClear();
+    });
+    test("It returns imageUrl mock of form payload when 'Place order' button is clicked and form validation passes.", async () => {
+      await waitFor(() => {
+        const response = fetchMock.mock.results[0];
+        expect(response.value.status).toBe(200);
+        expect(JSON.parse(response.value.body.toString())).toEqual({ imageUrl: `${mockedImageUrl}` });
+      });
+    });
+    test("It redirects to Success screen when Place order button is clicked", async () => {
+      await waitFor(() => {
+        expect(window.location.pathname).toBe(successPath);
       });
     });
   });
