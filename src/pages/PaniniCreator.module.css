@@ -60,6 +60,7 @@
   text-transform: uppercase;
   font: var(--secondary-font);
   padding: var(--secondary-spacing) var(--primary-spacing);
+  cursor: pointer;
 }
 
 .formsSubmit {
