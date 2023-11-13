@@ -357,11 +357,15 @@ describe("Test form submitting", () => {
 
     describe(`Radio section test (${PaniniNames.serving}) field`, () => {
       let radioInputElements: HTMLInputElement[];
+      let radioInteractionButtons: HTMLButtonElement[];
       let defaultVal: string;
 
       beforeEach(() => {
         radioInputElements = Array.from(servingVariant, (val, index) =>
           screen.getByTestId(`${PaniniNames.serving}${index}-radioInputElement`)
+        );
+        radioInteractionButtons = Array.from(servingVariant, (val, index) =>
+          screen.getByTestId(`${PaniniNames.serving}${index}-radioInteractionButton`)
         );
         defaultVal = lodashGet(formDefaultValues, PaniniNames.serving);
       });
@@ -370,6 +374,24 @@ describe("Test form submitting", () => {
         radioInputElements.forEach((inputElement, index) => {
           expect(inputElement.value).toBe(defaultVal);
         });
+      });
+
+      test("value of radio section form field is changed after user interaction", () => {
+        let foundElement = false;
+        let index = 0;
+        let newVal = "";
+        while (index < radioInteractionButtons.length) {
+          const currentOption = radioInteractionButtons[index].getAttribute("data-testoption");
+          if (currentOption !== defaultVal) {
+            newVal = currentOption as string;
+            foundElement = true;
+            break;
+          }
+          index++;
+        }
+        expect(foundElement).toBe(true);
+        fireEvent.click(radioInteractionButtons[index]);
+        radioInputElements.forEach((input) => expect(input.value).toBe(newVal));
       });
     });
 

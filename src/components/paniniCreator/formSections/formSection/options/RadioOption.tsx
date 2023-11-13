@@ -24,6 +24,7 @@ export default function RadioOption(props: NamedOptionProps) {
         className={`${styles.radioButton} ${isChecked && styles.checked}`}
         onClick={handleRadioClick}
         data-testid={`${props.name}${props.index}-radioInteractionButton`}
+        data-testoption={props.option}
       ></button>
       <input
         className={styles.radioOption}
