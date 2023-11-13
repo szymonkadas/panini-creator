@@ -172,7 +172,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
                   data-testid="PlaceOrderButton"
                 />
               </label>
-              <button type="submit" className={styles.formsReset} onClick={resetPanini}>
+              <button type="submit" className={styles.formsReset} onClick={resetPanini} data-testid="resetButton">
                 start again
               </button>
             </div>

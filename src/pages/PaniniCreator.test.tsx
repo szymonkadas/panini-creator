@@ -357,11 +357,15 @@ describe("Test form submitting", () => {
 
     describe(`Radio section test (${PaniniNames.serving}) field`, () => {
       let radioInputElements: HTMLInputElement[];
+      let radioInteractionButtons: HTMLButtonElement[];
       let defaultVal: string;
 
       beforeEach(() => {
         radioInputElements = Array.from(servingVariant, (val, index) =>
           screen.getByTestId(`${PaniniNames.serving}${index}-radioInputElement`)
+        );
+        radioInteractionButtons = Array.from(servingVariant, (val, index) =>
+          screen.getByTestId(`${PaniniNames.serving}${index}-radioInteractionButton`)
         );
         defaultVal = lodashGet(formDefaultValues, PaniniNames.serving);
       });
@@ -370,6 +374,24 @@ describe("Test form submitting", () => {
         radioInputElements.forEach((inputElement, index) => {
           expect(inputElement.value).toBe(defaultVal);
         });
+      });
+
+      test("value of radio section form field is changed after user interaction", () => {
+        let foundElement = false;
+        let index = 0;
+        let newVal = "";
+        while (index < radioInteractionButtons.length) {
+          const currentOption = radioInteractionButtons[index].getAttribute("data-testoption");
+          if (currentOption !== defaultVal) {
+            newVal = currentOption as string;
+            foundElement = true;
+            break;
+          }
+          index++;
+        }
+        expect(foundElement).toBe(true);
+        fireEvent.click(radioInteractionButtons[index]);
+        radioInputElements.forEach((input) => expect(input.value).toBe(newVal));
       });
     });
 
@@ -422,5 +444,201 @@ describe("Test form submitting", () => {
         expect(window.location.pathname).toBe(successPath);
       });
     });
+  });
+
+  describe("It should reset all form configuration values when START AGAIN button is clicked", () => {
+    // changing all values:
+    // bread
+    const formDefaultValues = SandwichDefaultVals;
+    const leftBreadSwipeButton: HTMLButtonElement = screen.getByTestId(`${PaniniNames.bread}-swipeLeftButton`);
+    const rightBreadSwipeButton: HTMLButtonElement = screen.getByTestId(`${PaniniNames.bread}-swipeRightButton`);
+
+    const defaultValIndex = breadVariants.findIndex((val) => val === lodashGet(formDefaultValues, PaniniNames.bread));
+    // swipe left or right if not possible to change its val.
+    if (defaultValIndex > 0) {
+      fireEvent.click(leftBreadSwipeButton);
+    } else if (defaultValIndex < breadVariants.length - 1) {
+      fireEvent.click(rightBreadSwipeButton);
+    }
+    // dressing
+    const dressingSwipeElements: HTMLInputElement[] = Array.from(
+      lodashGet(formDefaultValues, PaniniNames.dressing),
+      (val, index) => {
+        return screen.getByTestId(`${PaniniNames.dressing}${index}-swipeInputElement`);
+      }
+    );
+    const leftDressingSwipeButtons: HTMLButtonElement[] = Array.from(
+      lodashGet(formDefaultValues, PaniniNames.dressing),
+      (val, index) => {
+        return screen.getByTestId(`${PaniniNames.dressing}${index}-swipeLeftButton`);
+      }
+    );
+    const rightDressingSwipeButtons: HTMLButtonElement[] = Array.from(
+      lodashGet(formDefaultValues, PaniniNames.dressing),
+      (val, index) => {
+        return screen.getByTestId(`${PaniniNames.dressing}${index}-swipeRightButton`);
+      }
+    );
+    const dressingDefaultValues: string[] = lodashGet(formDefaultValues, PaniniNames.dressing);
+
+    dressingSwipeElements.forEach((inputElement, index) => {
+      const defaultValIndex = dressingVariants.findIndex((val) => val === dressingDefaultValues[index]);
+      if (defaultValIndex > 0) {
+        fireEvent.click(leftDressingSwipeButtons[index]);
+      } else if (defaultValIndex < dressingVariants.length - 1) {
+        fireEvent.click(rightDressingSwipeButtons[index]);
+      }
+    });
+
+    // Selects: cheese, meat, egg form fields)
+    const cheeseSelectElements: HTMLSelectElement[] = Array.from(
+      lodashGet(formDefaultValues, PaniniNames.cheese),
+      (val, index) => {
+        return screen.getByTestId(`${PaniniNames.cheese}${index}-selectElement`);
+      }
+    );
+    const meatSelectElements: HTMLSelectElement[] = Array.from(
+      lodashGet(formDefaultValues, PaniniNames.meat),
+      (val, index) => {
+        return screen.getByTestId(`${PaniniNames.meat}${index}-selectElement`);
+      }
+    );
+    const eggSelectElements: HTMLSelectElement[] = Array.from(
+      lodashGet(formDefaultValues, PaniniNames.egg),
+      (val, index) => {
+        return screen.getByTestId(`${PaniniNames.egg}${index}-selectElement`);
+      }
+    );
+    const cheeseDefaultValues = lodashGet(formDefaultValues, PaniniNames.cheese);
+    const meatDefaultValues = lodashGet(formDefaultValues, PaniniNames.meat);
+    const eggDefaultValues = lodashGet(formDefaultValues, PaniniNames.egg);
+
+    cheeseSelectElements.forEach((selectElement, index) => {
+      const otherOption = randomElementArray(cheeseVariants.filter((val) => val !== cheeseDefaultValues[index]));
+      fireEvent.change(selectElement, { target: { value: otherOption } });
+    });
+
+    meatSelectElements.forEach((selectElement, index) => {
+      const otherOption = randomElementArray(meatVariants.filter((val) => val !== meatDefaultValues[index]));
+      fireEvent.change(selectElement, { target: { value: otherOption } });
+    });
+
+    eggSelectElements.forEach((selectElement, index) => {
+      const otherOption = randomElementArray(eggVariants.filter((val) => val !== eggDefaultValues[index]));
+      fireEvent.change(selectElement, { target: { value: otherOption } });
+    });
+
+    //CheckboxButton section vegetables:
+    const vegetablesDefaultValues = lodashGet(formDefaultValues, PaniniNames.vegetables);
+    const vegetablesCheckboxButtonInputElements: HTMLInputElement[] = screen.getAllByTestId(
+      `${PaniniNames.vegetables}-checkboxButtonInputElement`
+    );
+    const vegetablesCheckboxButtons: HTMLButtonElement[] = Array.from(vegetableVariant, (val, index) => {
+      return screen.getByTestId(`${PaniniNames.vegetables}${index}-checkboxButtonInteractionButton`);
+    });
+
+    // first click all selected checkboxes to unselect them
+    const filteredDefaultValues = [...vegetablesDefaultValues];
+    vegetablesDefaultValues.forEach((defaultVal, index) => {
+      const indexOfButtonToBeClicked = vegetablesCheckboxButtons.findIndex((button) => {
+        return button.value.toLowerCase() === defaultVal.toLowerCase();
+      });
+      filteredDefaultValues.filter((val) => val !== defaultVal);
+      fireEvent.click(vegetablesCheckboxButtons[indexOfButtonToBeClicked]);
+    });
+
+    // simulating many interactions
+    let elementsCountToBeClicked = Math.floor(Math.random() * vegetableVariant.length * 2);
+    let expectedValues: string[] = [];
+    while (elementsCountToBeClicked > 0) {
+      const otherOption = randomElementArray(vegetableVariant);
+      const indexOfButtonToBeClicked = vegetablesCheckboxButtons.findIndex((button) => {
+        return button.value.toLowerCase() === otherOption.toLowerCase();
+      });
+      fireEvent.click(vegetablesCheckboxButtons[indexOfButtonToBeClicked]);
+      if (expectedValues.includes(otherOption)) {
+        expectedValues = expectedValues.filter((val) => val !== otherOption);
+      } else {
+        expectedValues.push(otherOption);
+      }
+      elementsCountToBeClicked--;
+    }
+
+    //Checkbox section spreads, topping, cutlery, napkins:
+
+    const spreadsDefaultValues = lodashGet(formDefaultValues, PaniniNames.spreads);
+    const spreadsCheckboxInputElements: HTMLInputElement[] = Array.from(spreadVariant, (val, index) =>
+      screen.getByTestId(`${PaniniNames.spreads}${index}-checkboxInputElement`)
+    );
+
+    const napkinsCheckboxInteractionButton: HTMLButtonElement = screen.getByTestId(
+      `${PaniniNames.napkins}0-checkboxInteractionButton`
+    );
+    const cutleryCheckboxInteractionButton: HTMLButtonElement = screen.getByTestId(
+      `${PaniniNames.cutlery}0-checkboxInteractionButton`
+    );
+    const toppingCheckboxInteractionButton: HTMLButtonElement = screen.getByTestId(
+      `${PaniniNames.topping}0-checkboxInteractionButton`
+    );
+    const spreadsCheckboxInteractionButtons: HTMLButtonElement[] = Array.from(spreadVariant, (val, index) =>
+      screen.getByTestId(`${PaniniNames.spreads}${index}-checkboxInteractionButton`)
+    );
+
+    // these 3 have 2 options so it's enough to click once.
+    fireEvent.click(napkinsCheckboxInteractionButton);
+    fireEvent.click(cutleryCheckboxInteractionButton);
+    fireEvent.click(toppingCheckboxInteractionButton);
+
+    // clear all options
+    spreadsDefaultValues.forEach((defaultVal, index) => {
+      const indexOfButtonToBeClicked = spreadsCheckboxInputElements.findIndex(
+        (checkboxInputElement) => checkboxInputElement.value === defaultVal
+      );
+      fireEvent.click(spreadsCheckboxInteractionButtons[indexOfButtonToBeClicked]);
+    });
+    spreadsCheckboxInputElements.forEach((checkboxInputElement, index) => {
+      expect(checkboxInputElement.value).toBe("");
+    });
+    // simulating many interactions
+    elementsCountToBeClicked = Math.floor(Math.random() * vegetableVariant.length * 2);
+    expectedValues = [];
+    while (elementsCountToBeClicked > 0) {
+      const otherOption = randomElementArray(spreadVariant);
+      const indexOfButtonToBeClicked = spreadsCheckboxInputElements.findIndex((element) => {
+        return element.getAttribute("data-testoption")?.toLowerCase() === otherOption.toLowerCase();
+      });
+      fireEvent.click(spreadsCheckboxInteractionButtons[indexOfButtonToBeClicked]);
+      if (expectedValues.includes(otherOption)) {
+        expectedValues = expectedValues.filter((val) => val !== otherOption);
+      } else {
+        expectedValues.push(otherOption);
+      }
+      elementsCountToBeClicked--;
+    }
+
+    // changing radio section (serving field)
+    const radioInteractionButtons: HTMLButtonElement[] = Array.from(servingVariant, (val, index) =>
+      screen.getByTestId(`${PaniniNames.serving}${index}-radioInteractionButton`)
+    );
+    const radioDefaultVal: string = lodashGet(formDefaultValues, PaniniNames.serving);
+
+    let index = 0;
+    while (index < radioInteractionButtons.length) {
+      const currentOption = radioInteractionButtons[index].getAttribute("data-testoption");
+      if (currentOption !== radioDefaultVal) {
+        break;
+      }
+      index++;
+    }
+    fireEvent.click(radioInteractionButtons[index]);
+
+    // changing text section (sandwichName field)
+    const textInputElement: HTMLInputElement = screen.getByTestId(`${PaniniNames.sandwichName}-textInputElement`);
+    fireEvent.change(textInputElement, { target: { value: "Not default name" } });
+
+    const resetButton = screen.getByTestId("resetButton");
+    fireEvent.click(resetButton);
+
+    // tutaj dajesz sprawdzanie czy wartości są defaultowe, przekopiujesz potem je z góry.
   });
 });
