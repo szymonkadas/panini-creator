@@ -54,6 +54,7 @@ export default function CheckboxOption(props: NamedOptionProps) {
         className={`${styles.checkboxButton} ${isChecked ? styles.checked : ""}`}
         onClick={handleUserCheckToggle}
         data-testid={`${props.name}${props.index}-checkboxInteractionButton`}
+        value={props.option.toLowerCase()}
       ></button>
       <input
         key={`checkboxInput${props.option}${props.index}`}

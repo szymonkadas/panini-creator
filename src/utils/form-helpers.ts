@@ -11,23 +11,22 @@ export function isActiveToggle(
 
 export function handleOptionDecrease(
   currentOptionIndex: number,
+  optionsLength: number,
   setCurrentOption: React.Dispatch<React.SetStateAction<number>>,
-  action: () => void
+  action: (newOptionIndex: number) => void
 ) {
-  if (currentOptionIndex > 0) {
-    action();
-    setCurrentOption((prev) => prev - 1);
-  }
+  const newOptionIndex = currentOptionIndex > 0 ? currentOptionIndex - 1 : optionsLength - 1;
+  action(newOptionIndex);
+  setCurrentOption(newOptionIndex);
 }
 
 export function handleOptionIncrease(
   currentOptionIndex: number,
   optionsLength: number,
   setCurrentOption: React.Dispatch<React.SetStateAction<number>>,
-  action: () => void
+  action: (newOptionIndex: number) => void
 ) {
-  if (currentOptionIndex < optionsLength - 1) {
-    action();
-    setCurrentOption((prev) => prev + 1);
-  }
+  const newOptionIndex = currentOptionIndex < optionsLength - 1 ? currentOptionIndex + 1 : 0;
+  action(newOptionIndex);
+  setCurrentOption(newOptionIndex);
 }
