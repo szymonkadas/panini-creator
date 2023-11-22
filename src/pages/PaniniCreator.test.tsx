@@ -105,12 +105,11 @@ describe("Test form submitting", async () => {
       });
     });
     test("It redirects to Success screen when Place order button is clicked", async () => {
-      await waitFor(() => {
-        expect(window.location.pathname).toBe(successPath);
-      });
+      expect(window.location.pathname).toBe(successPath);
     });
   });
 });
+
 // fetching helper functions:
 function getElement<T>(paniniPath: string, elementName: string, index?: number) {
   return screen.getByTestId(`${paniniPath}${index !== undefined ? index : ""}-${elementName}`) as T;
