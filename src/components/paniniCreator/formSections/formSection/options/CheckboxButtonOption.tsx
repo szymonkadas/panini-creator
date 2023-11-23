@@ -24,9 +24,6 @@ export default function CheckboxButtonOption(props: NamedOptionProps) {
     setValue(props.name, updatedItems);
   };
 
-  const textContent =
-    props.option.length > 0 ? `${props.option[0].toUpperCase()}${props.option.slice(1).toLowerCase()}` : ``;
-
   return (
     <label key={`checkboxButtonLabel${props.option}${props.index}`} className={styles.checkboxButtonLabel}>
       option {props.option} checkbox
@@ -35,14 +32,17 @@ export default function CheckboxButtonOption(props: NamedOptionProps) {
         key={`checkboxButton${props.option}${props.index}`}
         className={`${styles.checkboxButton} ${isChecked && styles.checked}`}
         onClick={handleUserCheckToggle}
+        data-testid={`${props.name}${props.index}-checkboxButtonInteractionButton`}
+        value={props.option.toLowerCase()}
       >
-        {textContent}
+        {props.option.toLowerCase()}
       </button>
       <input
         key={`checkboxButtonInput${props.option}${props.index}`}
         className={styles.checkboxButtonOption}
         type="checkbox"
         {...field}
+        data-testid={`${props.name}-checkboxButtonInputElement`}
       />
     </label>
   );

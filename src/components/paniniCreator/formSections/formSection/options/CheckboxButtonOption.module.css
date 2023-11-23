@@ -13,8 +13,8 @@
   background-color: var(--special-color);
   border: var(--border-width) solid var(--special-color);
   padding: calc(var(--primary-spacing) / 2) var(--primary-spacing);
-  text-transform: none;
   font: var(--secondary-font);
+  text-transform: capitalize;
 }
 .checked {
   border-color: var(--border-color) !important;

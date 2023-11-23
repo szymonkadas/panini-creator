@@ -103,7 +103,11 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
         </div>
       )}
       <FormProvider {...methods}>
-        <form className={styles.paniniCreator} onSubmit={methods.handleSubmit(handleSave)}>
+        <form
+          className={styles.paniniCreator}
+          onSubmit={methods.handleSubmit(handleSave)}
+          data-testid={`PaniniMainForm`}
+        >
           <div className={styles.formsInterface}>
             <h2 className={styles.formsLabel}>Panini Creator</h2>
             <RandomizeButton action={randomizeOrderData}></RandomizeButton>
@@ -160,8 +164,13 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
             </div>
             <div className={styles.formsSubmitInterfaceWrapper}>
               <label className={styles.formsSubmitLabel}>
-                place order or start again
-                <input type="submit" className={styles.formsSubmit} value={"place order"} />
+                place order
+                <input
+                  type="submit"
+                  className={styles.formsSubmit}
+                  value={"place order"}
+                  data-testid="PlaceOrderButton"
+                />
               </label>
               <button type="submit" className={styles.formsReset} onClick={resetPanini}>
                 start again
@@ -193,7 +202,7 @@ const SandwichPayload = z.object({
   }),
 });
 
-const SandwichDefaultVals: StrictSandwichPayload = {
+export const SandwichDefaultVals: StrictSandwichPayload = {
   sandwichName: "",
   cutlery: false,
   napkins: false,

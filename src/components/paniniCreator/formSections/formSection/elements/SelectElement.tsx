@@ -27,6 +27,7 @@ export default function SelectElement(props: SelectElementProps) {
         onClick={handleSelectClick}
         onChange={handleChange}
         value={value}
+        data-testid={`${props.name}${props.index}-selectElement`}
       >
         <SpecialOptions type="select" options={props.options} />
       </select>
