@@ -13,14 +13,14 @@ export default function MultiSwipe(props: MultiSwipeElementProps) {
   }, [currVal]);
 
   const handleDecrease = () => {
-    handleOptionDecrease(currentOption, setCurrentOption, () =>
-      props.onUpdate(props.index, props.options[currentOption - 1])
-    );
+    handleOptionDecrease(currentOption, props.options.length, setCurrentOption, (newOptionIndex: number) => {
+      props.onUpdate(props.index, props.options[newOptionIndex]);
+    });
   };
 
   const handleIncrease = () => {
-    handleOptionIncrease(currentOption, props.options.length, setCurrentOption, () =>
-      props.onUpdate(props.index, props.options[currentOption + 1])
+    handleOptionIncrease(currentOption, props.options.length, setCurrentOption, (newOptionIndex: number) =>
+      props.onUpdate(props.index, props.options[newOptionIndex])
     );
   };
 

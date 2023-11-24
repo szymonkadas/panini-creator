@@ -24,7 +24,7 @@ export default function SplashScreenLayout(props: SplashScreenLayoutProps) {
   useEffect(() => {
     setTimeout(() => {
       download(imageUrl, fileName);
-    }, 2000);
+    }, 4000);
   }, [imageUrl, fileName]);
   // end of download section
   return (
