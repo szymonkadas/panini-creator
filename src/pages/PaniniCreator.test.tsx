@@ -11,6 +11,7 @@ import { servingVariant } from "../data/serving";
 import { spreadVariant } from "../data/spread";
 import { vegetableVariant } from "../data/vegetable";
 import {
+  checkFormDefaultValues,
   testCheckboxButtonElements,
   testCheckboxElement,
   testCheckboxElements,
@@ -21,14 +22,20 @@ import {
   testTextSection,
 } from "../utils/test-functions";
 import {
-  areListedValuesEqualOrChanged,
   checkboxButtonsInteraction,
-  isValEqualOrChangedToListedValues,
   radioInteraction,
   selectFieldInteraction,
   swipeElementsInteraction,
 } from "../utils/test-helpers";
 import {
+  CheckboxButtonsElementsSetup,
+  CheckboxElementsSetup,
+  CheckboxesElementsSetup,
+  MultiSwipeElementSetup,
+  RadioElementSetup,
+  SelectElementSetup,
+  SwipeElementSetup,
+  TextElementSetup,
   setupCheckboxButtonsTest,
   setupCheckboxTest,
   setupCheckboxesTest,
@@ -104,73 +111,114 @@ describe("Test form submitting", async () => {
     // Text section (sandwichName field)
     await testTextSection(PaniniNames.sandwichName);
   });
+  describe("reset and randomization suite", async () => {
+    let breadSetup: SwipeElementSetup;
+    let dressingSetup: MultiSwipeElementSetup;
+    let cheeseSetup: SelectElementSetup;
+    let meatSetup: SelectElementSetup;
+    let eggSetup: SelectElementSetup;
+    let vegetableSetup: CheckboxButtonsElementsSetup;
+    let spreadsSetup: CheckboxesElementsSetup;
+    let toppingSetup: CheckboxElementsSetup;
+    let cutlerySetup: CheckboxElementsSetup;
+    let napkinsSetup: CheckboxElementsSetup;
+    let servingSetup: RadioElementSetup;
+    let sandwichNameSetup: TextElementSetup;
 
-  test("It should reset all form configuration values when START AGAIN button is clicked", async () => {
-    // change values:
-    // swipe section (bread)
-    const breadSetup = setupSwipeElementTest(PaniniNames.bread);
-    await userEvent.click(breadSetup.leftSwipeButton);
-    // multi swipe section (dressing)
-    const dressingSetup = setupMultiSwipeElementTest(PaniniNames.dressing);
-    await swipeElementsInteraction(
-      dressingSetup.leftSwipeButtons,
-      dressingVariants,
-      dressingSetup.swipeElementsDefaultValues
-    );
-    // select section (cheese, meat, egg)
-    const cheeseSetup = setupSelectTest(PaniniNames.cheese);
-    await selectFieldInteraction(cheeseSetup.selectElements, cheeseVariants, cheeseSetup.selectDefaultValues);
-    const meatSetup = setupSelectTest(PaniniNames.meat);
-    await selectFieldInteraction(meatSetup.selectElements, meatVariants, meatSetup.selectDefaultValues);
-    const eggSetup = setupSelectTest(PaniniNames.egg);
-    await selectFieldInteraction(eggSetup.selectElements, eggVariants, eggSetup.selectDefaultValues);
-    // checkboxButton section (vegetables)
-    const vegetableSetup = setupCheckboxButtonsTest(PaniniNames.vegetables, vegetableVariant);
-    await checkboxButtonsInteraction(
-      vegetableSetup.checkboxButtonInteractionButtons,
-      vegetableVariant,
-      vegetableSetup.checkboxButtonsDefaultValues
-    );
-    // Checkbox section (spreads, topping, cutlery, napkins)
-    const spreadsSetup = setupCheckboxesTest(PaniniNames.spreads, spreadVariant);
-    await checkboxButtonsInteraction(
-      spreadsSetup.checkboxInteractionButtons,
-      spreadVariant,
-      spreadsSetup.checkboxDefaultValues
-    );
-    const toppingSetup = setupCheckboxTest(PaniniNames.topping);
-    await userEvent.click(toppingSetup.checkboxInteractionButton);
-    const cutlerySetup = setupCheckboxTest(PaniniNames.cutlery);
-    await userEvent.click(cutlerySetup.checkboxInteractionButton);
-    const napkinsSetup = setupCheckboxTest(PaniniNames.napkins);
-    await userEvent.click(napkinsSetup.checkboxInteractionButton);
-    // Radio section (serving) field
-    const servingSetup = setupRadioTest(PaniniNames.serving, servingVariant);
-    await radioInteraction(servingSetup.radioInteractionButtons, servingSetup.radioDefaultValue);
-    // Text section (sandwichName field)
-    const sandwichNameSetup = setupTextSectionTest(PaniniNames.sandwichName);
-    const notDefaultVal = "Not default name";
-    await userEvent.type(sandwichNameSetup.textInputElement, notDefaultVal);
-    // reset values:
-    const resetButton = screen.getByTestId("resetButton");
-    await userEvent.click(resetButton);
-    // check if values are default:
-    expect(breadSetup.swipeInputElement.value).toBe(breadSetup.swipeDefaultVal);
-    areListedValuesEqualOrChanged(dressingSetup.swipeInputElements, dressingSetup.swipeElementsDefaultValues, true);
-    areListedValuesEqualOrChanged(cheeseSetup.selectElements, cheeseSetup.selectDefaultValues, true);
-    areListedValuesEqualOrChanged(meatSetup.selectElements, meatSetup.selectDefaultValues, true);
-    areListedValuesEqualOrChanged(eggSetup.selectElements, eggSetup.selectDefaultValues, true);
-    isValEqualOrChangedToListedValues(
-      vegetableSetup.checkboxButtonsDefaultValues.join(","),
-      vegetableSetup.checkboxButtonInputElements,
-      true
-    );
-    areListedValuesEqualOrChanged(spreadsSetup.defaultInputElements, spreadsSetup.checkboxDefaultValues, true);
-    expect(!!toppingSetup.checkboxInputElement.value).toBe(!!toppingSetup.checkboxDefaultValue);
-    expect(cutlerySetup.checkboxInputElement.value).toBe(`${cutlerySetup.checkboxDefaultValue}`);
-    expect(napkinsSetup.checkboxInputElement.value).toBe(`${napkinsSetup.checkboxDefaultValue}`);
-    isValEqualOrChangedToListedValues(servingSetup.radioDefaultValue, servingSetup.radioInputElements, true);
-    expect(sandwichNameSetup.textInputElement.value).toBe(sandwichNameSetup.textDefaultVal);
+    beforeEach(() => {
+      // Setup inputs and their values, etc.
+      breadSetup = setupSwipeElementTest(PaniniNames.bread);
+      dressingSetup = setupMultiSwipeElementTest(PaniniNames.dressing);
+      cheeseSetup = setupSelectTest(PaniniNames.cheese);
+      meatSetup = setupSelectTest(PaniniNames.meat);
+      eggSetup = setupSelectTest(PaniniNames.egg);
+      vegetableSetup = setupCheckboxButtonsTest(PaniniNames.vegetables, vegetableVariant);
+      spreadsSetup = setupCheckboxesTest(PaniniNames.spreads, spreadVariant);
+      toppingSetup = setupCheckboxTest(PaniniNames.topping);
+      cutlerySetup = setupCheckboxTest(PaniniNames.cutlery);
+      napkinsSetup = setupCheckboxTest(PaniniNames.napkins);
+      servingSetup = setupRadioTest(PaniniNames.serving, servingVariant);
+      sandwichNameSetup = setupTextSectionTest(PaniniNames.sandwichName);
+    });
+
+    test("It should reset all form configuration values when START AGAIN button is clicked", async () => {
+      // change values:
+      // swipe section (bread)
+      await userEvent.click(breadSetup.leftSwipeButton);
+      // multi swipe section (dressing)
+      await swipeElementsInteraction(
+        dressingSetup.leftSwipeButtons,
+        dressingVariants,
+        dressingSetup.swipeElementsDefaultValues
+      );
+      // select section (cheese, meat, egg)
+      await selectFieldInteraction(cheeseSetup.selectElements, cheeseVariants, cheeseSetup.selectDefaultValues);
+      await selectFieldInteraction(meatSetup.selectElements, meatVariants, meatSetup.selectDefaultValues);
+      await selectFieldInteraction(eggSetup.selectElements, eggVariants, eggSetup.selectDefaultValues);
+      // checkboxButton section (vegetables)
+      await checkboxButtonsInteraction(
+        vegetableSetup.checkboxButtonInteractionButtons,
+        vegetableVariant,
+        vegetableSetup.checkboxButtonsDefaultValues
+      );
+      // Checkbox section (spreads, topping, cutlery, napkins)
+      await checkboxButtonsInteraction(
+        spreadsSetup.checkboxInteractionButtons,
+        spreadVariant,
+        spreadsSetup.checkboxDefaultValues
+      );
+      await userEvent.click(toppingSetup.checkboxInteractionButton);
+      await userEvent.click(cutlerySetup.checkboxInteractionButton);
+      await userEvent.click(napkinsSetup.checkboxInteractionButton);
+      // Radio section (serving) field
+      await radioInteraction(servingSetup.radioInteractionButtons, servingSetup.radioDefaultValue);
+      // Text section (sandwichName field)
+      const notDefaultVal = "Not default name";
+      await userEvent.type(sandwichNameSetup.textInputElement, notDefaultVal);
+      // reset values:
+      const resetButton = screen.getByTestId("resetButton");
+      await userEvent.click(resetButton);
+      // check if values are default:
+      checkFormDefaultValues(
+        breadSetup,
+        dressingSetup,
+        cheeseSetup,
+        meatSetup,
+        eggSetup,
+        vegetableSetup,
+        spreadsSetup,
+        toppingSetup,
+        cutlerySetup,
+        napkinsSetup,
+        servingSetup,
+        sandwichNameSetup
+      );
+    });
+
+    test("Test panini form randomization", async () => {
+      const randomizeButton = screen.getByTestId("paniniRandomizeButton");
+      await userEvent.click(randomizeButton);
+      try {
+        checkFormDefaultValues(
+          breadSetup,
+          dressingSetup,
+          cheeseSetup,
+          meatSetup,
+          eggSetup,
+          vegetableSetup,
+          spreadsSetup,
+          toppingSetup,
+          cutlerySetup,
+          napkinsSetup,
+          servingSetup,
+          sandwichNameSetup
+        );
+      } catch (e) {
+        // task failed successfully, it shouldn't be equal to default values so if it throwed an error then it's randomized.
+        return;
+      }
+      expect("Randomization isn't working").toBe("That's for certain because sandwichName on default is blank.");
+    });
   });
 
   describe("Finalize order test suite: ", async () => {
@@ -180,9 +228,9 @@ describe("Test form submitting", async () => {
       const fetchMock = vitestFetchMock(vi);
       fetchMock.enableMocks();
       fetchMock.mockResponse(JSON.stringify({ imageUrl: mockedImageUrl }));
-      placeOrderButton = screen.getByTestId("PlaceOrderButton");
+      placeOrderButton = screen.getByTestId("placeOrderButton");
       // so the values are changed properly and validation will succeed for the next steps to occur.
-      randomizeButton = screen.getByTestId("PaniniRandomizeButton");
+      randomizeButton = screen.getByTestId("paniniRandomizeButton");
       fireEvent.click(randomizeButton);
       fireEvent.click(placeOrderButton);
     });

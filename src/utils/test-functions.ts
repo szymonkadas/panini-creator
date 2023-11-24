@@ -8,6 +8,14 @@ import {
   swipeElementsInteraction,
 } from "../utils/test-helpers";
 import {
+  CheckboxButtonsElementsSetup,
+  CheckboxElementsSetup,
+  CheckboxesElementsSetup,
+  MultiSwipeElementSetup,
+  RadioElementSetup,
+  SelectElementSetup,
+  SwipeElementSetup,
+  TextElementSetup,
   setupCheckboxButtonsTest,
   setupCheckboxTest,
   setupCheckboxesTest,
@@ -125,4 +133,43 @@ export async function testTextSection(paniniName: string) {
   expect(textInputElement.value).toBe(notDefaultVal);
 
   return { textInputElement, textDefaultVal };
+}
+
+// Check If every field has default values
+export function checkFormDefaultValues(
+  breadSetup: SwipeElementSetup,
+  dressingSetup: MultiSwipeElementSetup,
+  cheeseSetup: SelectElementSetup,
+  meatSetup: SelectElementSetup,
+  eggSetup: SelectElementSetup,
+  vegetableSetup: CheckboxButtonsElementsSetup,
+  spreadsSetup: CheckboxesElementsSetup,
+  toppingSetup: CheckboxElementsSetup,
+  cutlerySetup: CheckboxElementsSetup,
+  napkinsSetup: CheckboxElementsSetup,
+  servingSetup: RadioElementSetup,
+  sandwichNameSetup: TextElementSetup
+) {
+  expect(breadSetup.swipeInputElement.value).toBe(breadSetup.swipeDefaultVal);
+  // multi swipe section (dressing)
+  areListedValuesEqualOrChanged(dressingSetup.swipeInputElements, dressingSetup.swipeElementsDefaultValues, true);
+  // select section (cheese, meat, egg)
+  areListedValuesEqualOrChanged(cheeseSetup.selectElements, cheeseSetup.selectDefaultValues, true);
+  areListedValuesEqualOrChanged(meatSetup.selectElements, meatSetup.selectDefaultValues, true);
+  areListedValuesEqualOrChanged(eggSetup.selectElements, eggSetup.selectDefaultValues, true);
+  // checkboxButton section (vegetables)
+  isValEqualOrChangedToListedValues(
+    vegetableSetup.checkboxButtonsDefaultValues.join(","),
+    vegetableSetup.checkboxButtonInputElements,
+    true
+  );
+  // Checkbox section (spreads, topping, cutlery, napkins)
+  areListedValuesEqualOrChanged(spreadsSetup.defaultInputElements, spreadsSetup.checkboxDefaultValues, true);
+  expect(!!toppingSetup.checkboxInputElement.value).toBe(!!toppingSetup.checkboxDefaultValue);
+  expect(cutlerySetup.checkboxInputElement.value).toBe(`${cutlerySetup.checkboxDefaultValue}`);
+  expect(napkinsSetup.checkboxInputElement.value).toBe(`${napkinsSetup.checkboxDefaultValue}`);
+  // Radio section (serving)
+  isValEqualOrChangedToListedValues(servingSetup.radioDefaultValue, servingSetup.radioInputElements, true);
+  // Text section (sandwichName field)
+  expect(sandwichNameSetup.textInputElement.value).toBe(sandwichNameSetup.textDefaultVal);
 }

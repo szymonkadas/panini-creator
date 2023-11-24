@@ -169,7 +169,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
                   type="submit"
                   className={styles.formsSubmit}
                   value={"place order"}
-                  data-testid="PlaceOrderButton"
+                  data-testid="placeOrderButton"
                 />
               </label>
               <button type="submit" className={styles.formsReset} onClick={resetPanini} data-testid="resetButton">
