@@ -1,11 +1,13 @@
 import userEvent from "@testing-library/user-event";
-import { SandwichDefaultVals } from "../pages/PaniniCreator";
 import {
   areListedValuesEqualOrChanged,
   checkboxButtonsInteraction,
   isValEqualOrChangedToListedValues,
   radioInteraction,
   selectFieldInteraction,
+  swipeElementsInteraction,
+} from "../utils/test-helpers";
+import {
   setupCheckboxButtonsTest,
   setupCheckboxTest,
   setupCheckboxesTest,
@@ -14,11 +16,8 @@ import {
   setupSelectTest,
   setupSwipeElementTest,
   setupTextSectionTest,
-  swipeElementsInteraction,
-} from "../utils/test-helpers";
-
+} from "../utils/test-setup-functions";
 // form field tests functions:
-const formDefaultValues: StrictSandwichPayload = SandwichDefaultVals;
 
 export async function testSwipeElement(paniniName: string) {
   const { swipeInputElement, swipeDefaultVal, leftSwipeButton } = setupSwipeElementTest(paniniName);
@@ -89,10 +88,10 @@ export async function testCheckboxElement(paniniName: string, nullish: boolean) 
 }
 
 export async function testCheckboxElements(paniniName: string, variants: readonly string[]) {
-  const { checkboxDefaultValues, checkboxInputElements, checkboxInteractionButtons, defaultSpreadsInputElements } =
+  const { checkboxDefaultValues, checkboxInputElements, checkboxInteractionButtons, defaultInputElements } =
     setupCheckboxesTest(paniniName, variants);
   // checkbox values are indeed default on start
-  areListedValuesEqualOrChanged(defaultSpreadsInputElements, checkboxDefaultValues, true);
+  areListedValuesEqualOrChanged(defaultInputElements, checkboxDefaultValues, true);
   // simulating interactions
   const spreadExpectedValues = await checkboxButtonsInteraction(
     checkboxInteractionButtons,
@@ -102,7 +101,7 @@ export async function testCheckboxElements(paniniName: string, variants: readonl
   // values are changed
   isValEqualOrChangedToListedValues(`${spreadExpectedValues}`, checkboxInputElements, true);
 
-  return { checkboxInputElements, checkboxDefaultValues, checkboxInteractionButtons };
+  return { checkboxInputElements, checkboxDefaultValues, checkboxInteractionButtons, defaultInputElements };
 }
 
 export async function testRadioElements(paniniName: string, variants: readonly string[]) {
