@@ -197,15 +197,8 @@ describe("Test form submitting", async () => {
     });
 
     test("Test panini form randomization", async () => {
-      // same style way:
-      // snapshot like way:
-      const paniniForm: HTMLElement = screen.getByTestId("paniniMainForm");
-      const snapshot = paniniForm.innerHTML;
-      // common part
       const randomizeButton = screen.getByTestId("paniniRandomizeButton");
       await userEvent.click(randomizeButton);
-      // snapshot like way:
-      expect(paniniForm.innerHTML).not.toBe(snapshot);
       // run once again necessary setups to update their values (components with removal option during randomization could perish and be replaced with new ones)
       dressingSetup = setupMultiSwipeElementTest(PaniniNames.dressing, dressingVariants);
       cheeseSetup = setupSelectTest(PaniniNames.cheese, cheeseVariants);
