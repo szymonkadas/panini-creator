@@ -11,7 +11,8 @@ import { servingVariant } from "../data/serving";
 import { spreadVariant } from "../data/spread";
 import { vegetableVariant } from "../data/vegetable";
 import {
-  checkFormDefaultValues,
+  checkFormValuesToBeDefault,
+  checkFormValuesToNotBeDefault,
   testCheckboxButtonElements,
   testCheckboxElement,
   testCheckboxElements,
@@ -128,10 +129,10 @@ describe("Test form submitting", async () => {
     beforeEach(() => {
       // Setup inputs and their values, etc.
       breadSetup = setupSwipeElementTest(PaniniNames.bread);
-      dressingSetup = setupMultiSwipeElementTest(PaniniNames.dressing);
-      cheeseSetup = setupSelectTest(PaniniNames.cheese);
-      meatSetup = setupSelectTest(PaniniNames.meat);
-      eggSetup = setupSelectTest(PaniniNames.egg);
+      dressingSetup = setupMultiSwipeElementTest(PaniniNames.dressing, dressingVariants);
+      cheeseSetup = setupSelectTest(PaniniNames.cheese, cheeseVariants);
+      meatSetup = setupSelectTest(PaniniNames.meat, meatVariants);
+      eggSetup = setupSelectTest(PaniniNames.egg, eggVariants);
       vegetableSetup = setupCheckboxButtonsTest(PaniniNames.vegetables, vegetableVariant);
       spreadsSetup = setupCheckboxesTest(PaniniNames.spreads, spreadVariant);
       toppingSetup = setupCheckboxTest(PaniniNames.topping);
@@ -179,7 +180,7 @@ describe("Test form submitting", async () => {
       const resetButton = screen.getByTestId("resetButton");
       await userEvent.click(resetButton);
       // check if values are default:
-      checkFormDefaultValues(
+      checkFormValuesToBeDefault(
         breadSetup,
         dressingSetup,
         cheeseSetup,
@@ -196,28 +197,36 @@ describe("Test form submitting", async () => {
     });
 
     test("Test panini form randomization", async () => {
+      // same style way:
+      // snapshot like way:
+      const paniniForm: HTMLElement = screen.getByTestId("paniniMainForm");
+      const snapshot = paniniForm.innerHTML;
+      // common part
       const randomizeButton = screen.getByTestId("paniniRandomizeButton");
       await userEvent.click(randomizeButton);
-      try {
-        checkFormDefaultValues(
-          breadSetup,
-          dressingSetup,
-          cheeseSetup,
-          meatSetup,
-          eggSetup,
-          vegetableSetup,
-          spreadsSetup,
-          toppingSetup,
-          cutlerySetup,
-          napkinsSetup,
-          servingSetup,
-          sandwichNameSetup
-        );
-      } catch (e) {
-        // task failed successfully, it shouldn't be equal to default values so if it throwed an error then it's randomized.
-        return;
-      }
-      expect("Randomization isn't working").toBe("That's for certain because sandwichName on default is blank.");
+      // snapshot like way:
+      expect(paniniForm.innerHTML).not.toBe(snapshot);
+      // run once again necessary setups to update their values (components with removal option during randomization could perish and be replaced with new ones)
+      dressingSetup = setupMultiSwipeElementTest(PaniniNames.dressing, dressingVariants);
+      cheeseSetup = setupSelectTest(PaniniNames.cheese, cheeseVariants);
+      meatSetup = setupSelectTest(PaniniNames.meat, meatVariants);
+      eggSetup = setupSelectTest(PaniniNames.egg, eggVariants);
+      const formState = {
+        bread: breadSetup,
+        dressing: dressingSetup,
+        cheese: cheeseSetup,
+        meat: meatSetup,
+        egg: eggSetup,
+        vegetable: vegetableSetup,
+        spreads: spreadsSetup,
+        topping: toppingSetup,
+        cutlery: cutlerySetup,
+        napkins: napkinsSetup,
+        serving: servingSetup,
+        sandwichName: sandwichNameSetup,
+      };
+
+      checkFormValuesToNotBeDefault(formState);
     });
   });
 

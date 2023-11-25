@@ -23,18 +23,10 @@ export type MultiSwipeElementSetup = {
   leftSwipeButtons: HTMLButtonElement[];
 };
 
-export function setupMultiSwipeElementTest(paniniName: string): MultiSwipeElementSetup {
+export function setupMultiSwipeElementTest(paniniName: string, variants: readonly string[]): MultiSwipeElementSetup {
   const swipeElementsDefaultValues: string[] = lodashGet(formDefaultValues, paniniName);
-  const swipeInputElements: HTMLInputElement[] = getIndexedElements(
-    swipeElementsDefaultValues,
-    paniniName,
-    "swipeInputElement"
-  );
-  const leftSwipeButtons: HTMLButtonElement[] = getIndexedElements(
-    swipeElementsDefaultValues,
-    paniniName,
-    "swipeLeftButton"
-  );
+  const swipeInputElements: HTMLInputElement[] = getIndexedElements(variants, paniniName, "swipeInputElement");
+  const leftSwipeButtons: HTMLButtonElement[] = getIndexedElements(variants, paniniName, "swipeLeftButton");
   return { swipeElementsDefaultValues, swipeInputElements, leftSwipeButtons };
 }
 
@@ -43,9 +35,9 @@ export type SelectElementSetup = {
   selectElements: HTMLSelectElement[];
 };
 
-export function setupSelectTest(paniniName: string): SelectElementSetup {
+export function setupSelectTest(paniniName: string, variants: readonly string[]): SelectElementSetup {
   const selectDefaultValues: string[] = lodashGet(formDefaultValues, paniniName);
-  const selectElements: HTMLSelectElement[] = getIndexedElements(selectDefaultValues, paniniName, "selectElement");
+  const selectElements: HTMLSelectElement[] = getIndexedElements(variants, paniniName, "selectElement");
   return { selectDefaultValues, selectElements };
 }
 
