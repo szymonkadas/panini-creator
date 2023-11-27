@@ -6,9 +6,7 @@ export default function SwipeSection(props: SwipeSectionProps) {
   return (
     <FormSectionTemplate title={props.title}>
       <div className={styles.optionsWrapper}>
-        <SingleSwipeElement name={props.name} options={props.options}>
-          {props?.children}
-        </SingleSwipeElement>
+        <SingleSwipeElement name={props.name} options={props.options} optionsIcons={props.optionsIcons} />
       </div>
     </FormSectionTemplate>
   );

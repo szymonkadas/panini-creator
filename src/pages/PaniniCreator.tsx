@@ -5,7 +5,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import postOrderSandwich from "../Api";
-import WheatIcon from "../components/icons/WheatIcon";
 import FormCard from "../components/paniniCreator/FormCard";
 import RandomizeButton from "../components/paniniCreator/RandomizeButton";
 import CheckboxButtonSection from "../components/paniniCreator/formSections/CheckboxButtonSection";
@@ -15,7 +14,7 @@ import RadioSection from "../components/paniniCreator/formSections/RadioSection"
 import SelectSection from "../components/paniniCreator/formSections/SelectSection";
 import SwipeSection from "../components/paniniCreator/formSections/SwipeSection";
 import TextSection from "../components/paniniCreator/formSections/TextSection";
-import { breadVariants } from "../data/bread";
+import { breadIcons, breadVariants } from "../data/bread";
 import { cheeseVariants } from "../data/cheese";
 import { dressingVariants } from "../data/dressing";
 import { eggVariants } from "../data/egg";
@@ -114,10 +113,12 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
           </div>
           <FormCard title="Configure Base">
             <div className={styles.formSections}>
-              <SwipeSection name={PaniniNames.bread} title="bread" options={breadVariants}>
-                {/* <img src="/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img> */}
-                <WheatIcon></WheatIcon>
-              </SwipeSection>
+              <SwipeSection
+                name={PaniniNames.bread}
+                title="bread"
+                options={breadVariants}
+                optionsIcons={breadIcons}
+              ></SwipeSection>
               <SelectSection
                 name={PaniniNames.cheese}
                 title="cheese"

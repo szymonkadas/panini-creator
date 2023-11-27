@@ -19,7 +19,7 @@ type FormSectionTemplateProps = {
 type TextSectionProps = Omit<FormSectionProps, "options">;
 
 type SwipeSectionProps = FormSectionProps & {
-  children?: ReactNode;
+  optionsIcons?: JSX.Element[];
 };
 
 type MultiSwipeSectionProps = SwipeSectionProps & {
