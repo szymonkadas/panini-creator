@@ -1,10 +1,8 @@
 import styles from "./RandomizeButton.module.css";
 export default function RandomizeButton(props: { action: () => void }) {
   return (
-    <button type="button" className={styles.button} onClick={props.action} data-testid="PaniniRandomizeButton">
+    <button type="button" className={styles.button} onClick={props.action} data-testid="paniniRandomizeButton">
       <div className={styles.dicesContainer}>
-        {/* <img className={styles.diceIcon} src="/dice1.svg" alt="dice 1 icon"></img>
-                  <img className={styles.diceIcon} src="/dice2.svg" alt="dice 2 icon"></img> */}
         <div className={styles.diceIcon}>
           <svg width="9" height="10" viewBox="0 0 9 10" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect
