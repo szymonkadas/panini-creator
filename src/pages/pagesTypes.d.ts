@@ -10,6 +10,7 @@ type SplashScreenLayoutProps = {
 // PaniniCreator
 type PaniniCreatorProps = {
   navTo: string;
+  submitted?: boolean;
 };
 
 // possible bugs later on with generating due to HONEY_MUSTARD -> HONEY MUSTARD. Change later on if needed, also added pecorino.

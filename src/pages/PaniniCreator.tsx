@@ -34,6 +34,7 @@ import styles from "./PaniniCreator.module.css";
 import { PaniniFormSectionMaxElements, PaniniNames } from "./PaniniCreatorEnums";
 
 export default function PaniniCreator(props: PaniniCreatorProps) {
+  const [submitted, setSubmitted] = useState(props.submitted ? props.submitted : false);
   const [formSaveError, setFormSaveError] = useState("");
   const methods = useForm<SandwichPayload>({
     defaultValues: SandwichDefaultVals,
@@ -44,6 +45,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
 
   const resetPanini = () => {
     methods.reset();
+    setSubmitted(false);
   };
 
   const randomizeOrderData = useCallback(() => {
@@ -76,6 +78,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
   };
 
   const handleSave = (formValues: SandwichPayload) => {
+    setSubmitted(true);
     const formatResults = formatSandwichData(formValues);
     formatResults.data !== null
       ? postOrderSandwich(formatResults.data, redirectUserOnSuccess)
@@ -165,15 +168,22 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
             </div>
             <div className={styles.formsSubmitInterfaceWrapper}>
               <label className={styles.formsSubmitLabel}>
-                place order
+                {submitted ? "loading..." : "place order"}
                 <input
                   type="submit"
-                  className={styles.formsSubmit}
-                  value={"place order"}
+                  className={`${styles.formsSubmit} ${submitted ? styles.formsSubmit__submitted : ""}`}
+                  value={submitted ? "loading..." : "place order"}
                   data-testid="PlaceOrderButton"
+                  disabled={submitted}
                 />
               </label>
-              <button type="submit" className={styles.formsReset} onClick={resetPanini} data-testid="resetButton">
+              <button
+                type="submit"
+                className={`${styles.formsReset} ${submitted ? styles.formsReset__submitted : ""}`}
+                onClick={resetPanini}
+                data-testid="resetButton"
+                disabled={submitted}
+              >
                 start again
               </button>
             </div>
