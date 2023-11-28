@@ -14,6 +14,23 @@ export function getIndexedElements<T>(sourceArray: readonly string[], paniniPath
     return getElement(paniniPath, elementName, index);
   }) as T;
 }
+export function getNestedElements<T>(
+  paniniPath: string,
+  elementName: string,
+  parentIndexCap: number,
+  nestedIndexCap: number
+) {
+  const elements = [];
+  for (let parentIndex = 0; parentIndex < parentIndexCap; parentIndex++) {
+    const elementChildren = [];
+    for (let nestedIndex = 0; nestedIndex < nestedIndexCap; nestedIndex++) {
+      const nestedElement = screen.getByTestId(`${paniniPath}${parentIndex}-${elementName}${nestedIndex}`);
+      elementChildren.push(nestedElement);
+    }
+    elements.push(elementChildren);
+  }
+  return elements as T;
+}
 
 // testing helper functions:
 export function areListedValuesEqualOrChanged(
@@ -53,13 +70,24 @@ export async function swipeElementsInteraction(
 }
 
 export async function selectFieldInteraction(
-  selectElements: HTMLSelectElement[],
+  selectElements: HTMLButtonElement[],
+  selectElementsOptions: HTMLButtonElement[][],
   data: readonly string[],
   defaultValues: string[]
 ) {
   for (const [index, selectElement] of selectElements.entries()) {
     const otherOption = randomElementArray(data.filter((val) => val !== defaultValues[index]));
-    await userEvent.selectOptions(selectElement, otherOption);
+    // click button so the dropdown will display.
+    await userEvent.click(selectElement);
+    // find option to click.
+    const selectElementOption = selectElementsOptions[index].find((element) => {
+      return element.value === otherOption;
+    });
+    if (selectElementOption === undefined) {
+      throw new Error(`Element option ${otherOption} in ${selectElementsOptions[index]} is undefined`);
+    } else {
+      await userEvent.click(selectElementOption);
+    }
   }
 }
 

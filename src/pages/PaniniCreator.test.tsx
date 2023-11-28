@@ -118,12 +118,27 @@ describe("Test form submitting", async () => {
       dressingSetup.swipeElementsDefaultValues
     );
     // select section (cheese, meat, egg)
-    const cheeseSetup = setupSelectTest(PaniniNames.cheese);
-    await selectFieldInteraction(cheeseSetup.selectElements, cheeseVariants, cheeseSetup.selectDefaultValues);
-    const meatSetup = setupSelectTest(PaniniNames.meat);
-    await selectFieldInteraction(meatSetup.selectElements, meatVariants, meatSetup.selectDefaultValues);
-    const eggSetup = setupSelectTest(PaniniNames.egg);
-    await selectFieldInteraction(eggSetup.selectElements, eggVariants, eggSetup.selectDefaultValues);
+    const cheeseSetup = setupSelectTest(PaniniNames.cheese, cheeseVariants);
+    await selectFieldInteraction(
+      cheeseSetup.selectElements,
+      cheeseSetup.selectElementsOptions,
+      cheeseVariants,
+      cheeseSetup.selectDefaultValues
+    );
+    const meatSetup = setupSelectTest(PaniniNames.meat, meatVariants);
+    await selectFieldInteraction(
+      meatSetup.selectElements,
+      meatSetup.selectElementsOptions,
+      meatVariants,
+      meatSetup.selectDefaultValues
+    );
+    const eggSetup = setupSelectTest(PaniniNames.egg, eggVariants);
+    await selectFieldInteraction(
+      eggSetup.selectElements,
+      eggSetup.selectElementsOptions,
+      eggVariants,
+      eggSetup.selectDefaultValues
+    );
     // checkboxButton section (vegetables)
     const vegetableSetup = setupCheckboxButtonsTest(PaniniNames.vegetables, vegetableVariant);
     await checkboxButtonsInteraction(

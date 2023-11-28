@@ -7,6 +7,7 @@ interface NamedOptionProps extends OptionProps {
   name: string;
 }
 
-interface SelectOptionProps extends OptionProps {
+interface SelectOptionProps extends NamedOptionProps {
   onInteract: (option: string) => void;
+  parentIndex: number;
 }

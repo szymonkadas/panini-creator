@@ -5,6 +5,7 @@
   height: 35px;
   width: 100%;
   background-color: white;
+  border: none;
 }
 
 .option:hover {
