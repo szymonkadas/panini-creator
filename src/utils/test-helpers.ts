@@ -10,9 +10,18 @@ export function getElements<T>(paniniPath: string, elementName: string) {
   return screen.getAllByTestId(`${paniniPath}-${elementName}`) as T;
 }
 export function getIndexedElements<T>(sourceArray: readonly string[], paniniPath: string, elementName: string) {
-  return Array.from(sourceArray, (val, index) => {
-    return getElement(paniniPath, elementName, index);
-  }) as T;
+  const searchResult: T[] = [];
+  for (let i = 0; i < sourceArray.length; i++) {
+    let element: T;
+    try {
+      element = getElement(paniniPath, elementName, i);
+    } catch (e) {
+      // if such element is not found then stop searching for more and return already gathered elements;
+      break;
+    }
+    searchResult.push(element);
+  }
+  return searchResult;
 }
 export function getNestedElements<T>(
   paniniPath: string,

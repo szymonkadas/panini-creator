@@ -108,7 +108,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
         <form
           className={styles.paniniCreator}
           onSubmit={methods.handleSubmit(handleSave)}
-          data-testid={`PaniniMainForm`}
+          data-testid={`paniniMainForm`}
         >
           <div className={styles.formsInterface}>
             <h2 className={styles.formsLabel}>Panini Creator</h2>
@@ -173,7 +173,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
                   type="submit"
                   className={`${styles.formsSubmit} ${submitted ? styles.formsSubmit__submitted : ""}`}
                   value={submitted ? "loading..." : "place order"}
-                  data-testid="PlaceOrderButton"
+                  data-testid="placeOrderButton"
                   disabled={submitted}
                 />
               </label>

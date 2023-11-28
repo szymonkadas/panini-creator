@@ -3,29 +3,39 @@ import { SandwichDefaultVals } from "../pages/PaniniCreator";
 import { getElement, getElements, getIndexedElements, getNestedElements } from "./test-helpers";
 // test setup functions:
 const formDefaultValues: StrictSandwichPayload = SandwichDefaultVals;
-export function setupSwipeElementTest(paniniName: string) {
+
+export type SwipeElementSetup = {
+  swipeInputElement: HTMLInputElement;
+  swipeDefaultVal: string;
+  leftSwipeButton: HTMLButtonElement;
+};
+
+export function setupSwipeElementTest(paniniName: string): SwipeElementSetup {
   const swipeInputElement: HTMLInputElement = getElement(paniniName, "swipeInputElement");
   const swipeDefaultVal: string = lodashGet(formDefaultValues, paniniName);
   const leftSwipeButton: HTMLButtonElement = getElement(paniniName, "swipeLeftButton");
   return { swipeInputElement, swipeDefaultVal, leftSwipeButton };
 }
 
-export function setupMultiSwipeElementTest(paniniName: string) {
-  const swipeElementsDefaultValues = lodashGet(formDefaultValues, paniniName);
-  const swipeInputElements: HTMLInputElement[] = getIndexedElements(
-    swipeElementsDefaultValues,
-    paniniName,
-    "swipeInputElement"
-  );
-  const leftSwipeButtons: HTMLButtonElement[] = getIndexedElements(
-    swipeElementsDefaultValues,
-    paniniName,
-    "swipeLeftButton"
-  );
+export type MultiSwipeElementSetup = {
+  swipeElementsDefaultValues: string[];
+  swipeInputElements: HTMLInputElement[];
+  leftSwipeButtons: HTMLButtonElement[];
+};
+
+export function setupMultiSwipeElementTest(paniniName: string, variants: readonly string[]): MultiSwipeElementSetup {
+  const swipeElementsDefaultValues: string[] = lodashGet(formDefaultValues, paniniName);
+  const swipeInputElements: HTMLInputElement[] = getIndexedElements(variants, paniniName, "swipeInputElement");
+  const leftSwipeButtons: HTMLButtonElement[] = getIndexedElements(variants, paniniName, "swipeLeftButton");
   return { swipeElementsDefaultValues, swipeInputElements, leftSwipeButtons };
 }
+export type SelectElementSetup = {
+  selectDefaultValues: string[];
+  selectElements: HTMLButtonElement[];
+  selectElementsOptions: HTMLButtonElement[][];
+};
 
-export function setupSelectTest(paniniName: string, variants: readonly string[]) {
+export function setupSelectTest(paniniName: string, variants: readonly string[]): SelectElementSetup {
   const selectDefaultValues: string[] = lodashGet(formDefaultValues, paniniName);
   const selectElements: HTMLButtonElement[] = getIndexedElements(selectDefaultValues, paniniName, "selectElement");
   const selectElementsOptions: HTMLButtonElement[][] = getNestedElements(
@@ -37,7 +47,16 @@ export function setupSelectTest(paniniName: string, variants: readonly string[])
   return { selectDefaultValues, selectElements, selectElementsOptions };
 }
 
-export function setupCheckboxButtonsTest(paniniName: string, variants: readonly string[]) {
+export type CheckboxButtonsElementsSetup = {
+  checkboxButtonsDefaultValues: string[];
+  checkboxButtonInputElements: HTMLInputElement[];
+  checkboxButtonInteractionButtons: HTMLButtonElement[];
+};
+
+export function setupCheckboxButtonsTest(
+  paniniName: string,
+  variants: readonly string[]
+): CheckboxButtonsElementsSetup {
   const checkboxButtonsDefaultValues: string[] = lodashGet(formDefaultValues, paniniName);
   const checkboxButtonInputElements: HTMLInputElement[] = getElements(paniniName, "checkboxButtonInputElement");
   const checkboxButtonInteractionButtons: HTMLButtonElement[] = getIndexedElements(
@@ -48,14 +67,27 @@ export function setupCheckboxButtonsTest(paniniName: string, variants: readonly 
   return { checkboxButtonsDefaultValues, checkboxButtonInputElements, checkboxButtonInteractionButtons };
 }
 
-export function setupCheckboxTest(paniniName: string) {
-  const checkboxDefaultValue = lodashGet(formDefaultValues, paniniName);
+export type CheckboxElementsSetup = {
+  checkboxDefaultValue: string[];
+  checkboxInputElement: HTMLInputElement;
+  checkboxInteractionButton: HTMLButtonElement;
+};
+
+export function setupCheckboxTest(paniniName: string): CheckboxElementsSetup {
+  const checkboxDefaultValue: string[] = lodashGet(formDefaultValues, paniniName);
   const checkboxInputElement: HTMLInputElement = getElement(paniniName, "checkboxInputElement", 0);
   const checkboxInteractionButton: HTMLButtonElement = getElement(paniniName, "checkboxInteractionButton", 0);
   return { checkboxDefaultValue, checkboxInputElement, checkboxInteractionButton };
 }
 
-export function setupCheckboxesTest(paniniName: string, variants: readonly string[]) {
+export type CheckboxesElementsSetup = {
+  checkboxDefaultValues: string[];
+  checkboxInputElements: HTMLInputElement[];
+  checkboxInteractionButtons: HTMLButtonElement[];
+  defaultInputElements: HTMLInputElement[];
+};
+
+export function setupCheckboxesTest(paniniName: string, variants: readonly string[]): CheckboxesElementsSetup {
   const checkboxDefaultValues: string[] = lodashGet(formDefaultValues, paniniName);
   const checkboxInputElements: HTMLInputElement[] = getIndexedElements(variants, paniniName, "checkboxInputElement");
   const checkboxInteractionButtons: HTMLButtonElement[] = getIndexedElements(
@@ -69,7 +101,13 @@ export function setupCheckboxesTest(paniniName: string, variants: readonly strin
   return { checkboxDefaultValues, checkboxInputElements, checkboxInteractionButtons, defaultInputElements };
 }
 
-export function setupRadioTest(paniniName: string, variants: readonly string[]) {
+export type RadioElementSetup = {
+  radioInputElements: HTMLInputElement[];
+  radioInteractionButtons: HTMLButtonElement[];
+  radioDefaultValue: string;
+};
+
+export function setupRadioTest(paniniName: string, variants: readonly string[]): RadioElementSetup {
   const radioInputElements: HTMLInputElement[] = getIndexedElements(variants, paniniName, "radioInputElement");
   const radioInteractionButtons: HTMLButtonElement[] = getIndexedElements(
     variants,
@@ -80,7 +118,12 @@ export function setupRadioTest(paniniName: string, variants: readonly string[]) 
   return { radioInputElements, radioInteractionButtons, radioDefaultValue };
 }
 
-export function setupTextSectionTest(paniniName: string) {
+export type TextElementSetup = {
+  textInputElement: HTMLInputElement;
+  textDefaultVal: string;
+};
+
+export function setupTextSectionTest(paniniName: string): TextElementSetup {
   const textInputElement: HTMLInputElement = getElement(paniniName, "textInputElement");
   const textDefaultVal: string = lodashGet(formDefaultValues, paniniName);
   return { textInputElement, textDefaultVal };
