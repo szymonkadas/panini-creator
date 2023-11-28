@@ -1,11 +1,19 @@
+.selectLabel,
+.selectOptions,
+.selectOptions * {
+  font: var(--secondary-font);
+}
+
 .selectLabel {
   font-size: 0;
+  width: var(--option-width);
   border: var(--border-width) solid var(--border-color);
   position: relative;
 }
+
 .selectOptions {
   border: none;
-  width: var(--option-width);
+  width: 100%;
   height: 35px;
   text-align: center;
   -webkit-appearance: none;
@@ -14,5 +22,14 @@
   /* applied this so on arrow img click, it passes through without any problems to the select */
   background-color: transparent;
   position: relative;
-  z-index: 2;
 }
+
+.selectOptions:hover {
+  background-color: var(--special-color);
+}
+
+/* .selectOptions option {
+  display: none;
+  height: 0;
+  background-color: transparent;
+} */

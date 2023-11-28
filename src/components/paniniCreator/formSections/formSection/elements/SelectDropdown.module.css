@@ -1,0 +1,33 @@
+.dropdown {
+  position: absolute;
+  top: 35px;
+  width: var(--option-width);
+  left: -1px;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  font: var(--secondary-font);
+  gap: 1px;
+  background-color: black;
+  z-index: 100;
+  border: var(--border-width) solid var(--border-color);
+}
+.inactive,
+.inactive * {
+  display: none;
+}
+
+.option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  width: 100%;
+  background-color: white;
+}
+
+.option:hover {
+  background-color: var(--special-color);
+  cursor: pointer;
+  user-select: none;
+}

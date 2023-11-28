@@ -25,3 +25,9 @@ interface SwipeElementProps {
   index?: number;
   children?: React.ReactNode;
 }
+
+interface SelectDropdownProps {
+  active: boolean;
+  options: readonly string[];
+  handleOptionChange: (option: string) => void;
+}
