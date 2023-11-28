@@ -44,6 +44,10 @@
   border: var(--border-width) solid var(--border-color);
 }
 
+.dropdown * {
+  font: var(--secondary-font);
+}
+
 .inactive,
 .inactive * {
   display: none;

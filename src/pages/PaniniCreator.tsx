@@ -46,6 +46,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
   const resetPanini = () => {
     methods.reset();
     setSubmitted(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const randomizeOrderData = useCallback(() => {
@@ -85,6 +86,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
       : handleFormSaveError(formatResults.errorMessage || "Form Save Error");
   };
   const handleFormSaveError = (errorMessage: string) => {
+    console.log(errorMessage);
     setFormSaveError(errorMessage);
     resetPanini();
   };
@@ -178,7 +180,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
                 />
               </label>
               <button
-                type="submit"
+                type="button"
                 className={`${styles.formsReset} ${submitted ? styles.formsReset__submitted : ""}`}
                 onClick={resetPanini}
                 data-testid="resetButton"

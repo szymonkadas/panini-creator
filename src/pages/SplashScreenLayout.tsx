@@ -17,9 +17,6 @@ export default function SplashScreenLayout(props: SplashScreenLayoutProps) {
       link.setAttribute("href", url);
       link.setAttribute("download", `${filename}.png`);
       link.setAttribute("target", "_blank");
-      link.onclick = () => {
-        console.log("click!");
-      };
       link.style.display = "none";
       document.body.appendChild(link);
       link.click();
