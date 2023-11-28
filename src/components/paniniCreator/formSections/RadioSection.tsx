@@ -5,7 +5,7 @@ import SpecialOptions from "./formSection/SpecialOptions";
 export default function RadioSection(props: Omit<FormSectionProps, "removable">) {
   return (
     <FormSectionTemplate title={props.title}>
-      <div className={styles.optionsWrapper}>
+      <div className={styles.horizontalOptionsWrapper}>
         <SpecialOptions type="radio" options={props.options} name={props.name} />
       </div>
     </FormSectionTemplate>

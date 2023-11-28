@@ -1,8 +1,10 @@
 .radioOptionLabel {
   display: flex;
   justify-content: right;
-  gap: var(--primary-spacing);
+  flex-direction: row-reverse;
+  gap: 6px;
   text-transform: uppercase;
+  align-items: center;
 }
 .radioOption {
   width: 0px;
