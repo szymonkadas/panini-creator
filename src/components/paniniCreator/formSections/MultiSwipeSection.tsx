@@ -51,6 +51,7 @@ export default function MultiSwipeSection(props: MultiSwipeSectionProps) {
         onAppend={append}
         onRemove={remove}
         maxElements={props.maxElements}
+        parting={true}
       />
       <div className={styles.optionsWrapper}>{...content}</div>
     </FormSectionTemplate>

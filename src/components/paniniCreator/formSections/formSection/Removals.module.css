@@ -17,10 +17,16 @@
 }
 
 .removal {
+  height: 27px;
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-template-areas: "switch add_remove";
+  align-content: center;
   column-gap: 5px;
+}
+.removalParting {
+  height: 0;
+  width: 0;
 }
 
 .switch {

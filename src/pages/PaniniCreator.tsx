@@ -86,7 +86,6 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
       : handleFormSaveError(formatResults.errorMessage || "Form Save Error");
   };
   const handleFormSaveError = (errorMessage: string) => {
-    console.log(errorMessage);
     setFormSaveError(errorMessage);
     resetPanini();
   };

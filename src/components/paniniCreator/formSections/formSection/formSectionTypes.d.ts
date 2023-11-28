@@ -31,4 +31,5 @@ type RemovalsProps = {
   onAppend: (value: string) => void;
   onRemove: (index: number) => void;
   toggleActive: () => void;
+  parting?: boolean;
 };
