@@ -1,0 +1,15 @@
+.option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  width: 100%;
+  background-color: white;
+  border: none;
+}
+
+.option:hover {
+  background-color: var(--special-color);
+  cursor: pointer;
+  user-select: none;
+}

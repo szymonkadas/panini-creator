@@ -1,10 +1,14 @@
-export default function SelectOption(props: OptionProps) {
+import styles from "./SelectOption.module.css";
+export default function SelectOption(props: SelectOptionProps) {
   return (
-    <option
-      key={`optionSelect${props.option}${props.index}`}
-      className={"optionSelect"}
+    <button
+      type="button"
+      className={styles.option}
+      data-testid={`${props.name}${props.parentIndex}-selectOption${props.index}`}
+      onClick={() => props.onInteract(props.option)}
       value={props.option}
-      label={props.option}
-    ></option>
+    >
+      {props.option}
+    </button>
   );
 }

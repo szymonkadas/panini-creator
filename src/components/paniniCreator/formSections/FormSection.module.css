@@ -33,6 +33,15 @@
   font: var(--secondary-font);
 }
 
+.horizontalOptionsWrapper {
+  grid-area: option;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: right;
+  align-content: center;
+  gap: calc(var(--form-section-content-spacing) * 2);
+}
+
 .checkboxButtonsWrapper {
   display: flex;
   flex-wrap: wrap;

@@ -1,24 +1,24 @@
 type BaseSpecialOptionsProps = {
   options: readonly string[];
+  name: string;
 };
 
 type CheckboxButtonProps = BaseSpecialOptionsProps & {
   type: "checkboxButton";
-  name: string;
 };
 
 type CheckboxProps = BaseSpecialOptionsProps & {
   type: "checkbox";
-  name: string;
 };
 
 type SelectProps = BaseSpecialOptionsProps & {
   type: "select";
+  onInteract: (option: string) => void;
+  parentIndex: number;
 };
 
 type RadioProps = BaseSpecialOptionsProps & {
   type: "radio";
-  name: string;
 };
 
 type SpecialOptionsProps = CheckboxButtonProps | CheckboxProps | SelectProps | RadioProps;

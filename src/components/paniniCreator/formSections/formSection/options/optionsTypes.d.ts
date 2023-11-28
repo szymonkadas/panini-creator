@@ -6,3 +6,8 @@ type OptionProps = {
 interface NamedOptionProps extends OptionProps {
   name: string;
 }
+
+interface SelectOptionProps extends NamedOptionProps {
+  onInteract: (option: string) => void;
+  parentIndex: number;
+}

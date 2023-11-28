@@ -23,8 +23,15 @@ export default function RadioOption(props: NamedOptionProps) {
         type="button"
         className={`${styles.radioButton} ${isChecked && styles.checked}`}
         onClick={handleRadioClick}
+        data-testid={`${props.name}${props.index}-radioInteractionButton`}
+        data-testoption={props.option}
       ></button>
-      <input className={styles.radioOption} type="radio" {...field} />
+      <input
+        className={styles.radioOption}
+        type="radio"
+        {...field}
+        data-testid={`${props.name}${props.index}-radioInputElement`}
+      />
     </label>
   );
 }

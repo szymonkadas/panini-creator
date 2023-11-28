@@ -13,16 +13,18 @@ export default function SingleSwipe(props: SingleSwipeElementProps) {
   }, [currVal]);
 
   const handleDecrease = () =>
-    handleOptionDecrease(currentOption, setCurrentOption, () => setValue(props.name, props.options[currentOption - 1]));
+    handleOptionDecrease(currentOption, props.options.length, setCurrentOption, (newOptionIndex: number) =>
+      setValue(props.name, props.options[newOptionIndex])
+    );
 
   const handleIncrease = () =>
-    handleOptionIncrease(currentOption, props.options.length, setCurrentOption, () =>
-      setValue(props.name, props.options[currentOption + 1])
+    handleOptionIncrease(currentOption, props.options.length, setCurrentOption, (newOptionIndex: number) =>
+      setValue(props.name, props.options[newOptionIndex])
     );
 
   return (
     <SwipeElement name={props.name} handleOptionDecrease={handleDecrease} handleOptionIncrease={handleIncrease}>
-      {props.children}
+      {props.optionsIcons && props.optionsIcons.length > currentOption && props.optionsIcons[currentOption]}
     </SwipeElement>
   );
 }

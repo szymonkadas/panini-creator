@@ -9,9 +9,8 @@ type SelectElementProps = {
 type SingleSwipeElementProps = {
   name: string;
   options: readonly string[];
-  children?: React.ReactNode;
+  optionsIcons?: JSX.Element[];
 };
-
 interface MultiSwipeElementProps extends SingleSwipeElementProps {
   index: number;
   onUpdate: (index: number, value: string) => void;
@@ -22,5 +21,12 @@ interface SwipeElementProps {
   handleOptionDecrease: () => void;
   handleOptionIncrease: () => void;
   value?: string;
+  index?: number;
   children?: React.ReactNode;
+}
+
+interface SelectDropdownProps {
+  active: boolean;
+  options: readonly string[];
+  handleOptionChange: (option: string) => void;
 }

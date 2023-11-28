@@ -12,6 +12,7 @@ export default function TextSection(props: TextSectionProps) {
           placeholder="eg. Club Panini"
           className={styles.textOption}
           required
+          data-testid={`${props.name}-textInputElement`}
           {...register(props.name)}
         />
         {formState.errors?.sandwichName && (
