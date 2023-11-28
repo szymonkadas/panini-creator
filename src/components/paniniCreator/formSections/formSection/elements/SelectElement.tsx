@@ -6,10 +6,21 @@ import styles from "./SelectElement.module.css";
 export default function SelectElement(props: SelectElementProps) {
   const value = Object.values(props.val).slice(0, -1).join("");
   const [isSelectActive, setIsSelectActive] = useState(false);
-  const selectRef = useRef<HTMLLabelElement>(null);
+  const labelRef = useRef<HTMLLabelElement>(null);
+  const [focusedByKey, setIsFocusedByKey] = useState(false);
 
-  const handleSelectClick = () => {
-    setIsSelectActive((prev) => !prev);
+  const handleMouseClick = () => {
+    if (!focusedByKey) {
+      setIsSelectActive((prev) => !prev);
+    } else {
+      setIsFocusedByKey(false);
+    }
+  };
+
+  // if the event was triggered by keyboard focus use this:
+  const handleFocus = () => {
+    setIsSelectActive(true);
+    setIsFocusedByKey(true);
   };
 
   const handleOptionChange = (option: string) => {
@@ -18,36 +29,30 @@ export default function SelectElement(props: SelectElementProps) {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleInteractionOutside = (event: MouseEvent | FocusEvent) => {
       // because Node extends EventTarget this assertion won't cause any problems.
       // this checks whether or not element targetted by user is within select boundaries.
-      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
+      if (labelRef.current && !labelRef.current.contains(event.target as Node)) {
         setIsSelectActive(false);
+        setIsFocusedByKey(false);
       }
     };
-
-    const handleFocusOutside = (event: FocusEvent) => {
-      if (selectRef.current && !selectRef.current.contains(event.relatedTarget as Node)) {
-        setIsSelectActive(false);
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
-    document.addEventListener("focusout", handleFocusOutside);
-
+    document.addEventListener("click", handleInteractionOutside);
+    document.addEventListener("focusout", handleInteractionOutside);
     return () => {
-      document.removeEventListener("click", handleClickOutside);
-      document.removeEventListener("focusout", handleFocusOutside);
+      document.removeEventListener("click", handleInteractionOutside);
+      document.removeEventListener("focusout", handleInteractionOutside);
     };
   }, []);
 
   return (
-    <label className={styles.selectLabel} ref={selectRef}>
+    <label className={styles.selectLabel} ref={labelRef}>
       Select an option:
       <button
         type="button"
         className={styles.select}
-        onFocus={handleSelectClick}
+        onClick={handleMouseClick}
+        onFocus={handleFocus}
         value={value}
         data-testid={`${props.name}${props.index}-selectElement`}
       >
