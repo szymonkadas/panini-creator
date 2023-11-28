@@ -21,9 +21,8 @@ export default function MultiSwipeSection(props: MultiSwipeSectionProps) {
           onUpdate={update}
           index={index}
           options={props.options}
-        >
-          {props?.children}
-        </MultiSwipeElement>
+          optionsIcons={props?.optionsIcons}
+        ></MultiSwipeElement>
       );
       return index < array.length - 1 ? (
         <>

@@ -5,6 +5,7 @@
   gap: 6px;
   text-transform: uppercase;
   align-items: center;
+  font: var(--secondary-font);
 }
 .radioOption {
   width: 0px;

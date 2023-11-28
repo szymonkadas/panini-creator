@@ -32,7 +32,7 @@ export default function MultiSwipe(props: MultiSwipeElementProps) {
       handleOptionDecrease={handleDecrease}
       handleOptionIncrease={handleIncrease}
     >
-      {props.children}
+      {props.optionsIcons && props.optionsIcons.length > currentOption && props.optionsIcons[currentOption]}
     </SwipeElement>
   );
 }
