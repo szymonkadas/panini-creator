@@ -1,10 +1,8 @@
-export default function SelectOption(props: OptionProps) {
+import styles from "./SelectOption.module.css";
+export default function SelectOption(props: SelectOptionProps) {
   return (
-    <option
-      key={`optionSelect${props.option}${props.index}`}
-      className={"optionSelect"}
-      value={props.option}
-      label={props.option}
-    ></option>
+    <div className={styles.option} data-testid={``} onClick={() => props.onInteract(props.option)}>
+      {props.option}
+    </div>
   );
 }

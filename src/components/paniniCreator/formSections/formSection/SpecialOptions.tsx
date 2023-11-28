@@ -16,7 +16,7 @@ export default function SpecialOptions(props: SpecialOptionsProps) {
         return <RadioOption option={option} index={index} name={props.name} />;
         break;
       case "select":
-        return <SelectOption {...{ option, index }} />;
+        return <SelectOption {...{ option, index, onInteract: props.onInteract }} />;
         break;
     }
   });

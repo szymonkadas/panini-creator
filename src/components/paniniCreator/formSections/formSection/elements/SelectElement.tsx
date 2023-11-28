@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import DownArrowIcon from "../../../../icons/DownArrowIcon";
-import SelectDropdown from "./SelectDropdown";
+import SpecialOptions from "../SpecialOptions";
 import styles from "./SelectElement.module.css";
 
 export default function SelectElement(props: SelectElementProps) {
@@ -36,7 +36,7 @@ export default function SelectElement(props: SelectElementProps) {
       Select an option:
       <button
         type="button"
-        className={styles.selectOptions}
+        className={styles.select}
         onClick={handleSelectClick}
         value={value}
         data-testid={`${props.name}${props.index}-selectElement`}
@@ -44,11 +44,9 @@ export default function SelectElement(props: SelectElementProps) {
         {value}
       </button>
       <DownArrowIcon active={isSelectActive}></DownArrowIcon>
-      <SelectDropdown
-        active={isSelectActive}
-        options={props.options}
-        handleOptionChange={handleOptionChange}
-      ></SelectDropdown>
+      <div className={`${styles.dropdown} ${isSelectActive ? "" : styles.inactive}`}>
+        <SpecialOptions type="select" options={props.options} onInteract={handleOptionChange}></SpecialOptions>
+      </div>
     </label>
   );
 }

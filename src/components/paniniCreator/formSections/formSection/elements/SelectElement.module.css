@@ -1,6 +1,6 @@
 .selectLabel,
-.selectOptions,
-.selectOptions * {
+.select,
+.select * {
   font: var(--secondary-font);
 }
 
@@ -11,7 +11,7 @@
   position: relative;
 }
 
-.selectOptions {
+.select {
   border: none;
   width: 100%;
   height: 35px;
@@ -24,12 +24,27 @@
   position: relative;
 }
 
-.selectOptions:hover {
+.select:hover {
   background-color: var(--special-color);
 }
 
-/* .selectOptions option {
+.dropdown {
+  position: absolute;
+  top: 35px;
+  width: var(--option-width);
+  left: -1px;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  font: var(--secondary-font);
+  gap: 1px;
+  background-color: black;
+  z-index: 3;
+  /* z index 1 above arrow zindex */
+  border: var(--border-width) solid var(--border-color);
+}
+
+.inactive,
+.inactive * {
   display: none;
-  height: 0;
-  background-color: transparent;
-} */
+}

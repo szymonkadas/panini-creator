@@ -18,7 +18,6 @@ interface MultiSwipeElementProps extends SingleSwipeElementProps {
 
 interface SwipeElementProps {
   name: string;
-
   handleOptionDecrease: () => void;
   handleOptionIncrease: () => void;
   value?: string;

@@ -14,6 +14,7 @@ type CheckboxProps = BaseSpecialOptionsProps & {
 
 type SelectProps = BaseSpecialOptionsProps & {
   type: "select";
+  onInteract: (option: string) => void;
 };
 
 type RadioProps = BaseSpecialOptionsProps & {
