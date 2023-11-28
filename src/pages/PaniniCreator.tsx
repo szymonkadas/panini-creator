@@ -5,7 +5,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import postOrderSandwich from "../Api";
-import WheatIcon from "../components/icons/WheatIcon";
 import FormCard from "../components/paniniCreator/FormCard";
 import RandomizeButton from "../components/paniniCreator/RandomizeButton";
 import CheckboxButtonSection from "../components/paniniCreator/formSections/CheckboxButtonSection";
@@ -15,7 +14,7 @@ import RadioSection from "../components/paniniCreator/formSections/RadioSection"
 import SelectSection from "../components/paniniCreator/formSections/SelectSection";
 import SwipeSection from "../components/paniniCreator/formSections/SwipeSection";
 import TextSection from "../components/paniniCreator/formSections/TextSection";
-import { breadVariants } from "../data/bread";
+import { breadIcons, breadVariants } from "../data/bread";
 import { cheeseVariants } from "../data/cheese";
 import { dressingVariants } from "../data/dressing";
 import { eggVariants } from "../data/egg";
@@ -35,6 +34,7 @@ import styles from "./PaniniCreator.module.css";
 import { PaniniFormSectionMaxElements, PaniniNames } from "./PaniniCreatorEnums";
 
 export default function PaniniCreator(props: PaniniCreatorProps) {
+  const [submitted, setSubmitted] = useState(props.submitted ? props.submitted : false);
   const [formSaveError, setFormSaveError] = useState("");
   const methods = useForm<SandwichPayload>({
     defaultValues: SandwichDefaultVals,
@@ -45,6 +45,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
 
   const resetPanini = () => {
     methods.reset();
+    setSubmitted(false);
   };
 
   const randomizeOrderData = useCallback(() => {
@@ -77,6 +78,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
   };
 
   const handleSave = (formValues: SandwichPayload) => {
+    setSubmitted(true);
     const formatResults = formatSandwichData(formValues);
     formatResults.data !== null
       ? postOrderSandwich(formatResults.data, redirectUserOnSuccess)
@@ -114,10 +116,12 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
           </div>
           <FormCard title="Configure Base">
             <div className={styles.formSections}>
-              <SwipeSection name={PaniniNames.bread} title="bread" options={breadVariants}>
-                {/* <img src="/wheat.svg" alt="wheatIcon" className={styles.wheatIcon}></img> */}
-                <WheatIcon></WheatIcon>
-              </SwipeSection>
+              <SwipeSection
+                name={PaniniNames.bread}
+                title="bread"
+                options={breadVariants}
+                optionsIcons={breadIcons}
+              ></SwipeSection>
               <SelectSection
                 name={PaniniNames.cheese}
                 title="cheese"
@@ -164,15 +168,22 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
             </div>
             <div className={styles.formsSubmitInterfaceWrapper}>
               <label className={styles.formsSubmitLabel}>
-                place order
+                {submitted ? "loading..." : "place order"}
                 <input
                   type="submit"
-                  className={styles.formsSubmit}
-                  value={"place order"}
+                  className={`${styles.formsSubmit} ${submitted ? styles.formsSubmit__submitted : ""}`}
+                  value={submitted ? "loading..." : "place order"}
                   data-testid="placeOrderButton"
+                  disabled={submitted}
                 />
               </label>
-              <button type="submit" className={styles.formsReset} onClick={resetPanini} data-testid="resetButton">
+              <button
+                type="submit"
+                className={`${styles.formsReset} ${submitted ? styles.formsReset__submitted : ""}`}
+                onClick={resetPanini}
+                data-testid="resetButton"
+                disabled={submitted}
+              >
                 start again
               </button>
             </div>

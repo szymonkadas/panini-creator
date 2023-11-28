@@ -1,6 +1,6 @@
 import { get as lodashGet } from "lodash";
 import { SandwichDefaultVals } from "../pages/PaniniCreator";
-import { getElement, getElements, getIndexedElements } from "./test-helpers";
+import { getElement, getElements, getIndexedElements, getNestedElements } from "./test-helpers";
 // test setup functions:
 const formDefaultValues: StrictSandwichPayload = SandwichDefaultVals;
 
@@ -29,16 +29,22 @@ export function setupMultiSwipeElementTest(paniniName: string, variants: readonl
   const leftSwipeButtons: HTMLButtonElement[] = getIndexedElements(variants, paniniName, "swipeLeftButton");
   return { swipeElementsDefaultValues, swipeInputElements, leftSwipeButtons };
 }
-
 export type SelectElementSetup = {
   selectDefaultValues: string[];
-  selectElements: HTMLSelectElement[];
+  selectElements: HTMLButtonElement[];
+  selectElementsOptions: HTMLButtonElement[][];
 };
 
 export function setupSelectTest(paniniName: string, variants: readonly string[]): SelectElementSetup {
   const selectDefaultValues: string[] = lodashGet(formDefaultValues, paniniName);
-  const selectElements: HTMLSelectElement[] = getIndexedElements(variants, paniniName, "selectElement");
-  return { selectDefaultValues, selectElements };
+  const selectElements: HTMLButtonElement[] = getIndexedElements(selectDefaultValues, paniniName, "selectElement");
+  const selectElementsOptions: HTMLButtonElement[][] = getNestedElements(
+    paniniName,
+    "selectOption",
+    selectElements.length,
+    variants.length
+  );
+  return { selectDefaultValues, selectElements, selectElementsOptions };
 }
 
 export type CheckboxButtonsElementsSetup = {

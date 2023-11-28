@@ -24,7 +24,7 @@ export default function SingleSwipe(props: SingleSwipeElementProps) {
 
   return (
     <SwipeElement name={props.name} handleOptionDecrease={handleDecrease} handleOptionIncrease={handleIncrease}>
-      {props.children}
+      {props.optionsIcons && props.optionsIcons.length > currentOption && props.optionsIcons[currentOption]}
     </SwipeElement>
   );
 }

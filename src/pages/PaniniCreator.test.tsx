@@ -153,9 +153,24 @@ describe("Test form submitting", async () => {
         dressingSetup.swipeElementsDefaultValues
       );
       // select section (cheese, meat, egg)
-      await selectFieldInteraction(cheeseSetup.selectElements, cheeseVariants, cheeseSetup.selectDefaultValues);
-      await selectFieldInteraction(meatSetup.selectElements, meatVariants, meatSetup.selectDefaultValues);
-      await selectFieldInteraction(eggSetup.selectElements, eggVariants, eggSetup.selectDefaultValues);
+      await selectFieldInteraction(
+        cheeseSetup.selectElements,
+        cheeseSetup.selectElementsOptions,
+        cheeseVariants,
+        cheeseSetup.selectDefaultValues
+      );
+      await selectFieldInteraction(
+        meatSetup.selectElements,
+        meatSetup.selectElementsOptions,
+        meatVariants,
+        meatSetup.selectDefaultValues
+      );
+      await selectFieldInteraction(
+        eggSetup.selectElements,
+        eggSetup.selectElementsOptions,
+        eggVariants,
+        eggSetup.selectDefaultValues
+      );
       // checkboxButton section (vegetables)
       await checkboxButtonsInteraction(
         vegetableSetup.checkboxButtonInteractionButtons,
