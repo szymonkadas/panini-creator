@@ -1,0 +1,111 @@
+.controls {
+  grid-column: 2/3;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas: "switch add_remove";
+  column-gap: 5px;
+  align-items: center;
+}
+
+.removalsWrapper {
+  grid-column: 2/3;
+  display: grid;
+  grid-template-rows: auto;
+  align-items: center;
+  justify-items: left;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 27px;
+  height: 17px;
+  font-size: 0;
+  grid-area: switch;
+}
+
+.switchInput {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  border: none;
+  position: absolute;
+  user-select: none;
+}
+
+.switchSlider {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  cursor: pointer;
+  background-color: transparent;
+  -webkit-transition: 0.4s;
+  transition-timing-function: cubic-bezier(0.75, 0.03, 0.58, 1);
+  transition: 0.4s;
+  border-radius: 27px;
+  border-style: solid;
+  border-color: var(--border-color);
+  border-width: var(--border-width);
+}
+
+.switchSlider:before {
+  display: inline-block;
+  position: relative;
+  content: "";
+  height: 9px;
+  width: 9px;
+  left: 3px;
+  top: 3px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: var(--border-width);
+  border-color: var(--border-color);
+  transition-timing-function: cubic-bezier(0.75, 0.03, 0.58, 1);
+}
+
+input:checked + .switchSlider:before {
+  -webkit-transform: translateX(9px);
+  -ms-transform: translateX(9px);
+  transform: translateX(9px);
+  background-color: black;
+}
+
+.addButton,
+.removeButton {
+  height: 17px;
+  width: 17px;
+  grid-area: add_remove;
+  border-radius: 50%;
+  background-color: white;
+  border-style: solid;
+  border-width: var(--border-width);
+  border-color: var(--border-color);
+  font-weight: 100;
+  transition: 0.4s;
+  transition-timing-function: cubic-bezier(0.75, 0.03, 0.58, 1);
+  position: relative;
+}
+
+.addButton {
+  background: url("/plus.svg") center no-repeat;
+}
+
+.removeButton {
+  background: url("/minus.svg") center no-repeat;
+}
+
+.addButton:hover,
+.removeButton:hover {
+  background-color: black;
+}
+
+.addButton:hover {
+  background-image: url("/plus-white.svg");
+}
+
+.removeButton:hover {
+  background-image: url("/minus-white.svg");
+}
