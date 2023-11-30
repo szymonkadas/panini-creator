@@ -23,11 +23,12 @@ type RadioProps = BaseSpecialOptionsProps & {
 
 type SpecialOptionsProps = CheckboxButtonProps | CheckboxProps | SelectProps | RadioProps;
 
-type RemovalsProps = {
+type ControlsProps = {
   isActive: boolean;
-  maxElements: number;
   defaultVal: string;
-  fieldsCurrentLength: number;
+  elementIndex: number;
+  currentFieldsLength: number;
+  maxElements: number;
   onAppend: (value: string) => void;
   onRemove: (index: number) => void;
   toggleActive: () => void;

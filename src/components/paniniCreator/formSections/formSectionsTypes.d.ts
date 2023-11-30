@@ -12,9 +12,15 @@ type FormSectionProps =
     };
 
 type FormSectionTemplateProps = {
-  title: string;
   children: ReactNode;
 };
+
+interface FormSectionTitleTemplateProps extends FormSectionTemplateProps {
+  classes?: string;
+}
+interface FormSectionRecordTemplateProps extends FormSectionTitleTemplateProps {
+  title?: string;
+}
 
 type TextSectionProps = Omit<FormSectionProps, "options">;
 

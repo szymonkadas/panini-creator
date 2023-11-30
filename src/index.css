@@ -4,7 +4,7 @@
   font-weight: 400;
 
   color: black;
-  background-color: #fff;
+  background-color: var(--background-color);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,6 +15,7 @@
   --option-width: 250px;
   --border-width: 0.5px;
   --border-color: black;
+  --background-color: #fff;
   --special-color: #fbfbfb;
   --primary-font-family: "Instrument Serif", serif;
   --secondary-font-family: "Oxygen Mono", monospace;

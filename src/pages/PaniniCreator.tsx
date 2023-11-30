@@ -62,7 +62,7 @@ export default function PaniniCreator(props: PaniniCreatorProps) {
         vegetables: randomSetValues(vegetableVariant, vegetableVariant.length),
       },
       extras: {
-        egg: randomArrayValues(eggVariants, eggVariants.length),
+        egg: randomArrayValues(eggVariants, PaniniFormSectionMaxElements.egg),
         spreads: randomSetValues(spreadVariant, spreadVariant.length),
         serving: randomElementArray(servingVariant),
         topping: Math.random() < 0.5 ? "SESAME" : null,

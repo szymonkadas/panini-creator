@@ -5,6 +5,8 @@
 }
 
 .selectLabel {
+  grid-column: 3/4;
+  justify-self: right;
   font-size: 0;
   width: var(--option-width);
   border: var(--border-width) solid var(--border-color);

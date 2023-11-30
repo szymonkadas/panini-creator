@@ -1,74 +1,79 @@
 .formSection {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: var(--primary-spacing) 0;
+  gap: var(--form-section-content-spacing);
+  background-color: var(--background-color);
+}
+
+.formSectionRecord {
+  width: 100%;
   display: grid;
   grid-template-columns: 20fr 10fr 70fr;
-  grid-template-areas: "title removal option";
   grid-template-rows: auto;
-  background-color: white;
-  padding: var(--primary-spacing) 0;
+  background-color: var(--background-color);
 }
 
-.formSectionTitleWrapper {
-  grid-area: title;
-  display: grid;
-  grid-template-rows: clamp(27px, 100%, 35px) 1fr;
+.selectRecord {
+  min-height: 37px;
 }
 
-.formSectionTitle {
+.formSectionRecordTitle {
+  grid-column: 1/2;
   display: flex;
   font-family: var(--primary-font-family);
   font-size: var(--h4-size);
   height: max-content;
-  align-content: center;
+  align-items: center;
   align-self: center;
   text-transform: capitalize;
 }
 
-.optionsWrapper {
-  grid-area: option;
-  display: grid;
-  grid-template-rows: auto;
-  gap: var(--form-section-content-spacing);
+.centerTopText {
+  align-self: first baseline;
+}
+
+.swipeOptionPartingWrapper {
+  grid-column: -3/4;
+  justify-self: right;
+  width: 100%;
+  background-color: var(--background-color);
+  height: calc(var(--border-width) * 2);
+  display: flex;
   justify-content: right;
-  font: var(--secondary-font);
+}
+
+.swipeOptionParting {
+  width: 60px;
+  height: 100%;
+  background-color: var(--border-color);
+  justify-self: right;
+  border: none;
+  /* center it under option*/
+  margin-right: calc(var(--option-width) / 2 - 30px);
 }
 
 .horizontalOptionsWrapper {
-  grid-area: option;
-  display: flex;
   flex-direction: row-reverse;
   justify-content: right;
   align-content: center;
   gap: calc(var(--form-section-content-spacing) * 2);
 }
 
+.verticalOptionsWrapper {
+  flex-direction: column;
+  align-items: end;
+  gap: var(--form-section-content-spacing);
+}
+
 .checkboxButtonsWrapper {
-  display: flex;
   flex-wrap: wrap;
+  justify-content: right;
   gap: 8px;
 }
 
-.swipeOptionPartingWrapper {
-  justify-self: right;
-  width: var(--option-width);
-  height: calc(var(--border-width) * 2);
-}
-
-.swipeOptionParting {
-  width: 60px;
-  height: 100%;
-  background-color: black;
-  justify-self: right;
-  border: none;
-  margin: auto;
-}
-
-.textOptionWrapper {
-  justify-content: initial;
-}
-
 .textOption {
-  display: flex;
   justify-self: center;
   padding: calc(var(--primary-spacing) / 2) var(--form-section-content-spacing);
   font: var(--secondary-font);
@@ -76,6 +81,14 @@
   border: var(--border-width) solid var(--border-color);
   outline: transparent;
 }
+
 .error {
   color: #a22;
+}
+.textOption,
+.checkboxButtonsWrapper,
+.verticalOptionsWrapper,
+.horizontalOptionsWrapper {
+  grid-column: 3/4;
+  display: flex;
 }
