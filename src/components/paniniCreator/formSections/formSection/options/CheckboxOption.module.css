@@ -1,9 +1,13 @@
 .checkboxLabel {
+  /* grid-column: 3/4; */
+  font: var(--secondary-font);
   display: flex;
   justify-content: right;
   gap: var(--primary-spacing);
   text-transform: uppercase;
   align-items: center;
+  width: fit-content;
+  /* justify-self: right; */
 }
 .checkboxOption {
   width: 0px;

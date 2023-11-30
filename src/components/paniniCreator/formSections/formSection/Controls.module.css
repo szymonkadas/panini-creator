@@ -1,26 +1,18 @@
+.controls {
+  grid-column: 2/3;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas: "switch add_remove";
+  column-gap: 5px;
+  align-items: center;
+}
+
 .removalsWrapper {
   grid-column: 2/3;
   display: grid;
   grid-template-rows: auto;
   align-items: center;
   justify-items: left;
-}
-
-.removalsWrapperActive {
-  gap: var(--form-section-content-spacing);
-}
-.removalsWrapperInactive {
-  gap: 0px;
-  grid-template-rows: 1fr;
-  margin-top: 1px;
-  margin-left: -1px;
-}
-
-.removal {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-areas: "switch add_remove";
-  column-gap: 5px;
 }
 
 .switch {

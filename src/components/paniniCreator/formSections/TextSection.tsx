@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
 import styles from "./FormSection.module.css";
-import FormSectionTemplate from "./FormSectionTemplate";
+import FormSectionTemplate, { FormSectionRecordTemplate } from "./FormSectionTemplates";
 
 export default function TextSection(props: TextSectionProps) {
   const { register, formState } = useFormContext();
   return (
-    <FormSectionTemplate title={props.title}>
-      <div className={`${styles.optionsWrapper} ${styles.textOptionWrapper}`}>
+    <FormSectionTemplate>
+      <FormSectionRecordTemplate title={props.title}>
         <input
           type="text"
           placeholder="eg. Club Panini"
@@ -18,7 +18,7 @@ export default function TextSection(props: TextSectionProps) {
         {formState.errors?.sandwichName && (
           <p className={styles.error}>{`${formState.errors?.sandwichName?.message}`}</p>
         )}
-      </div>
+      </FormSectionRecordTemplate>
     </FormSectionTemplate>
   );
 }
