@@ -1,7 +1,7 @@
 import styles from "./Controls.module.css";
 export default function Controls(props: ControlsProps) {
   const handleAddition = () => {
-    if (props.currentFieldLength < props.maxElements) props.onAppend && props.onAppend(props.defaultVal);
+    if (props.currentFieldsLength < props.maxElements) props.onAppend && props.onAppend(props.defaultVal);
   };
 
   const handleSubtraction = (indexToDel: number) => {
@@ -24,7 +24,7 @@ export default function Controls(props: ControlsProps) {
       )}
 
       {props.isActive &&
-        (props.elementIndex === 0 && props.currentFieldLength < props.maxElements ? (
+        (props.elementIndex === 0 && props.currentFieldsLength < props.maxElements ? (
           <button type="button" className={styles.addButton} onClick={handleAddition} />
         ) : (
           <button

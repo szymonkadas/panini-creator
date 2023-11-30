@@ -53,12 +53,14 @@ export async function testMultiSwipeElements(paniniName: string, variants: reado
 }
 
 export async function testSelectElements(paniniName: string, variants: readonly string[]) {
-  const { selectElements, selectDefaultValues, selectElementsOptions } = setupSelectTest(paniniName, variants);
+  let { selectElements, selectDefaultValues, selectElementsOptions } = setupSelectTest(paniniName, variants);
   // select fields values are indeed default on start
   areListedValuesEqualOrChanged(selectElements, selectDefaultValues, true);
   // user interacting with select fields.
   await selectFieldInteraction(selectElements, selectElementsOptions, variants, selectDefaultValues);
   // checking if values are changed.
+  // updating select elements pointers
+  selectElements = setupSelectTest(paniniName, variants).selectElements;
   areListedValuesEqualOrChanged(selectElements, selectDefaultValues, false);
 
   return { selectElements, selectDefaultValues };

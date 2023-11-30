@@ -2,9 +2,10 @@ import { useMemo } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { isActiveToggle } from "../../../utils/form-helpers";
 // import styles from "./FormSection.module.css";
+import styles from "./FormSection.module.css";
 import Controls from "./formSection/Controls";
 import MultiSwipe from "./formSection/elements/MultiSwipe";
-import styles from "./test.module.css";
+import FormSectionTemplate, { FormSectionRecordTemplate, FormSectionTitleTemplate } from "./FormSectionTemplates";
 
 export default function MultiSwipeSection(props: MultiSwipeSectionProps) {
   const { control } = useFormContext();
@@ -28,15 +29,12 @@ export default function MultiSwipeSection(props: MultiSwipeSectionProps) {
         return (
           <>
             <div className={styles.formSectionRecord} key={`formSectionRecord${field.id}`}>
-              <h4 className={styles.formSectionRecordTitle} key={`formSectionRecordTitle${field.id}`}>
-                {index === 0 ? props.title : ""}
-              </h4>
+              <FormSectionTitleTemplate>{index === 0 ? props.title : ""}</FormSectionTitleTemplate>
               <Controls
-                key={`MultiSwipeControls-${field.id}key`}
                 isActive={fields.length > 0}
                 defaultVal={props.options[0]}
                 elementIndex={index}
-                currentFieldLength={array.length}
+                currentFieldsLength={array.length}
                 maxElements={props.maxElements}
                 onAppend={append}
                 onRemove={remove}
@@ -57,38 +55,20 @@ export default function MultiSwipeSection(props: MultiSwipeSectionProps) {
       });
     } else {
       return [
-        <div className={styles.formSectionRecord} key={`formSectionRecord0${props.name}`}>
-          <h4 className={styles.formSectionRecordTitle} key={`formSectionRecordTitle0${props.name}`}>
-            {props.title}
-          </h4>
+        <FormSectionRecordTemplate key={`formSectionRecord0${props.name}`} title={props.title}>
           <Controls
-            key={`MultiSwipeControls-${props.name}0key`}
             isActive={fields.length > 0}
             defaultVal={props.options[0]}
             elementIndex={0}
-            currentFieldLength={0}
+            currentFieldsLength={0}
             maxElements={props.maxElements}
             onAppend={append}
             onRemove={remove}
             toggleActive={handleIsActiveToggle}
           ></Controls>
-        </div>,
+        </FormSectionRecordTemplate>,
       ];
     }
   }, [fields.length, props.name, props.options]);
-  return (
-    // <FormSectionTemplate title={props.title}>
-    //   <Removals
-    //     isActive={fields.length > 0}
-    //     toggleActive={handleIsActiveToggle}
-    //     defaultVal={props.options[0]}
-    //     fieldsCurrentLength={fields.length}
-    //     onAppend={append}
-    //     onRemove={remove}
-    //     maxElements={props.maxElements}
-    //   />
-    //   <div className={styles.optionsWrapper}>{...content}</div>
-    // </FormSectionTemplate>
-    <section className={styles.formSection}>{...content}</section>
-  );
+  return <FormSectionTemplate>{...content}</FormSectionTemplate>;
 }

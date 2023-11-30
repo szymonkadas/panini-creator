@@ -23,24 +23,13 @@ type RadioProps = BaseSpecialOptionsProps & {
 
 type SpecialOptionsProps = CheckboxButtonProps | CheckboxProps | SelectProps | RadioProps;
 
-type RemovalsProps = {
-  isActive: boolean;
-  maxElements: number;
-  defaultVal: string;
-  fieldsCurrentLength: number;
-  onAppend: (value: string) => void;
-  onRemove: (index: number) => void;
-  toggleActive: () => void;
-};
-
 type ControlsProps = {
   isActive: boolean;
   defaultVal: string;
   elementIndex: number;
-  currentFieldLength: number;
+  currentFieldsLength: number;
   maxElements: number;
   onAppend: (value: string) => void;
   onRemove: (index: number) => void;
   toggleActive: () => void;
 };
-// może rozdzielić onAppend i onRemove i na tej podstawie decydować czy się dodaje czy odejmuje?
