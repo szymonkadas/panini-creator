@@ -1,10 +1,11 @@
 import { useMemo } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { isActiveToggle } from "../../../utils/form-helpers";
+// import styles from "./FormSection.module.css";
 import styles from "./FormSection.module.css";
-import FormSectionTemplate from "./FormSectionTemplate";
-import Removals from "./formSection/Removals";
-import MultiSwipeElement from "./formSection/elements/MultiSwipeElement";
+import Controls from "./formSection/Controls";
+import MultiSwipe from "./formSection/elements/MultiSwipe";
+import FormSectionTemplate, { FormSectionRecordTemplate, FormSectionTitleTemplate } from "./FormSectionTemplates";
 
 export default function MultiSwipeSection(props: MultiSwipeSectionProps) {
   const { control } = useFormContext();
@@ -12,48 +13,62 @@ export default function MultiSwipeSection(props: MultiSwipeSectionProps) {
     control,
     name: props.name,
   });
-  const content = useMemo(() => {
-    return fields.map((field, index, array) => {
-      const swipe = (
-        <MultiSwipeElement
-          key={`${field.id}`}
-          name={props.name}
-          onUpdate={update}
-          index={index}
-          options={props.options}
-          optionsIcons={props?.optionsIcons}
-        ></MultiSwipeElement>
-      );
-      return index < array.length - 1 ? (
-        <>
-          {swipe}
-          <div className={styles.swipeOptionPartingWrapper} key={`hrwrap${props.name}${index}${field}key`}>
-            <hr key={`hr${props.name}${index}${field}key`} className={styles.swipeOptionParting}></hr>
-          </div>
-        </>
-      ) : (
-        swipe
-      );
-    });
-  }, [fields.length, props.name, props.options]);
 
   const handleIsActiveToggle = () => {
     isActiveToggle(fields, append, props.options[0], remove);
   };
 
-  return (
-    <FormSectionTemplate title={props.title}>
-      <Removals
-        isActive={fields.length > 0}
-        toggleActive={handleIsActiveToggle}
-        defaultVal={props.options[0]}
-        fieldsCurrentLength={fields.length}
-        onAppend={append}
-        onRemove={remove}
-        maxElements={props.maxElements}
-        parting={true}
-      />
-      <div className={styles.optionsWrapper}>{...content}</div>
-    </FormSectionTemplate>
-  );
+  const content = useMemo(() => {
+    if (fields.length > 0) {
+      return fields.map((field, index, array) => {
+        const parting = (
+          <div className={styles.swipeOptionPartingWrapper} key={`hrwrap${props.name}${index}${field}key`}>
+            <hr key={`hr${props.name}${index}${field}key`} className={styles.swipeOptionParting}></hr>
+          </div>
+        );
+        return (
+          <>
+            <div className={styles.formSectionRecord} key={`formSectionRecord${field.id}`}>
+              <FormSectionTitleTemplate>{index === 0 ? props.title : ""}</FormSectionTitleTemplate>
+              <Controls
+                isActive={fields.length > 0}
+                defaultVal={props.options[0]}
+                elementIndex={index}
+                currentFieldsLength={array.length}
+                maxElements={props.maxElements}
+                onAppend={append}
+                onRemove={remove}
+                toggleActive={handleIsActiveToggle}
+              ></Controls>
+              <MultiSwipe
+                key={`${field.id}`}
+                name={props.name}
+                onUpdate={update}
+                index={index}
+                options={props.options}
+                optionsIcons={props?.optionsIcons}
+              ></MultiSwipe>
+            </div>
+            {index < array.length - 1 && parting}
+          </>
+        );
+      });
+    } else {
+      return [
+        <FormSectionRecordTemplate key={`formSectionRecord0${props.name}`} title={props.title}>
+          <Controls
+            isActive={fields.length > 0}
+            defaultVal={props.options[0]}
+            elementIndex={0}
+            currentFieldsLength={0}
+            maxElements={props.maxElements}
+            onAppend={append}
+            onRemove={remove}
+            toggleActive={handleIsActiveToggle}
+          ></Controls>
+        </FormSectionRecordTemplate>,
+      ];
+    }
+  }, [fields.length, props.name, props.options]);
+  return <FormSectionTemplate>{...content}</FormSectionTemplate>;
 }

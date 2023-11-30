@@ -4,7 +4,7 @@
   align-items: center;
   gap: 6px;
   border: var(--border-width) solid transparent;
-  background-color: white;
+  background-color: var(--background-color);
   padding: var(--secondary-spacing) var(--primary-spacing);
   font: var(--secondary-font);
   text-transform: var(--secondary-font-transform);

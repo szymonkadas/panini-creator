@@ -1,4 +1,6 @@
 .swipeElement {
+  grid-column: 3/4;
+  justify-self: right;
   display: flex;
   width: var(--option-width);
   align-items: center;
